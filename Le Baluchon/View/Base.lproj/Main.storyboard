@@ -121,7 +121,7 @@
                         <viewLayoutGuide key="safeArea" id="ANC-9E-L3h"/>
                         <color key="backgroundColor" red="0.72804278140000001" green="0.83969277139999998" blue="0.98433440920000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Currency" image="translation" selectedImage="translation" id="8cD-ux-HM2"/>
+                    <tabBarItem key="tabBarItem" title="Currency" image="exchange" selectedImage="exchange" id="8cD-ux-HM2"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zjt-VJ-6Hh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -150,6 +150,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="exchange" width="25" height="25"/>
         <image name="translation" width="25" height="25"/>
         <image name="weather" width="25" height="25"/>
         <systemColor name="systemYellowColor">

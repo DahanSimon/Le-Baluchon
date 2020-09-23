@@ -9,5 +9,4 @@ import UIKit
 
 class ExchangeViewController: UIViewController {
 
-    @IBOutlet weak var translateButton: UIButton!
 }
