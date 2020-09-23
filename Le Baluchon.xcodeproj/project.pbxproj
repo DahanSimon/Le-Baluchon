@@ -15,6 +15,7 @@
 		6BC878F4251B9F7300113732 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6BC878F2251B9F7300113732 /* LaunchScreen.storyboard */; };
 		6BC878FF251B9F7300113732 /* Le_BaluchonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC878FE251B9F7300113732 /* Le_BaluchonTests.swift */; };
 		6BC8790A251B9F7300113732 /* Le_BaluchonUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC87909251B9F7300113732 /* Le_BaluchonUITests.swift */; };
+		6BC87928251BB68400113732 /* ExcangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC87927251BB68400113732 /* ExcangeViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		6BC87905251B9F7300113732 /* Le BaluchonUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Le BaluchonUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BC87909251B9F7300113732 /* Le_BaluchonUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Le_BaluchonUITests.swift; sourceTree = "<group>"; };
 		6BC8790B251B9F7300113732 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6BC87927251BB68400113732 /* ExcangeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExcangeViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,6 +142,7 @@
 			isa = PBXGroup;
 			children = (
 				6BC878EB251B9F6F00113732 /* ViewController.swift */,
+				6BC87927251BB68400113732 /* ExcangeViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -290,6 +293,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6BC87928251BB68400113732 /* ExcangeViewController.swift in Sources */,
 				6BC878EC251B9F6F00113732 /* ViewController.swift in Sources */,
 				6BC878E8251B9F6F00113732 /* AppDelegate.swift in Sources */,
 				6BC878EA251B9F6F00113732 /* SceneDelegate.swift in Sources */,
