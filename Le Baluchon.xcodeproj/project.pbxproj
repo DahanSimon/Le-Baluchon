@@ -99,12 +99,10 @@
 		6BC878E6251B9F6F00113732 /* Le Baluchon */ = {
 			isa = PBXGroup;
 			children = (
-				6BC878E7251B9F6F00113732 /* AppDelegate.swift */,
-				6BC878E9251B9F6F00113732 /* SceneDelegate.swift */,
-				6BC878EB251B9F6F00113732 /* ViewController.swift */,
-				6BC878ED251B9F6F00113732 /* Main.storyboard */,
-				6BC878F0251B9F7300113732 /* Assets.xcassets */,
-				6BC878F2251B9F7300113732 /* LaunchScreen.storyboard */,
+				6BC87923251BA19F00113732 /* Model */,
+				6BC87922251BA19900113732 /* View */,
+				6BC87921251BA19000113732 /* Controller */,
+				6BC87920251BA18600113732 /* Support */,
 				6BC878F5251B9F7300113732 /* Info.plist */,
 			);
 			path = "Le Baluchon";
@@ -126,6 +124,40 @@
 				6BC8790B251B9F7300113732 /* Info.plist */,
 			);
 			path = "Le BaluchonUITests";
+			sourceTree = "<group>";
+		};
+		6BC87920251BA18600113732 /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				6BC878E7251B9F6F00113732 /* AppDelegate.swift */,
+				6BC878E9251B9F6F00113732 /* SceneDelegate.swift */,
+				6BC878F0251B9F7300113732 /* Assets.xcassets */,
+			);
+			path = Support;
+			sourceTree = "<group>";
+		};
+		6BC87921251BA19000113732 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				6BC878EB251B9F6F00113732 /* ViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		6BC87922251BA19900113732 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				6BC878ED251B9F6F00113732 /* Main.storyboard */,
+				6BC878F2251B9F7300113732 /* LaunchScreen.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		6BC87923251BA19F00113732 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
