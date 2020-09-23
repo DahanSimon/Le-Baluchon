@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ExcangeViewController: UIViewController {
+class ExchangeViewController: UIViewController {
 
     @IBOutlet weak var translateButton: UIButton!
 }
