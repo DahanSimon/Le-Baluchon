@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ExchangeViewController: UIViewController {
+class ExchangeViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var amountToChangeTextField: UITextField!
     @IBOutlet weak var changedValueLabel: UILabel!
