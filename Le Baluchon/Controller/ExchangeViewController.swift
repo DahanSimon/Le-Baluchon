@@ -9,4 +9,11 @@ import UIKit
 
 class ExchangeViewController: UIViewController {
 
+    @IBOutlet weak var amountToChangeTextField: UITextField!
+    @IBOutlet weak var changedValueLabel: UILabel!
+    
+    
+    @IBAction func changeCurrency(_ sender: Any) {
+        
+    }
 }
