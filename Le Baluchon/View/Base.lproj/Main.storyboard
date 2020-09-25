@@ -82,7 +82,7 @@
                                     <constraint firstItem="Ca3-7y-cP1" firstAttribute="leading" secondItem="N2J-LH-acZ" secondAttribute="leading" constant="20" id="uA5-MP-kaI"/>
                                 </constraints>
                             </stackView>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="Pwm-5I-uom">
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="Pwm-5I-uom">
                                 <rect key="frame" x="157.66666666666666" y="356.66666666666669" width="60" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="Igx-dc-rch"/>
@@ -152,7 +152,7 @@
                                             <constraint firstAttribute="trailing" secondItem="owB-IE-4TT" secondAttribute="trailing" id="t3Q-nn-Uqw"/>
                                         </constraints>
                                     </stackView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="VS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WhW-fH-Kwu">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="VS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WhW-fH-Kwu">
                                         <rect key="frame" x="136.33333333333334" y="292" width="62.666666666666657" height="61"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="50"/>
                                         <color key="textColor" systemColor="systemYellowColor"/>
@@ -195,14 +195,14 @@
                                     <constraint firstAttribute="trailing" secondItem="ucP-cq-J12" secondAttribute="trailing" id="rkz-jH-DTm"/>
                                 </constraints>
                             </stackView>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="mPZ-VF-MIO" userLabel="Origin Acitivty Indicator">
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="mPZ-VF-MIO" userLabel="Origin Acitivty Indicator">
                                 <rect key="frame" x="157.66666666666666" y="134" width="60" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="fOH-Im-e08"/>
                                     <constraint firstAttribute="width" constant="60" id="qFg-UL-VZh"/>
                                 </constraints>
                             </activityIndicatorView>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="cOO-yG-StL" userLabel="Destination Activity Indicator">
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="cOO-yG-StL" userLabel="Destination Activity Indicator">
                                 <rect key="frame" x="157.66666666666666" y="579" width="60" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="60" id="Rvf-8e-JtI"/>
@@ -243,7 +243,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="gXz-yF-I8f">
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="gXz-yF-I8f">
                                 <rect key="frame" x="157.66666666666666" y="364" width="60" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="60" id="HIK-1j-E8C"/>
@@ -340,7 +340,9 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Convertisseur de devises" image="exchange" selectedImage="exchange" id="8cD-ux-HM2"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="gXz-yF-I8f" id="4p7-G4-J5S"/>
                         <outlet property="amountToChangeTextField" destination="nB6-Kb-5WZ" id="KJu-MU-whC"/>
+                        <outlet property="calculateButton" destination="vWM-rs-s24" id="3Vh-Tv-yLn"/>
                         <outlet property="changedValueLabel" destination="Ajr-g5-IyJ" id="q9t-oA-G7T"/>
                     </connections>
                 </viewController>
