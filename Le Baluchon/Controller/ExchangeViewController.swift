@@ -13,18 +13,20 @@ class ExchangeViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var changedValueLabel: UILabel!
     @IBOutlet weak var calculateButton: UIButton!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet var tapGestureRecognizer: UITapGestureRecognizer!
     
     
     @IBAction func changeCurrency(_ sender: Any) {
         toggleActivityIndicator(shown: true)
+        dismissKeyboard(tapGestureRecognizer)
         
-        ExchangeService.shared.amountToExchange = "80"
+        ExchangeService.shared.amountToExchange = amountToChangeTextField.text!
         
         ExchangeService.shared.getConvertion { (success, exchange) in
             self.toggleActivityIndicator(shown: false)
             
             if success, let exchange = exchange {
-                self.changedValueLabel.text = String(exchange.result)
+                self.changedValueLabel.text = String(format: "%.2f $", exchange.result)
             } else {
                 let alertVC = UIAlertController(title: "Erreur", message: "Une erreur c'est produite !", preferredStyle: .alert)
                 let action = UIAlertAction(title: "OK", style: .cancel, handler: nil)
@@ -32,6 +34,15 @@ class ExchangeViewController: UIViewController, UITextFieldDelegate {
                 self.present(alertVC, animated: true, completion: nil)
             }
         }
+    }
+    
+    @IBAction func dismissKeyboard(_ sender: UITapGestureRecognizer) {
+        amountToChangeTextField.resignFirstResponder()
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
     
     private func toggleActivityIndicator(shown: Bool) {

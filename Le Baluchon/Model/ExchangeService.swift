@@ -14,9 +14,13 @@ class ExchangeService {
     private init() {}
     
     var amountToExchange = ""
-    
     private var exchangeUrl: URL {
-        return URL(string: "https://data.fixer.io/api/convert?access_key=07bb16458b377a95361d648e74daed7f&from=EUR&to=USD&amount=" + self.amountToExchange)!
+        if let url = URL(string: "https://data.fixer.io/api/convert?access_key=07bb16458b377a95361d648e74daed7f&from=EUR&to=USD&amount=" + self.amountToExchange){
+            return url
+        } else {
+            let wrongUrl = URL(string: "https://data.fixer.io/api/convert?access_key=07bb16458b377a95361d648e74daed7&from=EUR&to=USD&amount=0")!
+            return wrongUrl
+        }
     }
     private var task: URLSessionDataTask?
     
@@ -48,14 +52,14 @@ class ExchangeService {
                         callback(false, nil)
                     }
                 } else {
-//                    if let incorrectResponseJSON = try? JSONDecoder().decode(IncorrectResponse.self, from: data) {
-//                        if !incorrectResponseJSON.success {
-//                            let error = incorrectResponseJSON.error.code
-//                            callback(false, nil)
-//                        } else {
-//                            callback(false, nil)
-//                        }
-//                    }
+                    //                    if let incorrectResponseJSON = try? JSONDecoder().decode(IncorrectResponse.self, from: data) {
+                    //                        if !incorrectResponseJSON.success {
+                    //                            let error = incorrectResponseJSON.error.code
+                    //                            callback(false, nil)
+                    //                        } else {
+                    //                            callback(false, nil)
+                    //                        }
+                    //                    }
                     callback(false, nil)
                 }
                 
