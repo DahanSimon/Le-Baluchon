@@ -20,9 +20,9 @@ class ExchangeViewController: UIViewController, UITextFieldDelegate {
         toggleActivityIndicator(shown: true)
         dismissKeyboard(tapGestureRecognizer)
         
-        ExchangeService.shared.amountToExchange = amountToChangeTextField.text!
+        ConvertionService.shared.amountToConvert = amountToChangeTextField.text!
         
-        ExchangeService.shared.getConvertion { (success, exchange) in
+        ConvertionService.shared.getConvertion { (success, exchange) in
             self.toggleActivityIndicator(shown: false)
             
             if success, let exchange = exchange {

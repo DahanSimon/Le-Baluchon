@@ -7,15 +7,15 @@
 
 import Foundation
 
-class ExchangeService {
-    static var shared = ExchangeService()
-    private var exchangeSession = URLSession(configuration: .default)
+class ConvertionService {
+    static var shared = ConvertionService()
+    private var convertionSession = URLSession(configuration: .default)
     
     private init() {}
     
-    var amountToExchange = ""
-    private var exchangeUrl: URL {
-        if let url = URL(string: "https://data.fixer.io/api/convert?access_key=07bb16458b377a95361d648e74daed7f&from=EUR&to=USD&amount=" + self.amountToExchange){
+    var amountToConvert = ""
+    private var convertionUrl: URL {
+        if let url = URL(string: "https://data.fixer.io/api/convert?access_key=07bb16458b377a95361d648e74daed7f&from=EUR&to=USD&amount=" + self.amountToConvert){
             return url
         } else {
             let wrongUrl = URL(string: "https://data.fixer.io/api/convert?access_key=07bb16458b377a95361d648e74daed7&from=EUR&to=USD&amount=0")!
@@ -25,14 +25,14 @@ class ExchangeService {
     private var task: URLSessionDataTask?
     
     init (exchangeSession: URLSession) {
-        self.exchangeSession = exchangeSession
+        self.convertionSession = exchangeSession
     }
     
-    func getConvertion(callback: @escaping (Bool, Exchange?) -> Void) {
+    func getConvertion(callback: @escaping (Bool, Convertion?) -> Void) {
         let request = createConvertionRequest()
         task?.cancel()
         
-        task = exchangeSession.dataTask(with: request) { (data, response, error) in
+        task = convertionSession.dataTask(with: request) { (data, response, error) in
             DispatchQueue.main.async {
                 guard let data = data, error == nil else {
                     callback(false, nil)
@@ -44,10 +44,10 @@ class ExchangeService {
                     return
                 }
                 
-                if let responseJSON = try? JSONDecoder().decode(Response.self, from: data) {
+                if let responseJSON = try? JSONDecoder().decode(ConvertionResponse.self, from: data) {
                     if responseJSON.success {
-                        let exchange = Exchange(convert: responseJSON.query.amount, from: responseJSON.query.from, to: responseJSON.query.to, rate: responseJSON.info.rate, result: responseJSON.result!)
-                        callback(true, exchange)
+                        let convert = Convertion(convert: responseJSON.query.amount, from: responseJSON.query.from, to: responseJSON.query.to, rate: responseJSON.info.rate, result: responseJSON.result!)
+                        callback(true, convert)
                     } else {
                         callback(false, nil)
                     }
@@ -69,7 +69,7 @@ class ExchangeService {
     }
     
     private func createConvertionRequest() -> URLRequest {
-        var request = URLRequest(url: ExchangeService.shared.exchangeUrl)
+        var request = URLRequest(url: ConvertionService.shared.convertionUrl)
         request.httpMethod = "POST"
         
         let body = ""
@@ -78,33 +78,6 @@ class ExchangeService {
     }
 }
 
-struct Response: Codable {
-    let success: Bool
-    let query: Query
-    let info: Info
-    let date: String
-    let result: Double?
-}
 
-struct Info: Codable {
-    let timestamp: Int
-    let rate: Double
-}
 
-struct Query: Codable {
-    let from, to: String
-    let amount: Double
-}
-
-//// MARK: - IncorrectResponse
-//struct IncorrectResponse: Codable {
-//    let success: Bool
-//    let error: Error
-//}
-//
-//// MARK: - Error
-//struct Error: Codable {
-//    let code: Int
-//    let type, info: String
-//}
 

@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Exchange {
+class Convertion {
     
     var currencyToConvertFrom: String
     var currencyToConvertTo: String
