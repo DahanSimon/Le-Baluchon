@@ -16,7 +16,7 @@
 		6BC878F4251B9F7300113732 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6BC878F2251B9F7300113732 /* LaunchScreen.storyboard */; };
 		6BC878FF251B9F7300113732 /* Le_BaluchonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC878FE251B9F7300113732 /* Le_BaluchonTests.swift */; };
 		6BC8790A251B9F7300113732 /* Le_BaluchonUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC87909251B9F7300113732 /* Le_BaluchonUITests.swift */; };
-		6BC87928251BB68400113732 /* ExchangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC87927251BB68400113732 /* ExchangeViewController.swift */; };
+		6BC87928251BB68400113732 /* ConvertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC87927251BB68400113732 /* ConvertViewController.swift */; };
 		6BC87930251BDAFA00113732 /* TranslateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC8792F251BDAFA00113732 /* TranslateViewController.swift */; };
 		6BC87935251BE4DE00113732 /* WeatherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC87934251BE4DE00113732 /* WeatherViewController.swift */; };
 /* End PBXBuildFile section */
@@ -54,7 +54,7 @@
 		6BC87905251B9F7300113732 /* Le BaluchonUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Le BaluchonUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BC87909251B9F7300113732 /* Le_BaluchonUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Le_BaluchonUITests.swift; sourceTree = "<group>"; };
 		6BC8790B251B9F7300113732 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		6BC87927251BB68400113732 /* ExchangeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeViewController.swift; sourceTree = "<group>"; };
+		6BC87927251BB68400113732 /* ConvertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConvertViewController.swift; sourceTree = "<group>"; };
 		6BC8792F251BDAFA00113732 /* TranslateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslateViewController.swift; sourceTree = "<group>"; };
 		6BC87934251BE4DE00113732 /* WeatherViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -84,6 +84,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6BA9189A2523B2C200CA3A01 /* Convertion Group */ = {
+			isa = PBXGroup;
+			children = (
+				6B5B350B251D63FD00554B7B /* ConvertionService.swift */,
+				6B5B3510251D6B0C00554B7B /* Convertion.swift */,
+				6BBEBD3C2520B99D00B16CA0 /* ConvertionResponse.swift */,
+			);
+			path = "Convertion Group";
+			sourceTree = "<group>";
+		};
 		6BC878DB251B9F6F00113732 = {
 			isa = PBXGroup;
 			children = (
@@ -146,7 +156,7 @@
 		6BC87921251BA19000113732 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				6BC87927251BB68400113732 /* ExchangeViewController.swift */,
+				6BC87927251BB68400113732 /* ConvertViewController.swift */,
 				6BC8792F251BDAFA00113732 /* TranslateViewController.swift */,
 				6BC87934251BE4DE00113732 /* WeatherViewController.swift */,
 			);
@@ -165,9 +175,7 @@
 		6BC87923251BA19F00113732 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				6B5B350B251D63FD00554B7B /* ConvertionService.swift */,
-				6B5B3510251D6B0C00554B7B /* Convertion.swift */,
-				6BBEBD3C2520B99D00B16CA0 /* ConvertionResponse.swift */,
+				6BA9189A2523B2C200CA3A01 /* Convertion Group */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -302,7 +310,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6BC87928251BB68400113732 /* ExchangeViewController.swift in Sources */,
+				6BC87928251BB68400113732 /* ConvertViewController.swift in Sources */,
 				6BC87935251BE4DE00113732 /* WeatherViewController.swift in Sources */,
 				6B5B350C251D63FD00554B7B /* ConvertionService.swift in Sources */,
 				6BBEBD3D2520B99D00B16CA0 /* ConvertionResponse.swift in Sources */,

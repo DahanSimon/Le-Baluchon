@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ExchangeViewController: UIViewController, UITextFieldDelegate {
+class ConvertViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var amountToChangeTextField: UITextField!
     @IBOutlet weak var changedValueLabel: UILabel!
@@ -16,11 +16,11 @@ class ExchangeViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet var tapGestureRecognizer: UITapGestureRecognizer!
     
     
-    @IBAction func changeCurrency(_ sender: Any) {
+    @IBAction func calculate(_ sender: Any) {
         toggleActivityIndicator(shown: true)
         dismissKeyboard(tapGestureRecognizer)
         
-        ConvertionService.shared.amountToConvertString = amountToChangeTextField.text!
+        Convertion.shared.amountToConvertString = amountToChangeTextField.text!
         
         ConvertionService.shared.getConvertion { (success, exchange) in
             self.toggleActivityIndicator(shown: false)

@@ -259,10 +259,10 @@
             </objects>
             <point key="canvasLocation" x="675" y="721"/>
         </scene>
-        <!--Exchange Currencies-->
+        <!--Convert Currencies-->
         <scene sceneID="icH-6K-4bM">
             <objects>
-                <viewController title="Exchange Currencies" id="btR-QC-N7s" customClass="ExchangeViewController" customModule="Le_Baluchon" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Convert Currencies" id="btR-QC-N7s" customClass="ConvertViewController" customModule="Le_Baluchon" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="TOY-cc-kuy">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -322,7 +322,7 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
-                                            <action selector="changeCurrency:" destination="btR-QC-N7s" eventType="touchUpInside" id="dDS-FY-1BB"/>
+                                            <action selector="calculate:" destination="btR-QC-N7s" eventType="touchUpInside" id="F76-bc-fuy"/>
                                         </connections>
                                     </button>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="eUr-sc-Wmo" userLabel="SecondCurrencyStackView">
