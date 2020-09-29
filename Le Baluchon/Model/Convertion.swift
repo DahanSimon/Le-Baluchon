@@ -9,18 +9,20 @@ import Foundation
 
 class Convertion {
     
-    var currencyToConvertFrom: String
-    var currencyToConvertTo: String
+    private let currencyToConvertFrom = "EUR"
+    var currencyToConvertTo = "USD"
     var amount: Double
-    var rate: Double
-    var result: Double
+    static var rate: Double?
+    var result: Double? {
+        guard let rate = Convertion.rate else {
+            return nil
+        }
+        return amount * rate
+    }
     
     
-    init(convert amount: Double, from currencyToConvertFrom: String, to currencyToConvertTo: String, rate: Double, result: Double) {
+    
+    init(convert amount: Double) {
         self.amount = amount
-        self.currencyToConvertFrom = currencyToConvertFrom
-        self.currencyToConvertTo = currencyToConvertTo
-        self.rate = rate
-        self.result = result
     }
 }

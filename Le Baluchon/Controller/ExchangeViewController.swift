@@ -20,13 +20,13 @@ class ExchangeViewController: UIViewController, UITextFieldDelegate {
         toggleActivityIndicator(shown: true)
         dismissKeyboard(tapGestureRecognizer)
         
-        ConvertionService.shared.amountToConvert = amountToChangeTextField.text!
+        ConvertionService.shared.amountToConvertString = amountToChangeTextField.text!
         
         ConvertionService.shared.getConvertion { (success, exchange) in
             self.toggleActivityIndicator(shown: false)
             
             if success, let exchange = exchange {
-                self.changedValueLabel.text = String(format: "%.2f $", exchange.result)
+                self.changedValueLabel.text = String(format: "%.2f $", exchange.result!)
             } else {
                 let alertVC = UIAlertController(title: "Erreur", message: "Une erreur c'est produite !", preferredStyle: .alert)
                 let action = UIAlertAction(title: "OK", style: .cancel, handler: nil)
