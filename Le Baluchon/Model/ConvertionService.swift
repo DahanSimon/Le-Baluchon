@@ -14,7 +14,6 @@ class ConvertionService {
     private init() {}
     
     var currentDate: String {
-        print("\(getCurrentDate())")
         return getCurrentDate()
     }
     

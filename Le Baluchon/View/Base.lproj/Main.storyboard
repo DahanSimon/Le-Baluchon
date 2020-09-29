@@ -82,7 +82,7 @@
                                     <constraint firstItem="Ca3-7y-cP1" firstAttribute="leading" secondItem="N2J-LH-acZ" secondAttribute="leading" constant="20" id="uA5-MP-kaI"/>
                                 </constraints>
                             </stackView>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="Pwm-5I-uom">
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="Pwm-5I-uom">
                                 <rect key="frame" x="177" y="398.5" width="60" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="Igx-dc-rch"/>
@@ -217,14 +217,14 @@
                                     <constraint firstItem="WhW-fH-Kwu" firstAttribute="centerX" secondItem="BJG-zn-Yud" secondAttribute="centerX" id="zuu-F8-lz3"/>
                                 </constraints>
                             </stackView>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="mPZ-VF-MIO" userLabel="Origin Acitivty Indicator">
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="mPZ-VF-MIO" userLabel="Origin Acitivty Indicator">
                                 <rect key="frame" x="177" y="195" width="60" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="fOH-Im-e08"/>
                                     <constraint firstAttribute="width" constant="60" id="qFg-UL-VZh"/>
                                 </constraints>
                             </activityIndicatorView>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="cOO-yG-StL" userLabel="Destination Activity Indicator">
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="cOO-yG-StL" userLabel="Destination Activity Indicator">
                                 <rect key="frame" x="177" y="602" width="60" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="60" id="Rvf-8e-JtI"/>
@@ -267,7 +267,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="gXz-yF-I8f">
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="gXz-yF-I8f">
                                 <rect key="frame" x="177" y="364" width="60" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="60" id="HIK-1j-E8C"/>
