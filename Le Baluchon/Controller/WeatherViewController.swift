@@ -71,7 +71,17 @@ class WeatherViewController: UIViewController {
                     self.originCityWeatherDescriptionLabel.text = "WEATHER INFO : \n \(weather.weather[0].weatherDescription)"
                     self.originCityWeatherLabel.text = self.getStringFromTemp(temperature: weather.main.temp) + " °C"
                 }
+            } else {
+                self.toggleActivityIndicator(shown: true)
+                self.presentAlert()
             }
         }
+    }
+    
+    private func presentAlert() {
+        let alertVC = UIAlertController(title: "Erreur", message: "Une erreur c'est produite merci de rafraichir.", preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .cancel, handler: refreshButtonTapped(_:))
+        alertVC.addAction(action)
+        self.present(alertVC, animated: true, completion: nil)
     }
 }
