@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		6B59B8F62524E38B00901DEF /* ConvertionErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B59B8F52524E38B00901DEF /* ConvertionErrors.swift */; };
+		6B59B8FC2524EF7200901DEF /* CityWeatherResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B59B8FB2524EF7200901DEF /* CityWeatherResponse.swift */; };
+		6B59B9042524EF9400901DEF /* WeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B59B9032524EF9400901DEF /* WeatherService.swift */; };
 		6B5B350C251D63FD00554B7B /* ConvertionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5B350B251D63FD00554B7B /* ConvertionService.swift */; };
 		6BBEBD3D2520B99D00B16CA0 /* ConvertionResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBEBD3C2520B99D00B16CA0 /* ConvertionResponse.swift */; };
 		6BC878E8251B9F6F00113732 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC878E7251B9F6F00113732 /* AppDelegate.swift */; };
@@ -40,6 +42,8 @@
 
 /* Begin PBXFileReference section */
 		6B59B8F52524E38B00901DEF /* ConvertionErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConvertionErrors.swift; sourceTree = "<group>"; };
+		6B59B8FB2524EF7200901DEF /* CityWeatherResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityWeatherResponse.swift; sourceTree = "<group>"; };
+		6B59B9032524EF9400901DEF /* WeatherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherService.swift; sourceTree = "<group>"; };
 		6B5B350B251D63FD00554B7B /* ConvertionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConvertionService.swift; sourceTree = "<group>"; };
 		6BBEBD3C2520B99D00B16CA0 /* ConvertionResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConvertionResponse.swift; sourceTree = "<group>"; };
 		6BC878E4251B9F6F00113732 /* Le Baluchon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Le Baluchon.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -84,6 +88,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6B59B8FA2524EF3D00901DEF /* Weather Group */ = {
+			isa = PBXGroup;
+			children = (
+				6B59B9032524EF9400901DEF /* WeatherService.swift */,
+				6B59B8FB2524EF7200901DEF /* CityWeatherResponse.swift */,
+			);
+			path = "Weather Group";
+			sourceTree = "<group>";
+		};
 		6BA9189A2523B2C200CA3A01 /* Convertion Group */ = {
 			isa = PBXGroup;
 			children = (
@@ -176,6 +189,7 @@
 			isa = PBXGroup;
 			children = (
 				6BA9189A2523B2C200CA3A01 /* Convertion Group */,
+				6B59B8FA2524EF3D00901DEF /* Weather Group */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -311,9 +325,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				6BC87928251BB68400113732 /* ConvertViewController.swift in Sources */,
+				6B59B9042524EF9400901DEF /* WeatherService.swift in Sources */,
 				6B59B8F62524E38B00901DEF /* ConvertionErrors.swift in Sources */,
 				6BC87935251BE4DE00113732 /* WeatherViewController.swift in Sources */,
 				6B5B350C251D63FD00554B7B /* ConvertionService.swift in Sources */,
+				6B59B8FC2524EF7200901DEF /* CityWeatherResponse.swift in Sources */,
 				6BBEBD3D2520B99D00B16CA0 /* ConvertionResponse.swift in Sources */,
 				6BC87930251BDAFA00113732 /* TranslateViewController.swift in Sources */,
 				6BC878E8251B9F6F00113732 /* AppDelegate.swift in Sources */,

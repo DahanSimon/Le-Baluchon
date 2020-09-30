@@ -212,44 +212,59 @@
                                     <constraint firstItem="ucP-cq-J12" firstAttribute="leading" secondItem="BJG-zn-Yud" secondAttribute="leading" id="B8j-3S-dTC"/>
                                     <constraint firstAttribute="trailing" secondItem="8Th-MS-Maq" secondAttribute="trailing" id="Jay-cC-cpR"/>
                                     <constraint firstItem="8Th-MS-Maq" firstAttribute="leading" secondItem="BJG-zn-Yud" secondAttribute="leading" id="OtT-DC-v6Y"/>
+                                    <constraint firstItem="WhW-fH-Kwu" firstAttribute="top" secondItem="ucP-cq-J12" secondAttribute="bottom" constant="10" id="QpL-oa-7cq"/>
                                     <constraint firstItem="8Th-MS-Maq" firstAttribute="top" relation="lessThanOrEqual" secondItem="WhW-fH-Kwu" secondAttribute="bottom" constant="70" id="dAi-Xi-Xiu"/>
+                                    <constraint firstItem="8Th-MS-Maq" firstAttribute="top" secondItem="WhW-fH-Kwu" secondAttribute="bottom" constant="10" id="hAj-m0-b0A"/>
+                                    <constraint firstItem="ucP-cq-J12" firstAttribute="top" secondItem="BJG-zn-Yud" secondAttribute="top" id="oDY-cU-kDG"/>
+                                    <constraint firstAttribute="bottom" secondItem="8Th-MS-Maq" secondAttribute="bottom" id="pDa-aV-AfT"/>
                                     <constraint firstAttribute="trailing" secondItem="ucP-cq-J12" secondAttribute="trailing" id="rkz-jH-DTm"/>
                                     <constraint firstItem="WhW-fH-Kwu" firstAttribute="centerX" secondItem="BJG-zn-Yud" secondAttribute="centerX" id="zuu-F8-lz3"/>
                                 </constraints>
                             </stackView>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="mPZ-VF-MIO" userLabel="Origin Acitivty Indicator">
-                                <rect key="frame" x="177" y="195" width="60" height="60"/>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="center" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="mPZ-VF-MIO" userLabel="Origin Acitivty Indicator">
+                                <rect key="frame" x="157" y="228.66666666666663" width="100" height="100"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="fOH-Im-e08"/>
-                                    <constraint firstAttribute="width" constant="60" id="qFg-UL-VZh"/>
+                                    <constraint firstAttribute="width" constant="100" id="WVe-Nx-Tt7"/>
+                                    <constraint firstAttribute="height" constant="100" id="kAG-6s-DvQ"/>
                                 </constraints>
                             </activityIndicatorView>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="cOO-yG-StL" userLabel="Destination Activity Indicator">
-                                <rect key="frame" x="177" y="602" width="60" height="60"/>
+                                <rect key="frame" x="157" y="528.66666666666663" width="100" height="100"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="60" id="Rvf-8e-JtI"/>
-                                    <constraint firstAttribute="height" constant="60" id="a10-6u-8e2"/>
+                                    <constraint firstAttribute="width" constant="100" id="Kla-8K-Mly"/>
+                                    <constraint firstAttribute="height" constant="100" id="LTb-te-4sc"/>
                                 </constraints>
                             </activityIndicatorView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jqA-Jv-lZu">
+                                <rect key="frame" x="332" y="412.66666666666669" width="32" height="32"/>
+                                <state key="normal" image="refresh"/>
+                                <connections>
+                                    <action selector="refreshButtonTapped:" destination="bGy-iD-b0S" eventType="touchUpInside" id="4hJ-Vc-2w0"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="BRh-Gn-x45"/>
                         <color key="backgroundColor" red="0.72804278140000001" green="0.83969277139999998" blue="0.98433440920000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
-                            <constraint firstItem="8Th-MS-Maq" firstAttribute="centerY" secondItem="cOO-yG-StL" secondAttribute="centerY" id="7Jl-HU-Qiw"/>
+                            <constraint firstItem="BRh-Gn-x45" firstAttribute="trailing" secondItem="jqA-Jv-lZu" secondAttribute="trailing" constant="50" id="4ZV-RI-EyV"/>
+                            <constraint firstItem="jqA-Jv-lZu" firstAttribute="centerY" secondItem="BJG-zn-Yud" secondAttribute="centerY" id="7EY-wk-Otu"/>
                             <constraint firstItem="BJG-zn-Yud" firstAttribute="leading" secondItem="gQe-SR-5hx" secondAttribute="leading" constant="20" id="BaH-9p-nV8"/>
                             <constraint firstItem="BJG-zn-Yud" firstAttribute="top" secondItem="BRh-Gn-x45" secondAttribute="top" constant="20" id="ClC-gl-dLa"/>
-                            <constraint firstItem="8Th-MS-Maq" firstAttribute="centerX" secondItem="cOO-yG-StL" secondAttribute="centerX" id="U9g-WB-Pnr"/>
+                            <constraint firstItem="mPZ-VF-MIO" firstAttribute="bottom" secondItem="BJG-zn-Yud" secondAttribute="centerY" constant="-100" id="Ipi-0H-JXx"/>
+                            <constraint firstItem="cOO-yG-StL" firstAttribute="top" secondItem="BJG-zn-Yud" secondAttribute="centerY" constant="100" id="L1g-IL-Zof"/>
                             <constraint firstItem="BRh-Gn-x45" firstAttribute="bottom" secondItem="BJG-zn-Yud" secondAttribute="bottom" constant="20" id="Vq0-fi-q8O"/>
+                            <constraint firstItem="cOO-yG-StL" firstAttribute="centerX" secondItem="gQe-SR-5hx" secondAttribute="centerX" id="fy2-tC-O7q"/>
                             <constraint firstItem="mPZ-VF-MIO" firstAttribute="centerX" secondItem="ucP-cq-J12" secondAttribute="centerX" id="qCB-mR-KCK"/>
                             <constraint firstItem="BRh-Gn-x45" firstAttribute="trailing" secondItem="BJG-zn-Yud" secondAttribute="trailing" constant="20" id="qK5-WY-3qf"/>
-                            <constraint firstItem="mPZ-VF-MIO" firstAttribute="centerY" secondItem="ucP-cq-J12" secondAttribute="centerY" id="zVO-yA-Fyd"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Météo" image="weather" id="1P2-Nj-eH1"/>
                     <connections>
+                        <outlet property="destinationActivityINdicator" destination="cOO-yG-StL" id="i1p-4L-GWe"/>
                         <outlet property="destinationStackView" destination="8Th-MS-Maq" id="PzB-hF-6Hn"/>
                         <outlet property="destinationTemperatureLabel" destination="31x-Ie-eA2" id="3ko-kc-3a5"/>
                         <outlet property="destinationWeatherDescriptionLabel" destination="sUt-Ji-6Pa" id="aVg-1O-btU"/>
+                        <outlet property="originActivityIndicator" destination="mPZ-VF-MIO" id="bch-tb-d2d"/>
                         <outlet property="originCityWeatherDescriptionLabel" destination="owB-IE-4TT" id="JwC-Ns-kBa"/>
                         <outlet property="originCityWeatherLabel" destination="Pd2-6f-877" id="gtu-Ot-Rnf"/>
                         <outlet property="originWeatherStackView" destination="ucP-cq-J12" id="EvC-fe-W1U"/>
@@ -409,6 +424,7 @@
     </scenes>
     <resources>
         <image name="exchange" width="25" height="25"/>
+        <image name="refresh" width="32" height="32"/>
         <image name="translation" width="25" height="25"/>
         <image name="weather" width="25" height="25"/>
         <systemColor name="systemYellowColor">
