@@ -22,13 +22,13 @@ class ConvertViewController: UIViewController, UITextFieldDelegate {
     }
     
     override func viewDidLoad() {
-        ConvertionService.shared.getConvertion { (success, exchange) in
-            self.toggleActivityIndicator(shown: false)
+        ConvertionService.shared.getConvertion { [self] (success, exchange) in
+            toggleActivityIndicator(shown: false)
             
             if success, let exchange = exchange {
-                self.rateInfoLabel.text = "1 € = \(exchange.rates.usd) $"
+                rateInfoLabel.text = "1 € = \(exchange.rates.usd) $"
             } else {
-                self.rateInfoLabel.isHidden = true
+                rateInfoLabel.isHidden = true
             }
         }
     }
@@ -39,24 +39,24 @@ class ConvertViewController: UIViewController, UITextFieldDelegate {
         
         // Is Valuable ?
         guard let amountToConvertString = amountToChangeTextField.text else {
-            self.toggleActivityIndicator(shown: false)
+            toggleActivityIndicator(shown: false)
             return
         }
         
         guard let amountToConvert = Double(amountToConvertString) else {
-            self.toggleActivityIndicator(shown: false)
+            toggleActivityIndicator(shown: false)
             presentAlert(vcError: .invalidTextFieldInput)
             return
         }
         
-        ConvertionService.shared.getConvertion { (success, exchange) in
-            self.toggleActivityIndicator(shown: false)
+        ConvertionService.shared.getConvertion { [self] (success, exchange) in
+            toggleActivityIndicator(shown: false)
             
             if success, let exchange = exchange {
                 let result = self.convert(amount: amountToConvert, rate: exchange.rates)
-                self.changedValueLabel.text = String(format: "%.2f $", result)
+                changedValueLabel.text = String(format: "%.2f $", result)
             } else {
-                self.presentAlert(vcError: .apiError)
+                presentAlert(vcError: .apiError)
             }
         }
     }
