@@ -28,6 +28,8 @@ class ConvertionService {
     
     private var task: URLSessionDataTask?
     
+    var convertionError: ConvertionErrors? = nil
+    
     init (exchangeSession: URLSession) {
         self.convertionSession = exchangeSession
     }
@@ -36,39 +38,34 @@ class ConvertionService {
         let request = createConvertionRequest()
         task?.cancel()
         
-        
         // Checks if we need to call the API
         if lastUpdatedRateDate ?? 0 <= currentTimestamp - 3600 {
             task = convertionSession.dataTask(with: request) { (data, response, error) in
                 DispatchQueue.main.async {
                     guard let data = data, error == nil else {
                         callback(false, nil)
+                        self.convertionError = .noDataReceived
                         return
                     }
                     
                     guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
                         callback(false, nil)
+                        self.convertionError = .responseCodeIsNot200
                         return
                     }
                     
                     if let responseJSON = try? JSONDecoder().decode(ConvertionResponse.self, from: data) {
-                        if responseJSON.success {
-                            self.convertionResponse = responseJSON
-                            self.lastUpdatedRateDate = self.convertionResponse!.timestamp
-                            callback(true, self.convertionResponse)
+                        self.convertionResponse = responseJSON
+                        self.lastUpdatedRateDate = self.convertionResponse!.timestamp
+                        callback(true, self.convertionResponse)
+                    } else {
+                        if let incorrectResponseJSON = try? JSONDecoder().decode(IncorrectResponse.self, from: data) {
+                            let incorrectResponse = incorrectResponseJSON
+                            self.convertionError = .incorrectRequest(errorDescription: incorrectResponse.error.info)
+                            callback(false, nil)
                         } else {
                             callback(false, nil)
                         }
-                    } else {
-                        if let incorrectResponseJSON = try? JSONDecoder().decode(IncorrectResponse.self, from: data) {
-                            if !incorrectResponseJSON.success {
-                                let error = incorrectResponseJSON.error.code
-                                callback(false, nil)
-                            } else {
-                                callback(false, nil)
-                            }
-                        }
-                        callback(false, nil)
                     }
                 }
             }

@@ -35,3 +35,4 @@ struct Error: Codable {
     let code: Int
     let type, info: String
 }
+
