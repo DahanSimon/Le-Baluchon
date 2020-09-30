@@ -14,19 +14,35 @@ class ConvertViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var calculateButton: UIButton!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet var tapGestureRecognizer: UITapGestureRecognizer!
+    @IBOutlet weak var rateInfoLabel: UILabel!
     
+    override func viewDidLoad() {
+        ConvertionService.shared.getConvertion { (success, exchange) in
+            self.toggleActivityIndicator(shown: false)
+            
+            if success, let exchange = exchange {
+                self.rateInfoLabel.text = "1 € = \(exchange.rates.usd) $"
+            }
+        }
+    }
     
     @IBAction func calculate(_ sender: Any) {
         toggleActivityIndicator(shown: true)
         dismissKeyboard(tapGestureRecognizer)
         
-        Convertion.shared.amountToConvertString = amountToChangeTextField.text!
+        guard let amountToConvertString = amountToChangeTextField.text else {
+            return
+        }
+        guard let amountToConvert = Double(amountToConvertString) else {
+            return
+        }
         
         ConvertionService.shared.getConvertion { (success, exchange) in
             self.toggleActivityIndicator(shown: false)
             
             if success, let exchange = exchange {
-                self.changedValueLabel.text = String(format: "%.2f $", exchange.result!)
+                let result = self.convert(amount: amountToConvert, rate: exchange.rates)
+                self.changedValueLabel.text = String(format: "%.2f $", result)
             } else {
                 let alertVC = UIAlertController(title: "Erreur", message: "Une erreur c'est produite !", preferredStyle: .alert)
                 let action = UIAlertAction(title: "OK", style: .cancel, handler: nil)
@@ -48,5 +64,9 @@ class ConvertViewController: UIViewController, UITextFieldDelegate {
     private func toggleActivityIndicator(shown: Bool) {
         calculateButton.isHidden = shown
         activityIndicator.isHidden = !shown
+    }
+    
+    private func convert(amount: Double, rate: Rates) -> Double {
+        return amount * rate.usd
     }
 }

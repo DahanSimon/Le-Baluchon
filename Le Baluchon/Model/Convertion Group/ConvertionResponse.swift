@@ -12,7 +12,6 @@ import Foundation
 struct ConvertionResponse: Codable {
     let success: Bool
     let timestamp: Int
-    let historical: Bool
     let base, date: String
     let rates: Rates
 }

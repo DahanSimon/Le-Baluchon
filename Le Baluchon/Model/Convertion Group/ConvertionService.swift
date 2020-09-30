@@ -12,35 +12,33 @@ class ConvertionService {
     static var shared = ConvertionService()
     private init() {}
     
+    var convertionResponse: ConvertionResponse?
+    
     private var convertionSession = URLSession(configuration: .default)
     
-    var lastUpdatedRateDate: String?
-    var currentDate: String {
-        return getCurrentDate()
+    var lastUpdatedRateDate: Int?
+    var currentTimestamp: Int {
+        return getcurrentTimestamp()
     }
     
     private var convertionUrl: URL {
-        let url = URL(string: "https://data.fixer.io/api/" + self.currentDate + "?access_key=07bb16458b377a95361d648e74daed7f&base=EUR&symbols=usd")!
+        let url = URL(string: "https://data.fixer.io/api/latest" + "?access_key=07bb16458b377a95361d648e74daed7f&base=EUR&symbols=usd")!
         return url
     }
+    
     private var task: URLSessionDataTask?
     
     init (exchangeSession: URLSession) {
         self.convertionSession = exchangeSession
     }
     
-    func getConvertion(callback: @escaping (Bool, Convertion?) -> Void) {
+    func getConvertion(callback: @escaping (Bool, ConvertionResponse?) -> Void) {
         let request = createConvertionRequest()
         task?.cancel()
         
-        // Checks if the user input is valid
-        guard let _ = Convertion.shared.amountToConvert else {
-            callback(false, nil)
-            return
-        }
         
         // Checks if we need to call the API
-        if self.lastUpdatedRateDate != getCurrentDate() {
+        if lastUpdatedRateDate ?? 0 <= currentTimestamp - 3600 {
             task = convertionSession.dataTask(with: request) { (data, response, error) in
                 DispatchQueue.main.async {
                     guard let data = data, error == nil else {
@@ -55,31 +53,33 @@ class ConvertionService {
                     
                     if let responseJSON = try? JSONDecoder().decode(ConvertionResponse.self, from: data) {
                         if responseJSON.success {
-                            
-                            Convertion.shared.rate = responseJSON.rates.usd
-                            self.lastUpdatedRateDate = self.currentDate
-                            callback(true, Convertion.shared)
-                            
+                            self.convertionResponse = responseJSON
+                            self.lastUpdatedRateDate = self.convertionResponse!.timestamp
+                            callback(true, self.convertionResponse)
                         } else {
                             callback(false, nil)
                         }
                     } else {
-//                        if let incorrectResponseJSON = try? JSONDecoder().decode(IncorrectResponse.self, from: data) {
-//                            if !incorrectResponseJSON.success {
-//                                let error = incorrectResponseJSON.error.code
-//                                callback(false, nil)
-//                            } else {
-//                                callback(false, nil)
-//                            }
-//                        }
-//                        callback(false, nil)
+                        if let incorrectResponseJSON = try? JSONDecoder().decode(IncorrectResponse.self, from: data) {
+                            if !incorrectResponseJSON.success {
+                                let error = incorrectResponseJSON.error.code
+                                callback(false, nil)
+                            } else {
+                                callback(false, nil)
+                            }
+                        }
+                        callback(false, nil)
                     }
                 }
             }
             
             task?.resume()
         } else {
-            callback(true, Convertion.shared)
+            if let convertionResponse = self.convertionResponse {
+                callback(true, convertionResponse)
+            } else {
+                callback(false, nil)
+            }
         }
     }
     
@@ -92,12 +92,12 @@ class ConvertionService {
         return request
     }
     
-    private func getCurrentDate() -> String {
+    private func getcurrentTimestamp() -> Int {
         let dateFormatter : DateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
+        dateFormatter.timeZone = TimeZone(secondsFromGMT:0)
         let date = Date()
-        let dateString = dateFormatter.string(from: date)
-        return dateString
+        let currentTimestamp = Int(date.timeIntervalSince1970)
+        return currentTimestamp
     }
 }
 
