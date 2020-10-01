@@ -22,7 +22,7 @@ class ConvertionService {
     }
     
     private var convertionUrl: URL {
-        let url = URL(string: "https://data.fixer.io/api/latest" + "?access_key=07bb16458b377a95361d648e74daed7f&base=EUR&symbols=usd")!
+        let url = URL(string: "https://data.fixer.io/api/latest" + "?access_key=07bb16458b377a95361d648e74daed7f&base=EUR")!
         return url
     }
     

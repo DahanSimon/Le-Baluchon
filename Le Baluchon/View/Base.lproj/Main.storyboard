@@ -360,6 +360,20 @@
                                     <constraint firstAttribute="width" constant="200" id="Mi2-lU-ekp"/>
                                 </constraints>
                             </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ua9-Bm-Dsp">
+                                <rect key="frame" x="374" y="54" width="30" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="30" id="FoC-yq-6aH"/>
+                                    <constraint firstAttribute="height" constant="30" id="qZ6-Uh-EB4"/>
+                                </constraints>
+                                <color key="tintColor" red="0.081825204193592072" green="0.12255995720624924" blue="0.34369492530822754" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" image="gearshape.fill" catalog="system">
+                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
+                                </state>
+                                <connections>
+                                    <segue destination="HSh-3R-F1O" kind="presentation" id="HHB-Bq-08j"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="ANC-9E-L3h"/>
                         <color key="backgroundColor" red="0.72804278140000001" green="0.83969277139999998" blue="0.98433440920000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -368,7 +382,9 @@
                             <constraint firstItem="ANC-9E-L3h" firstAttribute="bottom" secondItem="Wiw-QC-GMi" secondAttribute="bottom" constant="20" id="02I-Df-j1c"/>
                             <constraint firstItem="Wiw-QC-GMi" firstAttribute="top" relation="greaterThanOrEqual" secondItem="ubd-2z-TrQ" secondAttribute="bottom" constant="20" id="5G7-QP-XVy"/>
                             <constraint firstItem="gXz-yF-I8f" firstAttribute="centerX" secondItem="vWM-rs-s24" secondAttribute="centerX" id="B99-Se-8pb"/>
+                            <constraint firstItem="ANC-9E-L3h" firstAttribute="trailing" secondItem="ua9-Bm-Dsp" secondAttribute="trailing" constant="10" id="ONT-Hi-TBO"/>
                             <constraint firstItem="gXz-yF-I8f" firstAttribute="centerY" secondItem="vWM-rs-s24" secondAttribute="centerY" id="RJe-Zh-cuo"/>
+                            <constraint firstItem="ua9-Bm-Dsp" firstAttribute="top" secondItem="ANC-9E-L3h" secondAttribute="top" constant="10" id="UI8-8v-adH"/>
                             <constraint firstItem="ubd-2z-TrQ" firstAttribute="centerY" secondItem="TOY-cc-kuy" secondAttribute="centerY" id="USo-c3-2tO"/>
                             <constraint firstItem="gXz-yF-I8f" firstAttribute="top" secondItem="vWM-rs-s24" secondAttribute="top" id="XAn-a4-u4f"/>
                             <constraint firstItem="gXz-yF-I8f" firstAttribute="bottom" secondItem="vWM-rs-s24" secondAttribute="bottom" id="aJX-y0-Jbz"/>
@@ -398,7 +414,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-1364" y="720.44334975369463"/>
+            <point key="canvasLocation" x="-1365.217391304348" y="719.86607142857144"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="W8a-4m-CNP">
@@ -421,9 +437,58 @@
             </objects>
             <point key="canvasLocation" x="-271" y="-86"/>
         </scene>
+        <!--Convert Settings View Controller-->
+        <scene sceneID="hln-bL-IoX">
+            <objects>
+                <viewController id="HSh-3R-F1O" customClass="ConvertSettingsViewController" customModule="Le_Baluchon" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Jly-eP-Dju">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aJW-Rp-6Ah">
+                                <rect key="frame" x="0.0" y="404" width="414" height="404"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5LI-E0-8E3">
+                                        <rect key="frame" x="374" y="10" width="30" height="36"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <state key="normal" title="OK">
+                                            <color key="titleColor" red="0.081825204193592072" green="0.12255995720624924" blue="0.34369492530822754" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <segue destination="ntc-8K-bMt" kind="unwind" unwindAction="unwindToConvertionWithSegue:" id="QFi-QW-SPX"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.72804278140000001" green="0.83969277139999998" blue="0.98433440920000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="tintColor" systemColor="systemYellowColor"/>
+                                <constraints>
+                                    <constraint firstItem="5LI-E0-8E3" firstAttribute="top" secondItem="aJW-Rp-6Ah" secondAttribute="top" constant="10" id="LT2-3u-bXh"/>
+                                    <constraint firstAttribute="trailing" secondItem="5LI-E0-8E3" secondAttribute="trailing" constant="10" id="mgY-Lw-PC1"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="gRT-Gr-A5a"/>
+                        <constraints>
+                            <constraint firstItem="aJW-Rp-6Ah" firstAttribute="leading" secondItem="gRT-Gr-A5a" secondAttribute="leading" id="126-L7-zg1"/>
+                            <constraint firstItem="aJW-Rp-6Ah" firstAttribute="bottom" secondItem="gRT-Gr-A5a" secondAttribute="bottom" id="GDt-G0-rbn"/>
+                            <constraint firstItem="gRT-Gr-A5a" firstAttribute="trailing" secondItem="aJW-Rp-6Ah" secondAttribute="trailing" id="Kbv-Qt-Nwf"/>
+                            <constraint firstItem="aJW-Rp-6Ah" firstAttribute="top" secondItem="gRT-Gr-A5a" secondAttribute="centerY" id="YLN-LW-RlZ"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="hG5-3w-JvZ"/>
+                    <connections>
+                        <outlet property="settingHalfView" destination="aJW-Rp-6Ah" id="e8q-2Z-YfQ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QDE-bF-Tm0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="ntc-8K-bMt" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="-1365" y="1451"/>
+        </scene>
     </scenes>
     <resources>
         <image name="exchange" width="25" height="25"/>
+        <image name="gearshape.fill" catalog="system" width="128" height="121"/>
         <image name="refresh" width="32" height="32"/>
         <image name="translation" width="25" height="25"/>
         <image name="weather" width="25" height="25"/>

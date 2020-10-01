@@ -61,19 +61,19 @@ class WeatherViewController: UIViewController {
     
     private func getWeather(for city: WeatherService, cityName: String, isDestination: Bool) {
         self.toggleActivityIndicator(shown: true)
-        city.getWeather(for: cityName) { (success, weather) in
-            self.toggleActivityIndicator(shown: false)
+        city.getWeather(for: cityName) { [self] (success, weather) in
+            toggleActivityIndicator(shown: false)
             if success, let weather = weather {
                 if isDestination {
-                    self.destinationWeatherDescriptionLabel.text = "WEATHER INFO : \n \(weather.weather[0].weatherDescription)"
-                    self.destinationTemperatureLabel.text = self.getStringFromTemp(temperature: weather.main.temp) + " °C"
+                    destinationWeatherDescriptionLabel.text = "WEATHER INFO : \n \(weather.weather[0].weatherDescription)"
+                    destinationTemperatureLabel.text = getStringFromTemp(temperature: weather.main.temp) + " °C"
                 } else {
-                    self.originCityWeatherDescriptionLabel.text = "WEATHER INFO : \n \(weather.weather[0].weatherDescription)"
-                    self.originCityWeatherLabel.text = self.getStringFromTemp(temperature: weather.main.temp) + " °C"
+                    originCityWeatherDescriptionLabel.text = "WEATHER INFO : \n \(weather.weather[0].weatherDescription)"
+                    originCityWeatherLabel.text = getStringFromTemp(temperature: weather.main.temp) + " °C"
                 }
             } else {
-                self.toggleActivityIndicator(shown: true)
-                self.presentAlert()
+                toggleActivityIndicator(shown: true)
+                presentAlert()
             }
         }
     }

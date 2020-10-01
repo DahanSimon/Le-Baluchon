@@ -13,17 +13,9 @@ struct ConvertionResponse: Codable {
     let success: Bool
     let timestamp: Int
     let base, date: String
-    let rates: Rates
+    let rates: [String: Double]
 }
 
-// MARK: - Rates
-struct Rates: Codable {
-    let usd: Double
-
-    enum CodingKeys: String, CodingKey {
-        case usd = "USD"
-    }
-}
 // MARK: - IncorrectResponse
 struct IncorrectResponse: Codable {
     let success: Bool

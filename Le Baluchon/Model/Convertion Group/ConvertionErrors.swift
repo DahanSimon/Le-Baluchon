@@ -12,3 +12,5 @@ enum ConvertionErrors {
     case responseCodeIsNot200
     case incorrectRequest(errorDescription: String)
 }
+
+

@@ -26,7 +26,8 @@ class ConvertViewController: UIViewController, UITextFieldDelegate {
             toggleActivityIndicator(shown: false)
             
             if success, let exchange = exchange {
-                rateInfoLabel.text = "1 € = \(exchange.rates.usd) $"
+                let rate = exchange.rates["USD"]!
+                rateInfoLabel.text = "1 € = " + String(format: "%.4f $", rate)
             } else {
                 rateInfoLabel.isHidden = true
             }
@@ -53,7 +54,7 @@ class ConvertViewController: UIViewController, UITextFieldDelegate {
             toggleActivityIndicator(shown: false)
             
             if success, let exchange = exchange {
-                let result = self.convert(amount: amountToConvert, rate: exchange.rates)
+                let result = self.convert(amount: amountToConvert, rate: exchange.rates["USD"]!)
                 changedValueLabel.text = String(format: "%.2f $", result)
             } else {
                 presentAlert(vcError: .apiError)
@@ -75,8 +76,8 @@ class ConvertViewController: UIViewController, UITextFieldDelegate {
         activityIndicator.isHidden = !shown
     }
     
-    private func convert(amount: Double, rate: Rates) -> Double {
-        return amount * rate.usd
+    private func convert(amount: Double, rate: Double) -> Double {
+        return amount * rate
     }
     
     private func presentAlert(vcError: VCErrors) {
@@ -85,4 +86,6 @@ class ConvertViewController: UIViewController, UITextFieldDelegate {
         alertVC.addAction(action)
         self.present(alertVC, animated: true, completion: nil)
     }
+    
+    @IBAction func unwindToConvertion(segue:UIStoryboardSegue) { }
 }
