@@ -68,9 +68,8 @@ extension ConvertSettingsViewController: UIPickerViewDataSource, UIPickerViewDel
     }
     
     func checkData() {
-        let currencyData = Currency()
-        for (key, _) in currencyData.data {
-            ratesCityCode[key] = currencyData.data[key]?.name
+        for (key, _) in Currency.share.data {
+            ratesCityCode[key] = Currency.share.data[key]?.name
         }
     }
 }

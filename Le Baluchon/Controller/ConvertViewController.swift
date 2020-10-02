@@ -12,23 +12,6 @@ class ConvertViewController: UIViewController, UITextFieldDelegate, CurrencySele
     func didSelectCurrency(convertTo_CurrencyCode: String, baseCurrencyCode: String) {
         self.selectedConvertTo_CurrencyCode = convertTo_CurrencyCode
         self.selectedBaseCurrencyCode = baseCurrencyCode
-        let convertTo_CurrencyData = Currency()
-        let convertTo_CurrencySymbol = convertTo_CurrencyData.data[convertTo_CurrencyCode]!.symbol
-        let baseCurrencyData = Currency()
-        let baseCurrencySymbol = baseCurrencyData.data[baseCurrencyCode]!.symbol
-        ConvertionService.shared.baseCurrency = baseCurrencyCode
-        ConvertionService.shared.getConvertion { [self] (success, exchange) in
-            toggleActivityIndicator(shown: false)
-            
-            if success, let exchange = exchange {
-                self.baseCurrencySymbol.text = baseCurrencySymbol
-                self.changedValueLabel.text = "0 \(convertTo_CurrencySymbol)"
-                let rate = exchange.rates[selectedConvertTo_CurrencyCode]!
-                rateInfoLabel.text = "1 \(baseCurrencySymbol) = " + String(format: "%.4f \(convertTo_CurrencySymbol)", rate)
-            } else {
-                rateInfoLabel.isHidden = true
-            }
-        }
     }
         
     @IBOutlet weak var baseCurrencySymbol: UILabel!
@@ -75,24 +58,7 @@ class ConvertViewController: UIViewController, UITextFieldDelegate, CurrencySele
             presentAlert(vcError: .invalidTextFieldInput)
             return
         }
-        
-        ConvertionService.shared.getConvertion { [self] (success, exchange) in
-            toggleActivityIndicator(shown: false)
-            
-            if success, let exchange = exchange {
-                
-                let rate = exchange.rates[selectedConvertTo_CurrencyCode]!
-                let result = self.convert(amount: amountToConvert, rate: rate)
-               
-                let currencyData = Currency()
-                let convertTo_CurrencySymbol = currencyData.data[selectedConvertTo_CurrencyCode]!.symbol
-                let baseCurrencySymbol = currencyData.data[selectedBaseCurrencyCode]!.symbol
-                changedValueLabel.text = String(format: "%.2f \(convertTo_CurrencySymbol)", result)
-                rateInfoLabel.text = "1 \(baseCurrencySymbol) = " + String(format: "%.4f \(convertTo_CurrencySymbol)", exchange.rates[selectedConvertTo_CurrencyCode]!)
-            } else {
-                presentAlert(vcError: .apiError)
-            }
-        }
+        callApi(amountToConvert: amountToConvert)
     }
     
     @IBAction func dismissKeyboard(_ sender: UITapGestureRecognizer) {
@@ -127,4 +93,23 @@ class ConvertViewController: UIViewController, UITextFieldDelegate, CurrencySele
         present(selectionVC, animated: true, completion: nil)
     }
     
+    func callApi(amountToConvert: Double) {
+        ConvertionService.shared.getConvertion { [self] (success, exchange) in
+            toggleActivityIndicator(shown: false)
+            
+            if success, let exchange = exchange {
+                
+                let rate = exchange.rates[selectedConvertTo_CurrencyCode]!
+                let result = self.convert(amount: amountToConvert, rate: rate)
+
+                let convertTo_CurrencySymbol = Currency.share.data[selectedConvertTo_CurrencyCode]!.symbol
+                let baseCurrencySymbol = Currency.share.data[selectedBaseCurrencyCode]!.symbol
+                self.baseCurrencySymbol.text = baseCurrencySymbol
+                changedValueLabel.text = String(format: "%.2f \(convertTo_CurrencySymbol)", result)
+                rateInfoLabel.text = "1 \(baseCurrencySymbol) = " + String(format: "%.4f \(convertTo_CurrencySymbol)", exchange.rates[selectedConvertTo_CurrencyCode]!)
+            } else {
+                presentAlert(vcError: .apiError)
+            }
+        }
+    }
 }

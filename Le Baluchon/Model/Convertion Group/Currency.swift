@@ -9,6 +9,9 @@ import Foundation
 
 struct Currency {
     
+    static let share = Currency()
+    
+    private init() {} 
     static var currenciesData: Data? {
         let bundle = Bundle(for: ConvertionService.self)
         let url = bundle.url(forResource: "CurrenciesData", withExtension: "json")!
