@@ -13,16 +13,17 @@ class ConvertionService {
     private init() {}
     
     var convertionResponse: ConvertionResponse?
-    
+    var baseCurrency = "EUR"
     private var convertionSession = URLSession(configuration: .default)
     
     var lastUpdatedRateDate: Int?
+    var lastBaseRequested: String?
     var currentTimestamp: Int {
         return getcurrentTimestamp()
     }
     
     private var convertionUrl: URL {
-        let url = URL(string: "https://data.fixer.io/api/latest" + "?access_key=07bb16458b377a95361d648e74daed7f&base=EUR")!
+        let url = URL(string: "https://data.fixer.io/api/latest" + "?access_key=07bb16458b377a95361d648e74daed7f&base=" + baseCurrency)!
         return url
     }
     
@@ -30,7 +31,7 @@ class ConvertionService {
     
     var convertionError: ConvertionErrors? = nil
     
-    init (exchangeSession: URLSession) {
+    init (exchangeSession: URLSession, baseCurrency: String) {
         self.convertionSession = exchangeSession
     }
     
@@ -39,7 +40,7 @@ class ConvertionService {
         task?.cancel()
         
         // Checks if we need to call the API
-        if lastUpdatedRateDate ?? 0 <= currentTimestamp - 3600 {
+        if lastUpdatedRateDate ?? 0 <= currentTimestamp - 3600 || lastBaseRequested != baseCurrency {
             task = convertionSession.dataTask(with: request) { (data, response, error) in
                 DispatchQueue.main.async { [self] in
                     guard let data = data, error == nil else {
@@ -57,6 +58,7 @@ class ConvertionService {
                     if let responseJSON = try? JSONDecoder().decode(ConvertionResponse.self, from: data) {
                         self.convertionResponse = responseJSON
                         self.lastUpdatedRateDate = self.convertionResponse!.timestamp
+                        self.lastBaseRequested = baseCurrency
                         callback(true, convertionResponse)
                     } else {
                         if let incorrectResponseJSON = try? JSONDecoder().decode(IncorrectResponse.self, from: data) {

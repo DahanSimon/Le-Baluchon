@@ -7,14 +7,40 @@
 
 import UIKit
 
-class ConvertViewController: UIViewController, UITextFieldDelegate {
-    
+@available(iOS 13.0, *)
+class ConvertViewController: UIViewController, UITextFieldDelegate, CurrencySelectionDelegate {
+    func didSelectCurrency(convertTo_CurrencyCode: String, baseCurrencyCode: String) {
+        self.selectedConvertTo_CurrencyCode = convertTo_CurrencyCode
+        self.selectedBaseCurrencyCode = baseCurrencyCode
+        let convertTo_CurrencyData = Currency()
+        let convertTo_CurrencySymbol = convertTo_CurrencyData.data[convertTo_CurrencyCode]!.symbol
+        let baseCurrencyData = Currency()
+        let baseCurrencySymbol = baseCurrencyData.data[baseCurrencyCode]!.symbol
+        ConvertionService.shared.baseCurrency = baseCurrencyCode
+        ConvertionService.shared.getConvertion { [self] (success, exchange) in
+            toggleActivityIndicator(shown: false)
+            
+            if success, let exchange = exchange {
+                self.baseCurrencySymbol.text = baseCurrencySymbol
+                self.changedValueLabel.text = "0 \(convertTo_CurrencySymbol)"
+                let rate = exchange.rates[selectedConvertTo_CurrencyCode]!
+                rateInfoLabel.text = "1 \(baseCurrencySymbol) = " + String(format: "%.4f \(convertTo_CurrencySymbol)", rate)
+            } else {
+                rateInfoLabel.isHidden = true
+            }
+        }
+    }
+        
+    @IBOutlet weak var baseCurrencySymbol: UILabel!
     @IBOutlet weak var amountToChangeTextField: UITextField!
     @IBOutlet weak var changedValueLabel: UILabel!
     @IBOutlet weak var calculateButton: UIButton!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet var tapGestureRecognizer: UITapGestureRecognizer!
     @IBOutlet weak var rateInfoLabel: UILabel!
+    
+    var selectedConvertTo_CurrencyCode = "USD"
+    var selectedBaseCurrencyCode = "EUR"
     
     enum VCErrors: String {
         case invalidTextFieldInput = "Merci d'entrer une valeur correct."
@@ -54,8 +80,15 @@ class ConvertViewController: UIViewController, UITextFieldDelegate {
             toggleActivityIndicator(shown: false)
             
             if success, let exchange = exchange {
-                let result = self.convert(amount: amountToConvert, rate: exchange.rates["USD"]!)
-                changedValueLabel.text = String(format: "%.2f $", result)
+                
+                let rate = exchange.rates[selectedConvertTo_CurrencyCode]!
+                let result = self.convert(amount: amountToConvert, rate: rate)
+               
+                let currencyData = Currency()
+                let convertTo_CurrencySymbol = currencyData.data[selectedConvertTo_CurrencyCode]!.symbol
+                let baseCurrencySymbol = currencyData.data[selectedBaseCurrencyCode]!.symbol
+                changedValueLabel.text = String(format: "%.2f \(convertTo_CurrencySymbol)", result)
+                rateInfoLabel.text = "1 \(baseCurrencySymbol) = " + String(format: "%.4f \(convertTo_CurrencySymbol)", exchange.rates[selectedConvertTo_CurrencyCode]!)
             } else {
                 presentAlert(vcError: .apiError)
             }
@@ -88,4 +121,10 @@ class ConvertViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func unwindToConvertion(segue:UIStoryboardSegue) { }
+    @IBAction func settingsButtonTapped(_ sender: Any) {
+        let selectionVC = storyboard?.instantiateViewController(identifier: "settingsViewController") as! ConvertSettingsViewController
+        selectionVC.selectionDelegate = self
+        present(selectionVC, animated: true, completion: nil)
+    }
+    
 }
