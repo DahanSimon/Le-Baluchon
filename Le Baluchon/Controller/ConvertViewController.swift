@@ -12,6 +12,8 @@ class ConvertViewController: UIViewController, UITextFieldDelegate, CurrencySele
     func didSelectCurrency(convertTo_CurrencyCode: String, baseCurrencyCode: String) {
         self.selectedConvertTo_CurrencyCode = convertTo_CurrencyCode
         self.selectedBaseCurrencyCode = baseCurrencyCode
+        callApi(amountToConvert: 0.0)
+
     }
         
     @IBOutlet weak var baseCurrencySymbol: UILabel!

@@ -24,7 +24,7 @@ class WeatherService {
     }
     
     func getWeather(for city: String, callback: @escaping (Bool, CityWeatherResponse?) -> Void) {
-        let weatherUrl = URL(string: "https://api.openweathermap.org/data/2.5/weather?q=\(city)&appid=be119e6e4c0a0f05303ec9a30132499e&units=metric")!
+        let weatherUrl = URL(string: "https://api.openweathermap.org/data/2.5/weather?q=\(city)&appid=be119e6e4c0a0f05303ec9a30132499e&units=metric&lang=fr")!
         let request = createConvertionRequest(url: weatherUrl)
         task?.cancel()
         

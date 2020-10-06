@@ -7,28 +7,64 @@
 
 import UIKit
 
-class WeatherViewController: UIViewController {
+@available(iOS 13.0, *)
+class WeatherViewController: UIViewController, WeatherSelectionDelegate {
+    
+    func didEnteredCitiesNames(destinationCityName: String, originCityName: String) {
+        self.destinationCityName = destinationCityName
+        self.originCityName = originCityName
+        compareWeather(between: self.originCityNameUrlFriendly!, and: self.destinationCityNameUrlFriendly!)
+    }
+    
     
     @IBOutlet weak var originWeatherStackView: UIStackView!
     @IBOutlet weak var originCityWeatherLabel: UILabel!
     @IBOutlet weak var originCityWeatherDescriptionLabel: UILabel!
     @IBOutlet weak var originActivityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var originCityNameLabel: UILabel!
     
     @IBOutlet weak var destinationStackView: UIStackView!
     @IBOutlet weak var destinationTemperatureLabel: UILabel!
     @IBOutlet weak var destinationWeatherDescriptionLabel: UILabel!
     @IBOutlet weak var destinationActivityINdicator: UIActivityIndicatorView!
+    @IBOutlet weak var destinationCityNameLabel: UILabel!
     
+    var originCityName: String? = "Paris"
+    var destinationCityName: String? = "New York"
     
+    var originCityNameUrlFriendly: String? {
+        if let originCityName = originCityName{
+            return originCityName.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
+        } else {
+            return nil
+        }
+    }
+    
+    var destinationCityNameUrlFriendly: String? {
+        if let destinationCityName = destinationCityName{
+            return destinationCityName.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
+        } else {
+            return nil
+        }
+    }
     override func viewDidLoad() {
         setShadow(to: originWeatherStackView)
         setShadow(to: destinationStackView)
         
-        compareWeather(between: "Paris", and: "New%20York")
+        compareWeather(between: originCityNameUrlFriendly!, and: destinationCityNameUrlFriendly!)
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        print("äppear")
+    }
+    
+    @IBAction func unwindToWeather(segue:UIStoryboardSegue) {}
+    
     @IBAction func refreshButtonTapped(_ sender: Any) {
-        compareWeather(between: "Paris", and: "New%20York")
+        guard let destinationCityNameUrlFriendly = destinationCityNameUrlFriendly, let originCityNameUrlFriendly = originCityNameUrlFriendly  else {
+            return
+        }
+        compareWeather(between: originCityNameUrlFriendly, and: destinationCityNameUrlFriendly)
     }
     
     private func setShadow(to view: UIView) {
@@ -66,9 +102,11 @@ class WeatherViewController: UIViewController {
             toggleActivityIndicator(shown: false)
             if success, let weather = weather {
                 if isDestination {
+                    destinationCityNameLabel.text = destinationCityName
                     destinationWeatherDescriptionLabel.text = "WEATHER INFO : \n \(weather.weather[0].weatherDescription)"
                     destinationTemperatureLabel.text = getStringFromTemp(temperature: weather.main.temp) + " °C"
                 } else {
+                    originCityNameLabel.text = originCityName
                     originCityWeatherDescriptionLabel.text = "WEATHER INFO : \n \(weather.weather[0].weatherDescription)"
                     originCityWeatherLabel.text = getStringFromTemp(temperature: weather.main.temp) + " °C"
                 }
@@ -77,6 +115,14 @@ class WeatherViewController: UIViewController {
                 presentAlert()
             }
         }
+    }
+    
+
+    
+    @IBAction func settingsButtonTapped(_ sender: Any) {
+        let weatherSelectionVC = storyboard?.instantiateViewController(identifier: "weatherSettingsVC") as! WeatherSettingsViewController
+        weatherSelectionVC.weatherSelectionDelegate = self
+        present(weatherSelectionVC, animated: true, completion: nil)
     }
     
     private func presentAlert() {
