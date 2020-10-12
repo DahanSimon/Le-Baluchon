@@ -13,6 +13,7 @@ class WeatherService {
     //private init() {}
     
     var weatherResponse: CityWeatherResponse?
+    var weatherResponseError: WeatherResponseError?
     
     private var weatherSession = URLSession(configuration: .default)
         
@@ -37,15 +38,22 @@ class WeatherService {
                     callback(false, nil)
                     return
                 }
-                
-                guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+    
+                guard let response = response as? HTTPURLResponse, response.statusCode == 200 || response.statusCode == 404 else {
                     callback(false, nil)
                     return
                 }
                 
-                if let responseJSON = try? JSONDecoder().decode(CityWeatherResponse.self, from: data) {
-                    self.weatherResponse = responseJSON
-                    callback(true, self.weatherResponse)
+                if response.statusCode == 200 {
+                    if let responseJSON = try? JSONDecoder().decode(CityWeatherResponse.self, from: data) {
+                        self.weatherResponse = responseJSON
+                        callback(true, self.weatherResponse)
+                    }
+                } else {
+                    if let responseJSON = try? JSONDecoder().decode(WeatherResponseError.self, from: data) {
+                        self.weatherResponseError = responseJSON
+                        callback(false, nil)
+                    }
                 }
             }
         }

@@ -71,3 +71,8 @@ struct Wind: Codable {
     let speed: Double
     let deg: Int
 }
+
+// MARK: - WeatherResponseError
+struct WeatherResponseError: Codable {
+    let cod, message: String
+}

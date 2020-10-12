@@ -596,7 +596,6 @@
                                         </state>
                                         <connections>
                                             <action selector="okButtonTapped:" destination="FKJ-bZ-wpZ" eventType="touchUpInside" id="qf2-J8-ECw"/>
-                                            <segue destination="Bj7-jN-chx" kind="unwind" unwindAction="unwindToWeatherWithSegue:" id="NR1-MQ-ZHM"/>
                                         </connections>
                                     </button>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalCentering" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="fBL-2K-xJo">
@@ -709,6 +708,7 @@
                         <outlet property="destinationCityTextField" destination="sRy-aI-q1p" id="9gz-2d-FgU"/>
                         <outlet property="originCityTextField" destination="3JX-8b-T3P" id="xH7-OO-kKt"/>
                         <outlet property="weatherSettingsHalfView" destination="k3h-HG-Q6S" id="2o3-OB-hTK"/>
+                        <segue destination="Bj7-jN-chx" kind="unwind" identifier="unwindToWeather" unwindAction="unwindToWeatherWithSegue:" id="tla-Jx-vEt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vp1-ZE-Qf8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
