@@ -7,7 +7,6 @@
 
 import UIKit
 
-@available(iOS 13.0, *)
 class ConvertViewController: UIViewController, UITextFieldDelegate, CurrencySelectionDelegate {
     func didSelectCurrency(convertTo_CurrencyCode: String, baseCurrencyCode: String) {
         self.selectedConvertTo_CurrencyCode = convertTo_CurrencyCode
@@ -90,27 +89,30 @@ class ConvertViewController: UIViewController, UITextFieldDelegate, CurrencySele
     
     @IBAction func unwindToConvertion(segue:UIStoryboardSegue) { }
     @IBAction func settingsButtonTapped(_ sender: Any) {
-        let selectionVC = storyboard?.instantiateViewController(identifier: "settingsViewController") as! ConvertSettingsViewController
+        let selectionVC = storyboard?.instantiateViewController(withIdentifier: "settingsViewController") as! ConvertSettingsViewController
         selectionVC.selectionDelegate = self
         present(selectionVC, animated: true, completion: nil)
     }
     
     func callApi(amountToConvert: Double) {
-        ConvertionService.shared.getConvertion { [self] (success, exchange) in
-            toggleActivityIndicator(shown: false)
+        ConvertionService.shared.getConvertion { [weak self] (success, exchange) in
+            
+            guard let self = self else { return }
+            
+            self.toggleActivityIndicator(shown: false)
             
             if success, let exchange = exchange {
                 
-                let rate = exchange.rates[selectedConvertTo_CurrencyCode]!
+                let rate = exchange.rates[self.selectedConvertTo_CurrencyCode]!
                 let result = self.convert(amount: amountToConvert, rate: rate)
 
-                let convertTo_CurrencySymbol = Currency.share.data[selectedConvertTo_CurrencyCode]!.symbol
-                let baseCurrencySymbol = Currency.share.data[selectedBaseCurrencyCode]!.symbol
+                let convertTo_CurrencySymbol = Currency.share.data[self.selectedConvertTo_CurrencyCode]!.symbol
+                let baseCurrencySymbol = Currency.share.data[self.selectedBaseCurrencyCode]!.symbol
                 self.baseCurrencySymbol.text = baseCurrencySymbol
-                changedValueLabel.text = String(format: "%.2f \(convertTo_CurrencySymbol)", result)
-                rateInfoLabel.text = "1 \(baseCurrencySymbol) = " + String(format: "%.4f \(convertTo_CurrencySymbol)", exchange.rates[selectedConvertTo_CurrencyCode]!)
+                self.changedValueLabel.text = String(format: "%.2f \(convertTo_CurrencySymbol)", result)
+                self.rateInfoLabel.text = "1 \(baseCurrencySymbol) = " + String(format: "%.4f \(convertTo_CurrencySymbol)", exchange.rates[self.selectedConvertTo_CurrencyCode]!)
             } else {
-                presentAlert(vcError: .apiError)
+                self.presentAlert(vcError: .apiError)
             }
         }
     }

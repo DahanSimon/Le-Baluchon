@@ -28,8 +28,11 @@ class WeatherService {
         let request = createConvertionRequest(url: weatherUrl)
         task?.cancel()
         
-        task = weatherSession.dataTask(with: request) { (data, response, error) in
+        task = weatherSession.dataTask(with: request) { /*[weak self]*/ (data, response, error) in
             DispatchQueue.main.async {
+                
+//                guard let self = self else { return }
+                
                 guard let data = data, error == nil else {
                     callback(false, nil)
                     return

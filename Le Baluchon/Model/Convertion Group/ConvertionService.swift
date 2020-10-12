@@ -42,24 +42,27 @@ class ConvertionService {
         // Checks if we need to call the API
         if lastUpdatedRateDate ?? 0 <= currentTimestamp - 3600 || lastBaseRequested != baseCurrency {
             task = convertionSession.dataTask(with: request) { (data, response, error) in
-                DispatchQueue.main.async { [self] in
+                DispatchQueue.main.async { [weak self] in
+                    
+                    guard let self = self else { return }
+
                     guard let data = data, error == nil else {
                         callback(false, nil)
-                        convertionError = .noDataReceived
+                        self.convertionError = .noDataReceived
                         return
                     }
                     
                     guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
                         callback(false, nil)
-                        convertionError = .responseCodeIsNot200
+                        self.convertionError = .responseCodeIsNot200
                         return
                     }
                     
                     if let responseJSON = try? JSONDecoder().decode(ConvertionResponse.self, from: data) {
                         self.convertionResponse = responseJSON
                         self.lastUpdatedRateDate = self.convertionResponse!.timestamp
-                        self.lastBaseRequested = baseCurrency
-                        callback(true, convertionResponse)
+                        self.lastBaseRequested = self.baseCurrency
+                        callback(true, self.convertionResponse)
                     } else {
                         if let incorrectResponseJSON = try? JSONDecoder().decode(IncorrectResponse.self, from: data) {
                             let incorrectResponse = incorrectResponseJSON
