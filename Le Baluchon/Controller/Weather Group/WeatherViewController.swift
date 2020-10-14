@@ -27,6 +27,7 @@ class WeatherViewController: UIViewController, WeatherSelectionDelegate {
     @IBOutlet weak var destinationActivityINdicator: UIActivityIndicatorView!
     @IBOutlet weak var destinationCityNameLabel: UILabel!
     
+        
     var originCityName: String? = "Paris"
     var destinationCityName: String? = "New York"
     
@@ -48,14 +49,8 @@ class WeatherViewController: UIViewController, WeatherSelectionDelegate {
     override func viewDidLoad() {
         setShadow(to: originWeatherStackView)
         setShadow(to: destinationStackView)
-        
         compareWeather(between: originCityNameUrlFriendly!, and: destinationCityNameUrlFriendly!)
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        print("äppear")
-    }
-    
     @IBAction func unwindToWeather(segue:UIStoryboardSegue) {}
     
     @IBAction func refreshButtonTapped(_ sender: Any) {
@@ -104,12 +99,12 @@ class WeatherViewController: UIViewController, WeatherSelectionDelegate {
             self.toggleActivityIndicator(shown: false)
             if success, let weather = weather {
                 if isDestination {
-                    self.destinationCityNameLabel.text = self.destinationCityName
-                    self.destinationWeatherDescriptionLabel.text = "WEATHER INFO : \n \(weather.weather[0].weatherDescription)"
+                    self.destinationCityNameLabel.text = weather.name
+                    self.destinationWeatherDescriptionLabel.text = "Description: \n \(weather.weather[0].weatherDescription)"
                     self.destinationTemperatureLabel.text = self.getStringFromTemp(temperature: weather.main.temp) + " °C"
                 } else {
-                    self.originCityNameLabel.text = self.originCityName
-                    self.originCityWeatherDescriptionLabel.text = "WEATHER INFO : \n \(weather.weather[0].weatherDescription)"
+                    self.originCityNameLabel.text = weather.name
+                    self.originCityWeatherDescriptionLabel.text = "Description: \n \(weather.weather[0].weatherDescription)"
                     self.originCityWeatherLabel.text = self.getStringFromTemp(temperature: weather.main.temp) + " °C"
                 }
             } else {
@@ -136,3 +131,4 @@ class WeatherViewController: UIViewController, WeatherSelectionDelegate {
         self.present(alertVC, animated: true, completion: nil)
     }
 }
+

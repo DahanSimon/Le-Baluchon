@@ -96,6 +96,32 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6B000FDF2537539F00653275 /* Convertion Group */ = {
+			isa = PBXGroup;
+			children = (
+				6BC87927251BB68400113732 /* ConvertViewController.swift */,
+				6BBF2A3B252640000098D104 /* ConvertSettingsViewController.swift */,
+			);
+			path = "Convertion Group";
+			sourceTree = "<group>";
+		};
+		6B000FE0253753B300653275 /* Weather Group */ = {
+			isa = PBXGroup;
+			children = (
+				6BC87934251BE4DE00113732 /* WeatherViewController.swift */,
+				6BAEBAE22535F0950027B6AF /* WeatherSettingsTableViewController.swift */,
+			);
+			path = "Weather Group";
+			sourceTree = "<group>";
+		};
+		6B000FE1253753DA00653275 /* Translation Group */ = {
+			isa = PBXGroup;
+			children = (
+				6BC8792F251BDAFA00113732 /* TranslateViewController.swift */,
+			);
+			path = "Translation Group";
+			sourceTree = "<group>";
+		};
 		6B59B8FA2524EF3D00901DEF /* Weather Group */ = {
 			isa = PBXGroup;
 			children = (
@@ -179,11 +205,9 @@
 		6BC87921251BA19000113732 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				6BC87927251BB68400113732 /* ConvertViewController.swift */,
-				6BBF2A3B252640000098D104 /* ConvertSettingsViewController.swift */,
-				6BC8792F251BDAFA00113732 /* TranslateViewController.swift */,
-				6BC87934251BE4DE00113732 /* WeatherViewController.swift */,
-				6BAEBAE22535F0950027B6AF /* WeatherSettingsTableViewController.swift */,
+				6B000FE0253753B300653275 /* Weather Group */,
+				6B000FDF2537539F00653275 /* Convertion Group */,
+				6B000FE1253753DA00653275 /* Translation Group */,
 			);
 			path = Controller;
 			sourceTree = "<group>";

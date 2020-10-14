@@ -237,21 +237,27 @@
                                 </constraints>
                             </activityIndicatorView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jqA-Jv-lZu" userLabel="Refresh">
-                                <rect key="frame" x="332" y="412.5" width="32" height="32"/>
-                                <state key="normal" image="refresh"/>
+                                <rect key="frame" x="314" y="403.5" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="Pts-C2-oz3"/>
+                                    <constraint firstAttribute="width" constant="50" id="yxD-LP-upl"/>
+                                </constraints>
+                                <state key="normal" image="refresh">
+                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="default"/>
+                                </state>
                                 <connections>
                                     <action selector="refreshButtonTapped:" destination="bGy-iD-b0S" eventType="touchUpInside" id="4hJ-Vc-2w0"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uur-fd-GLX" userLabel="Weather Settings">
-                                <rect key="frame" x="50" y="403.5" width="50" height="50"/>
+                                <rect key="frame" x="50" y="416" width="50" height="25"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="7Qz-TR-YI3"/>
+                                    <constraint firstAttribute="width" constant="50" id="cf9-gK-ViY"/>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="hNg-3D-rhX"/>
                                 </constraints>
                                 <color key="tintColor" red="0.08182520419" green="0.1225599572" blue="0.34369492530000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal">
-                                    <imageReference key="image" image="gearshape.fill" catalog="system" symbolScale="large"/>
+                                    <imageReference key="image" image="settings" symbolScale="large"/>
                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
                                 </state>
                                 <connections>
@@ -292,7 +298,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="f5P-0C-l0j" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="675" y="721"/>
+            <point key="canvasLocation" x="673.91304347826087" y="720.53571428571422"/>
         </scene>
         <!--Convert Currencies-->
         <scene sceneID="icH-6K-4bM">
@@ -310,7 +316,7 @@
                                 </constraints>
                                 <color key="tintColor" red="0.081825204193592072" green="0.12255995720624924" blue="0.34369492530822754" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal">
-                                    <imageReference key="image" image="gearshape.fill" catalog="system" symbolScale="large"/>
+                                    <imageReference key="image" image="settings" symbolScale="large"/>
                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
                                 </state>
                                 <connections>
@@ -577,7 +583,7 @@
         <scene sceneID="kPu-26-0vT">
             <objects>
                 <tableViewController storyboardIdentifier="tableViewVC" id="ftS-Nr-MCo" customClass="WeatherSettingsTableViewController" customModule="Le_Baluchon" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="bottom" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="THz-E8-6cb">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleAspectFit" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="THz-E8-6cb">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.72804278140000001" green="0.83969277139999998" blue="0.98433440920000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -588,15 +594,15 @@
                         <sections>
                             <tableViewSection id="4Ty-LP-DBx">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="default" indentationWidth="0.0" id="GOS-64-N0c">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleAspectFit" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="default" indentationWidth="0.0" rowHeight="460" id="GOS-64-N0c">
                                         <rect key="frame" x="0.0" y="18" width="414" height="460"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="GOS-64-N0c" id="UvR-ua-ASg">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="GOS-64-N0c" id="UvR-ua-ASg">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="460"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rhH-AF-Zc5" userLabel="Weather Settings Half View">
-                                                    <rect key="frame" x="0.0" y="-105" width="414" height="355"/>
+                                                <view contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="rhH-AF-Zc5" userLabel="Weather Settings Half View">
+                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="460"/>
                                                     <subviews>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IWO-Nz-55B">
                                                             <rect key="frame" x="374" y="10" width="30" height="30"/>
@@ -610,11 +616,10 @@
                                                             </state>
                                                             <connections>
                                                                 <action selector="okButtonTapped:" destination="ftS-Nr-MCo" eventType="touchUpInside" id="uEA-4I-6sF"/>
-                                                                <segue destination="5gS-yQ-T8J" kind="unwind" identifier="unwindToWeather2" unwindAction="unwindToWeatherWithSegue:" id="Zfa-8x-hhe"/>
                                                             </connections>
                                                         </button>
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalCentering" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="m44-kX-Ncn">
-                                                            <rect key="frame" x="10" y="40" width="394" height="305"/>
+                                                            <rect key="frame" x="10" y="40" width="394" height="410"/>
                                                             <subviews>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="r3t-5o-4QV" userLabel="origin_city">
                                                                     <rect key="frame" x="0.0" y="0.0" width="394" height="100"/>
@@ -641,7 +646,7 @@
                                                                     </constraints>
                                                                 </stackView>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="VS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NZP-3a-g5q">
-                                                                    <rect key="frame" x="0.0" y="120" width="394" height="65"/>
+                                                                    <rect key="frame" x="0.0" y="172.5" width="394" height="65"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="65" id="Zub-1C-cbd"/>
                                                                         <constraint firstAttribute="height" constant="65" id="x0c-Jx-ySs"/>
@@ -653,7 +658,7 @@
                                                                     <size key="shadowOffset" width="1" height="1"/>
                                                                 </label>
                                                                 <stackView opaque="NO" contentMode="scaleAspectFill" axis="vertical" distribution="equalCentering" translatesAutoresizingMaskIntoConstraints="NO" id="CCH-pF-SoQ" userLabel="destination_city">
-                                                                    <rect key="frame" x="0.0" y="205" width="394" height="100"/>
+                                                                    <rect key="frame" x="0.0" y="310" width="394" height="100"/>
                                                                     <subviews>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ville de destionation :" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bjI-v0-84y">
                                                                             <rect key="frame" x="0.0" y="0.0" width="394" height="50"/>
@@ -727,6 +732,7 @@
                         <outlet property="originCityTextField" destination="CtM-cp-XAc" id="yhT-KO-ZpB"/>
                         <outlet property="settingsTableView" destination="THz-E8-6cb" id="SKK-er-uqO"/>
                         <outlet property="tableView" destination="THz-E8-6cb" id="e5h-14-bUz"/>
+                        <segue destination="5gS-yQ-T8J" kind="unwind" identifier="unwindToWeather" unwindAction="unwindToWeatherWithSegue:" id="Xgq-pG-dGd"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Ft-oy-Z2U" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -738,13 +744,13 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="672.46376811594212" y="2260.7142857142858"/>
+            <point key="canvasLocation" x="674" y="1387"/>
         </scene>
     </scenes>
     <resources>
         <image name="exchange" width="25" height="25"/>
-        <image name="gearshape.fill" catalog="system" width="128" height="121"/>
-        <image name="refresh" width="32" height="32"/>
+        <image name="refresh" width="25" height="25"/>
+        <image name="settings" width="25" height="25"/>
         <image name="translation" width="25" height="25"/>
         <image name="weather" width="25" height="25"/>
         <systemColor name="systemYellowColor">

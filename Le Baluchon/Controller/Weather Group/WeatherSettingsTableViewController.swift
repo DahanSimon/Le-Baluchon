@@ -20,7 +20,7 @@ class WeatherSettingsTableViewController: UITableViewController {
     override func viewDidAppear(_ animated: Bool) {
         let guide = view.safeAreaLayoutGuide
         let height = guide.layoutFrame.size.height
-        tableView.frame = CGRect(x: 0, y: height/3, width: tableView.frame.size.width, height: tableView.contentSize.height)
+        tableView.frame = CGRect(x: 0, y: height-tableView.contentSize.height, width: tableView.frame.size.width, height: tableView.contentSize.height)
         tableView.isHidden = false
         super.viewDidAppear(true)
     }
@@ -29,27 +29,18 @@ class WeatherSettingsTableViewController: UITableViewController {
         self.settingsTableView.layer.cornerRadius = 15
         self.originCityTextField.backgroundColor = UIColor.white
         self.destinationCityTextField.backgroundColor = UIColor.white
+//        DispatchQueue.main.async  {
+//            let guide = self.view.safeAreaLayoutGuide
+//            let height = guide.layoutFrame.size.height
+//            self.tableView.frame = CGRect(x: 0, y: height-self.tableView.contentSize.height, width: self.tableView.frame.size.width, height: self.tableView.contentSize.height)
+//        }
         super.viewDidLoad()
     }
     
-    
-    
     var weatherSelectionDelegate: WeatherSelectionDelegate!
 
-    @IBAction func showtableViewButtonTapped(_ sender: Any) {
-        let tableViewVC = storyboard?.instantiateViewController(withIdentifier: "tableViewVC") as! WeatherSettingsTableViewController
-        let guide = view.safeAreaLayoutGuide
-        let height = guide.layoutFrame.size.height
-        tableViewVC.tableView.frame = CGRect(x: 0, y: height/3, width: tableViewVC.tableView.frame.size.width, height: tableViewVC.tableView.contentSize.height)
-        present(tableViewVC, animated: true) {
-            let guide = self.view.safeAreaLayoutGuide
-            let height = guide.layoutFrame.size.height
-            tableViewVC.tableView.frame = CGRect(x: 0, y: height/3, width: tableViewVC.tableView.frame.size.width, height: tableViewVC.tableView.contentSize.height)
-        }
-    }
     
     @IBAction func okButtonTapped(_ sender: Any) {
-        
         let formError: WeatherSettingsFormErrors?
         
         guard let originCityName = originCityTextField.text, let destinationCityName = destinationCityTextField.text else {
@@ -75,7 +66,7 @@ class WeatherSettingsTableViewController: UITableViewController {
             self.originCityTextField.backgroundColor = UIColor.white
             self.destinationCityTextField.backgroundColor = UIColor.white
             weatherSelectionDelegate.didEnteredCitiesNames(destinationCityName: destinationCityName, originCityName: originCityName)
-            self.performSegue(withIdentifier: "unwindToWeather2", sender: self)
+            self.performSegue(withIdentifier: "unwindToWeather", sender: self)
         }
     }
     
