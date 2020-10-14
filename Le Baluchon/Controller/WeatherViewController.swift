@@ -124,9 +124,9 @@ class WeatherViewController: UIViewController, WeatherSelectionDelegate {
 
     
     @IBAction func settingsButtonTapped(_ sender: Any) {
-        let weatherSelectionVC = storyboard?.instantiateViewController(withIdentifier: "weatherSettingsVC") as! WeatherSettingsViewController
-        weatherSelectionVC.weatherSelectionDelegate = self
-        present(weatherSelectionVC, animated: true, completion: nil)
+        let tableViewVC = storyboard?.instantiateViewController(withIdentifier: "tableViewVC") as! WeatherSettingsTableViewController
+        tableViewVC.weatherSelectionDelegate = self
+        present(tableViewVC, animated: true, completion: nil)
     }
     
     private func presentAlert(message: String, handler: ((UIAlertAction) -> Void)?) {
