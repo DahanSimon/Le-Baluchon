@@ -66,6 +66,7 @@ class WeatherViewController: UIViewController, WeatherSelectionDelegate {
         view.layer.shadowOpacity = 1
         view.layer.shadowOffset = CGSize(width: 5, height: 5)
         view.layer.shadowRadius = 15
+        view.backgroundColor = #colorLiteral(red: 0.08182520419, green: 0.1225599572, blue: 0.3436949253, alpha: 1)
     }
     
     private func toggleActivityIndicator(shown: Bool) {
@@ -119,9 +120,9 @@ class WeatherViewController: UIViewController, WeatherSelectionDelegate {
 
     
     @IBAction func settingsButtonTapped(_ sender: Any) {
-        let tableViewVC = storyboard?.instantiateViewController(withIdentifier: "tableViewVC") as! WeatherSettingsTableViewController
-        tableViewVC.weatherSelectionDelegate = self
-        present(tableViewVC, animated: true, completion: nil)
+        let settingsVC2 = storyboard?.instantiateViewController(withIdentifier: "SettingsVC2") as? SettingsContainerVC
+        settingsVC2?.delegate = self
+        present(settingsVC2!, animated: true, completion: nil)
     }
     
     private func presentAlert(message: String, handler: ((UIAlertAction) -> Void)?) {

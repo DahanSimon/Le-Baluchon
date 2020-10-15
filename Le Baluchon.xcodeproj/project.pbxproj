@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6B5833702538B12C00B10E9D /* SettingsContainerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B58336F2538B12C00B10E9D /* SettingsContainerVC.swift */; };
 		6B59B8F62524E38B00901DEF /* ConvertionErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B59B8F52524E38B00901DEF /* ConvertionErrors.swift */; };
 		6B59B8FC2524EF7200901DEF /* CityWeatherResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B59B8FB2524EF7200901DEF /* CityWeatherResponse.swift */; };
 		6B59B9042524EF9400901DEF /* WeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B59B9032524EF9400901DEF /* WeatherService.swift */; };
@@ -45,6 +46,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6B58336F2538B12C00B10E9D /* SettingsContainerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsContainerVC.swift; sourceTree = "<group>"; };
 		6B59B8F52524E38B00901DEF /* ConvertionErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConvertionErrors.swift; sourceTree = "<group>"; };
 		6B59B8FB2524EF7200901DEF /* CityWeatherResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityWeatherResponse.swift; sourceTree = "<group>"; };
 		6B59B9032524EF9400901DEF /* WeatherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherService.swift; sourceTree = "<group>"; };
@@ -110,6 +112,7 @@
 			children = (
 				6BC87934251BE4DE00113732 /* WeatherViewController.swift */,
 				6BAEBAE22535F0950027B6AF /* WeatherSettingsTableViewController.swift */,
+				6B58336F2538B12C00B10E9D /* SettingsContainerVC.swift */,
 			);
 			path = "Weather Group";
 			sourceTree = "<group>";
@@ -205,8 +208,8 @@
 		6BC87921251BA19000113732 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				6B000FE0253753B300653275 /* Weather Group */,
 				6B000FDF2537539F00653275 /* Convertion Group */,
+				6B000FE0253753B300653275 /* Weather Group */,
 				6B000FE1253753DA00653275 /* Translation Group */,
 			);
 			path = Controller;
@@ -366,6 +369,7 @@
 				6B59B9042524EF9400901DEF /* WeatherService.swift in Sources */,
 				6B59B8F62524E38B00901DEF /* ConvertionErrors.swift in Sources */,
 				6BC87935251BE4DE00113732 /* WeatherViewController.swift in Sources */,
+				6B5833702538B12C00B10E9D /* SettingsContainerVC.swift in Sources */,
 				6B5B350C251D63FD00554B7B /* ConvertionService.swift in Sources */,
 				6BBF2A3C252640000098D104 /* ConvertSettingsViewController.swift in Sources */,
 				6B90E0D125268BD8004DEB2F /* Currency.swift in Sources */,

@@ -17,23 +17,11 @@ class WeatherSettingsTableViewController: UITableViewController {
     @IBOutlet weak var originCityTextField: UITextField!
     @IBOutlet weak var destinationCityTextField: UITextField!
 
-    override func viewDidAppear(_ animated: Bool) {
-        let guide = view.safeAreaLayoutGuide
-        let height = guide.layoutFrame.size.height
-        tableView.frame = CGRect(x: 0, y: height-tableView.contentSize.height, width: tableView.frame.size.width, height: tableView.contentSize.height)
-        tableView.isHidden = false
-        super.viewDidAppear(true)
-    }
     
     override func viewDidLoad() {
         self.settingsTableView.layer.cornerRadius = 15
         self.originCityTextField.backgroundColor = UIColor.white
         self.destinationCityTextField.backgroundColor = UIColor.white
-//        DispatchQueue.main.async  {
-//            let guide = self.view.safeAreaLayoutGuide
-//            let height = guide.layoutFrame.size.height
-//            self.tableView.frame = CGRect(x: 0, y: height-self.tableView.contentSize.height, width: self.tableView.frame.size.width, height: self.tableView.contentSize.height)
-//        }
         super.viewDidLoad()
     }
     
