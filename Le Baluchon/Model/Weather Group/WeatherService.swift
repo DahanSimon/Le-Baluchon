@@ -85,7 +85,8 @@ class WeatherService {
                     }
                     dispatchGroup.leave()
             }
-            dispatchGroup.notify(queue: .main) { [weak self] in
+            
+            dispatchGroup.notify(queue: .main) {
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "didReceiveData"), object: nil)
             }
         }
