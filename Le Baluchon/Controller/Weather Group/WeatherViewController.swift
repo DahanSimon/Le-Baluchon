@@ -12,7 +12,7 @@ class WeatherViewController: UIViewController, WeatherSelectionDelegate {
     func didEnteredCitiesNames(destinationCityName: String, originCityName: String) {
         self.destinationCityName = destinationCityName
         self.originCityName = originCityName
-        compareWeather(between: self.originCityNameUrlFriendly!, and: self.destinationCityNameUrlFriendly!)
+        compareWeather(between: self.originCityName!, and: self.destinationCityName!)
     }
     
     @IBOutlet weak var originWeatherStackView: UIStackView!
@@ -30,35 +30,20 @@ class WeatherViewController: UIViewController, WeatherSelectionDelegate {
         
     var originCityName: String? = "Paris"
     var destinationCityName: String? = "New York"
-    
-    var originCityNameUrlFriendly: String? {
-        if let originCityName = originCityName{
-            return originCityName.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
-        } else {
-            return nil
-        }
-    }
-    
-    var destinationCityNameUrlFriendly: String? {
-        if let destinationCityName = destinationCityName{
-            return destinationCityName.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
-        } else {
-            return nil
-        }
-    }
+    let weatherService = WeatherService()
+    var weatherComparaison: [CityType: CityWeatherResponse?] = [:]
     override func viewDidLoad() {
+        compareWeather(between: "Paris", and: "New York")
+        let name = Notification.Name("didReceiveData")
+        NotificationCenter.default.addObserver(self, selector: #selector(onDidReceiveData(_:)), name: name, object: nil)
         setShadow(to: originWeatherStackView)
         setShadow(to: destinationStackView)
-        compareWeather(between: originCityNameUrlFriendly!, and: destinationCityNameUrlFriendly!)
     }
+    
     @IBAction func unwindToWeather(segue:UIStoryboardSegue) {}
     
     @IBAction func refreshButtonTapped(_ sender: Any) {
-        guard let destinationCityNameUrlFriendly = destinationCityNameUrlFriendly, let originCityNameUrlFriendly = originCityNameUrlFriendly  else {
-            presentAlert(message: "Merci de renter des noms de ville correct", handler: nil)
-            return
-        }
-        compareWeather(between: originCityNameUrlFriendly, and: destinationCityNameUrlFriendly)
+        compareWeather(between: self.originCityName!, and: self.destinationCityName!)
     }
     
     private func setShadow(to view: UIView) {
@@ -84,45 +69,99 @@ class WeatherViewController: UIViewController, WeatherSelectionDelegate {
     }
     
     private func compareWeather(between originCityName: String, and destinationCityName: String) {
-        let originWeather = WeatherService(exchangeSession: URLSession(configuration: .default))
-        let destinationWeather = WeatherService(exchangeSession: URLSession(configuration: .default))
-        
-        getWeather(for: originWeather, cityName: originCityName, isDestination: false)
-        if originWeather.weatherResponseError == nil {
-            getWeather(for: destinationWeather, cityName: destinationCityName, isDestination: true)
-        }
-    }
-    
-    private func getWeather(for city: WeatherService, cityName: String, isDestination: Bool) {
         self.toggleActivityIndicator(shown: true)
-        city.getWeather(for: cityName) { [weak self] (success, weather) in
-            guard let self = self else { return }
-            self.toggleActivityIndicator(shown: false)
-            if success, let weather = weather {
-                if isDestination {
-                    self.destinationCityNameLabel.text = weather.name
-                    self.destinationWeatherDescriptionLabel.text = "Description: \n \(weather.weather[0].weatherDescription)"
-                    self.destinationTemperatureLabel.text = self.getStringFromTemp(temperature: weather.main.temp) + " °C"
-                } else {
-                    self.originCityNameLabel.text = weather.name
-                    self.originCityWeatherDescriptionLabel.text = "Description: \n \(weather.weather[0].weatherDescription)"
-                    self.originCityWeatherLabel.text = self.getStringFromTemp(temperature: weather.main.temp) + " °C"
-                }
-            } else {
-                self.toggleActivityIndicator(shown: true)
-                if let serviceError = city.weatherResponseError {
-                    self.presentAlert(message: serviceError.message + "\nMerci d'entrer un nom de ville correct.", handler: self.settingsButtonTapped(_:))
-                }
+        weatherService.getWeatherComparaison(between: originCityName, and: destinationCityName)
+    }
+    
+    private func handleErrors(for cityType: CityType) {
+        guard let error = self.weatherService.weatherComparaison[cityType] as? WeatherResponseError else {
+            return
+        }
+        self.presentAlert(message: error.message + "\nMerci d'entrer un nom de ville correct.", handler: self.settingsButtonTapped(_:))
+    }
+    
+    @objc func onDidReceiveData(_ notification:Notification) {
+        DispatchQueue.main.async {
+            guard let destination = self.weatherService.weatherComparaison[.destination] as? CityWeatherResponse else {
+                self.handleErrors(for: .destination)
+                return
             }
+            
+            guard let origin = self.weatherService.weatherComparaison[.origin] as? CityWeatherResponse else {
+                self.handleErrors(for: .origin)
+                return
+            }
+            self.toggleActivityIndicator(shown: false)
+            self.originCityNameLabel.text = origin.name
+            self.originCityWeatherDescriptionLabel.text = "Description: \n \(origin.weather[0].weatherDescription)"
+            self.originCityWeatherLabel.text = self.getStringFromTemp(temperature: (origin.main.temp)) + " °C"
+            
+            self.destinationCityNameLabel.text = destination.name
+            self.destinationWeatherDescriptionLabel.text = "Description: \n \(destination.weather[0].weatherDescription)"
+            self.destinationTemperatureLabel.text = self.getStringFromTemp(temperature: destination.main.temp) + " °C"
+
         }
     }
     
-
+//    private func getWeather(for city: WeatherService, cityName: String, isDestination: Bool) {
+//        self.toggleActivityIndicator(shown: true)
+//        city.getWeather(for: cityName) { [weak self] (error, weather) in
+//            guard let self = self else { return }
+//
+//            self.toggleActivityIndicator(shown: false)
+//            if let weather = weather, error == nil {
+//                if isDestination {
+//                    self.destinationCityNameLabel.text = weather.name
+//                    self.destinationWeatherDescriptionLabel.text = "Description: \n \(weather.weather[0].weatherDescription)"
+//                    self.destinationTemperatureLabel.text = self.getStringFromTemp(temperature: weather.main.temp) + " °C"
+//                } else {
+//                    self.originCityNameLabel.text = weather.name
+//                    self.originCityWeatherDescriptionLabel.text = "Description: \n \(weather.weather[0].weatherDescription)"
+//                    self.originCityWeatherLabel.text = self.getStringFromTemp(temperature: weather.main.temp) + " °C"
+//                }
+//            } else {
+//                self.toggleActivityIndicator(shown: true)
+//                if let serviceError = error {
+//                    guard let error = city.error else {
+//                        return
+//                    }
+//
+//                    switch error {
+//                        case .apiError:
+//                            self.presentAlert(message: serviceError.message + "\nMerci d'entrer un nom de ville correct.", handler: self.settingsButtonTapped(_:))
+//                        case .notUrlFriendly:
+//                            self.presentAlert(message: "Merci d'entrer un nom de ville correct.", handler: self.settingsButtonTapped(_:))
+//                    }
+//                }
+//            }
+//        }
+//        let weatherViewModel = WeatherViewModel(originCityName: originCityName!, destinationCityName: destinationCityName!, weatherService: WeatherService())
+//        for (_, value) in weatherViewModel.weatherErrors {
+//            if let error = value {
+//                self.presentAlert(message: error.message + "\nMerci d'entrer un nom de ville correct.", handler: self.settingsButtonTapped(_:))
+//                return
+//            }
+//        }
+//
+//        if weatherViewModel.weatherErrors.count == 0 {
+//            self.originCityNameLabel.text = weatherViewModel.weatherInfos[originCityName!]?.name
+//            self.originCityWeatherDescriptionLabel.text = "Description: \n \(weatherViewModel.weatherInfos[originCityName!]!.weather[0].weatherDescription)"
+//            self.originCityWeatherLabel.text = self.getStringFromTemp(temperature: weatherViewModel.weatherInfos[originCityName!]!.main.temp) + " °C"
+//
+//            self.destinationCityNameLabel.text = weatherViewModel.weatherInfos[destinationCityName!]?.name
+//            self.destinationWeatherDescriptionLabel.text = "Description: \n \(weatherViewModel.weatherInfos[destinationCityName!]!.weather[0].weatherDescription)"
+//            self.destinationTemperatureLabel.text = self.getStringFromTemp(temperature: weatherViewModel.weatherInfos[destinationCityName!]!.main.temp) + " °C"
+//        }
+//    }
     
     @IBAction func settingsButtonTapped(_ sender: Any) {
-        let settingsVC2 = storyboard?.instantiateViewController(withIdentifier: "SettingsVC2") as? SettingsContainerVC
-        settingsVC2?.delegate = self
-        present(settingsVC2!, animated: true, completion: nil)
+        guard let storyBoard = storyboard else {
+            return
+        }
+        if let settingsVC2 = storyBoard.instantiateViewController(withIdentifier: "SettingsVC2") as? SettingsContainerVC {
+            settingsVC2.delegate = self
+            present(settingsVC2, animated: true, completion: nil)
+        }
     }
     
     private func presentAlert(message: String, handler: ((UIAlertAction) -> Void)?) {
@@ -131,5 +170,37 @@ class WeatherViewController: UIViewController, WeatherSelectionDelegate {
         alertVC.addAction(action)
         self.present(alertVC, animated: true, completion: nil)
     }
+    
+    deinit {
+        print("Weather has been deinited no retain cycle")
+    }
 }
 
+//class WeatherViewModel {
+//    var originCityName: String
+//    var destinationCityName: String
+//    var weatherInfos: [String: CityWeatherResponse] = [:]
+//    var weatherErrors: [String: WeatherResponseError?] = [:]
+//    var weatherService: WeatherServiceProtocol
+//
+//    init(originCityName: String, destinationCityName: String, weatherService: WeatherServiceProtocol) {
+//        self.originCityName = originCityName
+//        self.destinationCityName = destinationCityName
+//        self.weatherErrors[originCityName] = nil
+//        self.weatherErrors[destinationCityName] = nil
+//        self.weatherService = weatherService
+//        compareWeather()
+//    }
+//
+//    private func getWeather(for citysName: String) {
+//        weatherService.getWeather(for: citysName) { (weatherResponseError, cityWeatherResponse) in
+//            self.weatherErrors[citysName] = weatherResponseError
+//            self.weatherInfos[citysName] = cityWeatherResponse
+//        }
+//    }
+//
+//    func compareWeather() {
+//        self.getWeather(for: originCityName)
+//        self.getWeather(for: destinationCityName)
+//    }
+//}

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6B0B3852253B914F0093B1A5 /* ValidWeatherData.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B0B3851253B914F0093B1A5 /* ValidWeatherData.json */; };
+		6B0B3857253B92520093B1A5 /* WeatherDataError.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B0B3856253B92520093B1A5 /* WeatherDataError.json */; };
 		6B5833702538B12C00B10E9D /* SettingsContainerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B58336F2538B12C00B10E9D /* SettingsContainerVC.swift */; };
 		6B59B8F62524E38B00901DEF /* ConvertionErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B59B8F52524E38B00901DEF /* ConvertionErrors.swift */; };
 		6B59B8FC2524EF7200901DEF /* CityWeatherResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B59B8FB2524EF7200901DEF /* CityWeatherResponse.swift */; };
@@ -15,6 +17,9 @@
 		6B90E0D125268BD8004DEB2F /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B90E0D025268BD8004DEB2F /* Currency.swift */; };
 		6B90E0DE25274C82004DEB2F /* CurrenciesData.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B90E0DD25274C82004DEB2F /* CurrenciesData.json */; };
 		6BAEBAE32535F0950027B6AF /* WeatherSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BAEBAE22535F0950027B6AF /* WeatherSettingsTableViewController.swift */; };
+		6BBCE097253B85B000C82902 /* WeatherServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBCE096253B85B000C82902 /* WeatherServiceTests.swift */; };
+		6BBCE09F253B8D7F00C82902 /* WeatherServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBCE09E253B8D7F00C82902 /* WeatherServiceProtocol.swift */; };
+		6BBCE0A4253B8EAC00C82902 /* MockWeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBCE0A3253B8EAC00C82902 /* MockWeatherService.swift */; };
 		6BBEBD3D2520B99D00B16CA0 /* ConvertionResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBEBD3C2520B99D00B16CA0 /* ConvertionResponse.swift */; };
 		6BBF2A3C252640000098D104 /* ConvertSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBF2A3B252640000098D104 /* ConvertSettingsViewController.swift */; };
 		6BC878E8251B9F6F00113732 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC878E7251B9F6F00113732 /* AppDelegate.swift */; };
@@ -46,6 +51,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6B0B3851253B914F0093B1A5 /* ValidWeatherData.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ValidWeatherData.json; sourceTree = "<group>"; };
+		6B0B3856253B92520093B1A5 /* WeatherDataError.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = WeatherDataError.json; sourceTree = "<group>"; };
 		6B58336F2538B12C00B10E9D /* SettingsContainerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsContainerVC.swift; sourceTree = "<group>"; };
 		6B59B8F52524E38B00901DEF /* ConvertionErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConvertionErrors.swift; sourceTree = "<group>"; };
 		6B59B8FB2524EF7200901DEF /* CityWeatherResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityWeatherResponse.swift; sourceTree = "<group>"; };
@@ -54,6 +61,9 @@
 		6B90E0D025268BD8004DEB2F /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
 		6B90E0DD25274C82004DEB2F /* CurrenciesData.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = CurrenciesData.json; sourceTree = "<group>"; };
 		6BAEBAE22535F0950027B6AF /* WeatherSettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherSettingsTableViewController.swift; sourceTree = "<group>"; };
+		6BBCE096253B85B000C82902 /* WeatherServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherServiceTests.swift; sourceTree = "<group>"; };
+		6BBCE09E253B8D7F00C82902 /* WeatherServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherServiceProtocol.swift; sourceTree = "<group>"; };
+		6BBCE0A3253B8EAC00C82902 /* MockWeatherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockWeatherService.swift; sourceTree = "<group>"; };
 		6BBEBD3C2520B99D00B16CA0 /* ConvertionResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConvertionResponse.swift; sourceTree = "<group>"; };
 		6BBF2A3B252640000098D104 /* ConvertSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConvertSettingsViewController.swift; sourceTree = "<group>"; };
 		6BC878E4251B9F6F00113732 /* Le Baluchon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Le Baluchon.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -130,6 +140,7 @@
 			children = (
 				6B59B9032524EF9400901DEF /* WeatherService.swift */,
 				6B59B8FB2524EF7200901DEF /* CityWeatherResponse.swift */,
+				6BBCE09E253B8D7F00C82902 /* WeatherServiceProtocol.swift */,
 			);
 			path = "Weather Group";
 			sourceTree = "<group>";
@@ -144,6 +155,17 @@
 				6B90E0DD25274C82004DEB2F /* CurrenciesData.json */,
 			);
 			path = "Convertion Group";
+			sourceTree = "<group>";
+		};
+		6BBCE095253B858C00C82902 /* Weather Group */ = {
+			isa = PBXGroup;
+			children = (
+				6BBCE096253B85B000C82902 /* WeatherServiceTests.swift */,
+				6BBCE0A3253B8EAC00C82902 /* MockWeatherService.swift */,
+				6B0B3851253B914F0093B1A5 /* ValidWeatherData.json */,
+				6B0B3856253B92520093B1A5 /* WeatherDataError.json */,
+			);
+			path = "Weather Group";
 			sourceTree = "<group>";
 		};
 		6BC878DB251B9F6F00113732 = {
@@ -181,6 +203,7 @@
 		6BC878FD251B9F7300113732 /* Le BaluchonTests */ = {
 			isa = PBXGroup;
 			children = (
+				6BBCE095253B858C00C82902 /* Weather Group */,
 				6BC878FE251B9F7300113732 /* Le_BaluchonTests.swift */,
 				6BC87900251B9F7300113732 /* Info.plist */,
 			);
@@ -296,7 +319,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1200;
-				LastUpgradeCheck = 1200;
+				LastUpgradeCheck = 1210;
 				TargetAttributes = {
 					6BC878E3251B9F6F00113732 = {
 						CreatedOnToolsVersion = 12.0;
@@ -347,6 +370,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6B0B3857253B92520093B1A5 /* WeatherDataError.json in Resources */,
+				6B0B3852253B914F0093B1A5 /* ValidWeatherData.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -364,6 +389,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6BBCE09F253B8D7F00C82902 /* WeatherServiceProtocol.swift in Sources */,
 				6BAEBAE32535F0950027B6AF /* WeatherSettingsTableViewController.swift in Sources */,
 				6BC87928251BB68400113732 /* ConvertViewController.swift in Sources */,
 				6B59B9042524EF9400901DEF /* WeatherService.swift in Sources */,
@@ -384,6 +410,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6BBCE0A4253B8EAC00C82902 /* MockWeatherService.swift in Sources */,
+				6BBCE097253B85B000C82902 /* WeatherServiceTests.swift in Sources */,
 				6BC878FF251B9F7300113732 /* Le_BaluchonTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -482,7 +510,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -537,7 +565,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -555,7 +583,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9S2GW6G25E;
 				INFOPLIST_FILE = "Le Baluchon/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -575,7 +603,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9S2GW6G25E;
 				INFOPLIST_FILE = "Le Baluchon/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

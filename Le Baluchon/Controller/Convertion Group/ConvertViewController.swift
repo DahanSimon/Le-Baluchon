@@ -7,7 +7,16 @@
 
 import UIKit
 
-class ConvertViewController: UIViewController, UITextFieldDelegate, CurrencySelectionDelegate {
+class ConvertViewController: UIViewController, CurrencySelectionDelegate {
+    
+    enum VCErrors: String {
+        case invalidTextFieldInput = "Merci d'entrer une valeur correct."
+        case apiError = "Une erreur c'est produite ! Merci de réessayer."
+    }
+    
+    enum test {
+        case random(String)
+    }
     func didSelectCurrency(convertTo_CurrencyCode: String, baseCurrencyCode: String) {
         self.selectedConvertTo_CurrencyCode = convertTo_CurrencyCode
         self.selectedBaseCurrencyCode = baseCurrencyCode
@@ -25,12 +34,7 @@ class ConvertViewController: UIViewController, UITextFieldDelegate, CurrencySele
     
     var selectedConvertTo_CurrencyCode = "USD"
     var selectedBaseCurrencyCode = "EUR"
-    
-    enum VCErrors: String {
-        case invalidTextFieldInput = "Merci d'entrer une valeur correct."
-        case apiError = "Une erreur c'est produite ! Merci de réessayer."
-    }
-    
+        
     override func viewDidLoad() {
         ConvertionService.shared.getConvertion { [self] (success, exchange) in
             toggleActivityIndicator(shown: false)
@@ -48,7 +52,6 @@ class ConvertViewController: UIViewController, UITextFieldDelegate, CurrencySele
         toggleActivityIndicator(shown: true)
         dismissKeyboard(tapGestureRecognizer)
         
-        // Is Valuable ?
         guard let amountToConvertString = amountToChangeTextField.text else {
             toggleActivityIndicator(shown: false)
             return
@@ -62,18 +65,33 @@ class ConvertViewController: UIViewController, UITextFieldDelegate, CurrencySele
         callApi(amountToConvert: amountToConvert)
     }
     
-    @IBAction func dismissKeyboard(_ sender: UITapGestureRecognizer) {
-        amountToChangeTextField.resignFirstResponder()
-    }
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
-    }
+   
     
     private func toggleActivityIndicator(shown: Bool) {
         calculateButton.isHidden = shown
         activityIndicator.isHidden = !shown
+    }
+    
+    func callApi(amountToConvert: Double) {
+        ConvertionService.shared.getConvertion { /*[weak self]*/ (success, exchange) in
+            
+//            guard let self = self else { return }
+            
+            self.toggleActivityIndicator(shown: false)
+            
+            if success, let exchange = exchange {
+                let rate = exchange.rates[self.selectedConvertTo_CurrencyCode]!
+                let result = self.convert(amount: amountToConvert, rate: rate)
+
+                let convertTo_CurrencySymbol = Currency.share.data[self.selectedConvertTo_CurrencyCode]!.symbol
+                let baseCurrencySymbol = Currency.share.data[self.selectedBaseCurrencyCode]!.symbol
+                self.baseCurrencySymbol.text = baseCurrencySymbol
+                self.changedValueLabel.text = String(format: "%.2f \(convertTo_CurrencySymbol)", result)
+                self.rateInfoLabel.text = "1 \(baseCurrencySymbol) = " + String(format: "%.4f \(convertTo_CurrencySymbol)", exchange.rates[self.selectedConvertTo_CurrencyCode]!)
+            } else {
+                self.presentAlert(vcError: .apiError)
+            }
+        }
     }
     
     private func convert(amount: Double, rate: Double) -> Double {
@@ -87,33 +105,20 @@ class ConvertViewController: UIViewController, UITextFieldDelegate, CurrencySele
         self.present(alertVC, animated: true, completion: nil)
     }
     
-    @IBAction func unwindToConvertion(segue:UIStoryboardSegue) { }
+    @IBAction func unwindToConvertion(segue:UIStoryboardSegue) {}
+    
     @IBAction func settingsButtonTapped(_ sender: Any) {
         let selectionVC = storyboard?.instantiateViewController(withIdentifier: "settingsViewController") as! ConvertSettingsViewController
         selectionVC.selectionDelegate = self
         present(selectionVC, animated: true, completion: nil)
     }
-    
-    func callApi(amountToConvert: Double) {
-        ConvertionService.shared.getConvertion { [weak self] (success, exchange) in
-            
-            guard let self = self else { return }
-            
-            self.toggleActivityIndicator(shown: false)
-            
-            if success, let exchange = exchange {
-                
-                let rate = exchange.rates[self.selectedConvertTo_CurrencyCode]!
-                let result = self.convert(amount: amountToConvert, rate: rate)
+    deinit {
+        print("Convertion has been deinited no retain cycle")
+    }
+}
 
-                let convertTo_CurrencySymbol = Currency.share.data[self.selectedConvertTo_CurrencyCode]!.symbol
-                let baseCurrencySymbol = Currency.share.data[self.selectedBaseCurrencyCode]!.symbol
-                self.baseCurrencySymbol.text = baseCurrencySymbol
-                self.changedValueLabel.text = String(format: "%.2f \(convertTo_CurrencySymbol)", result)
-                self.rateInfoLabel.text = "1 \(baseCurrencySymbol) = " + String(format: "%.4f \(convertTo_CurrencySymbol)", exchange.rates[self.selectedConvertTo_CurrencyCode]!)
-            } else {
-                self.presentAlert(vcError: .apiError)
-            }
-        }
+extension ConvertViewController: UITextFieldDelegate {
+    @IBAction func dismissKeyboard(_ sender: UITapGestureRecognizer) {
+        amountToChangeTextField.resignFirstResponder()
     }
 }

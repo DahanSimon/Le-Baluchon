@@ -18,10 +18,14 @@ class WeatherSettingsTableViewController: UITableViewController {
     @IBOutlet weak var destinationCityTextField: UITextField!
 
     
+    
     override func viewDidLoad() {
         self.settingsTableView.layer.cornerRadius = 15
         self.originCityTextField.backgroundColor = UIColor.white
         self.destinationCityTextField.backgroundColor = UIColor.white
+        
+        self.originCityTextField.delegate = self
+        self.destinationCityTextField.delegate = self
         super.viewDidLoad()
     }
     
@@ -35,27 +39,31 @@ class WeatherSettingsTableViewController: UITableViewController {
             return
         }
         
-        if originCityName == "" && destinationCityName == ""{
+        
+        
+        if originCityName == "" && destinationCityName == "" {
             self.originCityTextField.backgroundColor = #colorLiteral(red: 1, green: 0.2705882353, blue: 0.2274509804, alpha: 1)
             self.destinationCityTextField.backgroundColor = #colorLiteral(red: 1, green: 0.2705882353, blue: 0.2274509804, alpha: 1)
             formError = .noTextFieldAreFilled
             presentAlert(message: formError!.rawValue)
         } else if destinationCityName == "" {
-            self.originCityTextField.backgroundColor = UIColor.white
+            self.originCityTextField.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
             self.destinationCityTextField.backgroundColor = #colorLiteral(red: 1, green: 0.2705882353, blue: 0.2274509804, alpha: 1)
             formError = .destinationTextFieldIsNotFilled
             presentAlert(message: formError!.rawValue)
         } else if originCityName == "" {
             self.originCityTextField.backgroundColor = #colorLiteral(red: 1, green: 0.2705882353, blue: 0.2274509804, alpha: 1)
-            self.destinationCityTextField.backgroundColor = UIColor.white
+            self.destinationCityTextField.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
             formError = .originTextFieldIsNotFilled
             presentAlert(message: formError!.rawValue)
         } else {
-            self.originCityTextField.backgroundColor = UIColor.white
-            self.destinationCityTextField.backgroundColor = UIColor.white
+            self.originCityTextField.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+            self.destinationCityTextField.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
             weatherSelectionDelegate.didEnteredCitiesNames(destinationCityName: destinationCityName, originCityName: originCityName)
             self.performSegue(withIdentifier: "unwindToWeather", sender: self)
         }
+        
+        
     }
     
     private func presentAlert(message: String) {
@@ -63,6 +71,10 @@ class WeatherSettingsTableViewController: UITableViewController {
         let action = UIAlertAction(title: "OK", style: .cancel, handler: nil)
         alertVC.addAction(action)
         self.present(alertVC, animated: true, completion: nil)
+    }
+    
+    deinit {
+        print("Weather has been deinited no retain cycle")
     }
 }
 
@@ -76,10 +88,13 @@ extension WeatherSettingsTableViewController: UITextFieldDelegate {
         textField.resignFirstResponder()
         return true
     }
+    
+    
 }
 
 enum WeatherSettingsFormErrors: String {
-    case originTextFieldIsNotFilled = "Merci d'entrer une vile d'origin"
+    case originTextFieldIsNotFilled = "Merci d'entrer une vile d'origine"
     case destinationTextFieldIsNotFilled = "Merci d'entrer une ville de destination"
     case noTextFieldAreFilled = "Merci de remplir les champs en rouge"
+    case entryIsWrong = "Merci d'entrer un nom de ville valide"
 }

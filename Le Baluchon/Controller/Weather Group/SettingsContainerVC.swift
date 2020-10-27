@@ -13,9 +13,6 @@ class SettingsContainerVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let guide = view.safeAreaLayoutGuide
-        let height = guide.layoutFrame.size.height
-        self.weatherSettingsTableVC.tableView.frame = CGRect(x: 0, y: height/2, width: self.weatherSettingsTableVC.tableView.frame.size.width, height: 400)
     }
     
     private var weatherSettingsTableVC: WeatherSettingsTableViewController!

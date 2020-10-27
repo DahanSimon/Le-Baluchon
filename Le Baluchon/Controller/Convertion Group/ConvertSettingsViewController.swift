@@ -22,6 +22,7 @@ class ConvertSettingsViewController: UIViewController {
         checkData()
     }
     
+    var ratesCityCode:[String: String] = [:]
     var currenciesArray: [String] = []
     var selectionDelegate: CurrencySelectionDelegate!
     
@@ -29,21 +30,17 @@ class ConvertSettingsViewController: UIViewController {
     private func createArrayFormDictionnary(dict: [String: String]) {
         var array: [String] = []
         for (key, value) in dict {
-            array.append(key + "  \(value)")
+            array.append(key + " - \(value)")
         }
         currenciesArray = array.sorted()
     }
     
     func getCurrenciesCode(pickerView: UIPickerView) -> String {
-        createArrayFormDictionnary(dict: ratesCityCode)
         let currencyIndex = pickerView.selectedRow(inComponent: 0)
         let currency = currenciesArray[currencyIndex]
         let currencyCode = currency.split(separator: " ").first!
         return String(currencyCode)
     }
-    
-    var ratesCityCode:[String: String] = [:]
-    
 }
 
 extension ConvertSettingsViewController: UIPickerViewDataSource, UIPickerViewDelegate {
@@ -68,8 +65,10 @@ extension ConvertSettingsViewController: UIPickerViewDataSource, UIPickerViewDel
     }
     
     func checkData() {
-        for (key, _) in Currency.share.data {
-            ratesCityCode[key] = Currency.share.data[key]?.name
+        for (code, _) in Currency.share.data {
+            if let _ = ConvertionService.shared.convertionResponse?.rates[code] {
+                ratesCityCode[code] = Currency.share.data[code]?.name
+            }
         }
     }
 }
