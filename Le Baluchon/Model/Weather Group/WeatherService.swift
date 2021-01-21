@@ -12,9 +12,15 @@ class WeatherService {
     var error: WeatherApiErrors?
     var weatherResponse: CityWeatherResponse?
     var weatherResponseError: WeatherResponseError?
-    var weatherComparaison: [CityType: Any?] = [:]
+    
+    static var shared = WeatherService()
+    private init() {}
+    
     private var weatherSession = URLSession(configuration: .default)
-        
+    
+    init(weatherSession: URLSession) {
+        self.weatherSession = weatherSession
+    }
     private var task: URLSessionDataTask?
         
     private func execute(request: URLRequest, callback: @escaping (WeatherResponseError?, CityWeatherResponse?) -> Void) {
@@ -60,13 +66,13 @@ class WeatherService {
         return request
     }
     
-    func getWeatherComparaison(between origin: String, and destination: String) {
+    func getWeatherComparaison(between origin: String, and destination: String, completionHandler: @escaping ([CityType: Any?]) -> Void) {
         
         let dispatchGroup = DispatchGroup()
-        
-        DispatchQueue.main.async {
+        var weatherComparaison: [CityType: Any?] = [:]
+//        DispatchQueue.main.async {
             dispatchGroup.enter()
-            self.getWeather(for: origin) { [self] (responseError, response) in
+            self.getWeather(for: origin) {  (responseError, response) in
                     if responseError == nil {
                         weatherComparaison[.origin] = response
                     } else {
@@ -76,7 +82,7 @@ class WeatherService {
             }
             
             dispatchGroup.enter()
-            self.getWeather(for: destination) { [self] (responseError, response) in
+            self.getWeather(for: destination) { (responseError, response) in
                     if response != nil {
                         weatherComparaison[.destination] = response
                         
@@ -87,11 +93,10 @@ class WeatherService {
             }
             
             dispatchGroup.notify(queue: .main) {
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "didReceiveData"), object: nil)
+                completionHandler(weatherComparaison)
             }
-        }
+//        }
     }
-    
 }
 
 extension WeatherService: WeatherServiceProtocol {
@@ -114,7 +119,9 @@ enum WeatherApiErrors {
     case notUrlFriendly(message: String)
 }
 
-enum CityType {
+enum CityType: String {
     case origin
     case destination
 }
+
+//

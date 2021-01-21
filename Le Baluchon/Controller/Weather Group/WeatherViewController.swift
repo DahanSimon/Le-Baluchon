@@ -30,12 +30,8 @@ class WeatherViewController: UIViewController, WeatherSelectionDelegate {
         
     var originCityName: String? = "Paris"
     var destinationCityName: String? = "New York"
-    let weatherService = WeatherService()
-    var weatherComparaison: [CityType: CityWeatherResponse?] = [:]
     override func viewDidLoad() {
         compareWeather(between: "Paris", and: "New York")
-        let name = Notification.Name("didReceiveData")
-        NotificationCenter.default.addObserver(self, selector: #selector(onDidReceiveData(_:)), name: name, object: nil)
         setShadow(to: originWeatherStackView)
         setShadow(to: destinationStackView)
     }
@@ -70,27 +66,18 @@ class WeatherViewController: UIViewController, WeatherSelectionDelegate {
     
     private func compareWeather(between originCityName: String, and destinationCityName: String) {
         self.toggleActivityIndicator(shown: true)
-        weatherService.getWeatherComparaison(between: originCityName, and: destinationCityName)
-    }
-    
-    private func handleErrors(for cityType: CityType) {
-        guard let error = self.weatherService.weatherComparaison[cityType] as? WeatherResponseError else {
-            return
-        }
-        self.presentAlert(message: error.message + "\nMerci d'entrer un nom de ville correct.", handler: self.settingsButtonTapped(_:))
-    }
-    
-    @objc func onDidReceiveData(_ notification:Notification) {
-        DispatchQueue.main.async {
-            guard let destination = self.weatherService.weatherComparaison[.destination] as? CityWeatherResponse else {
-                self.handleErrors(for: .destination)
+        WeatherService.shared.getWeatherComparaison(between: originCityName, and: destinationCityName) { weatherComparaison in
+            self.toggleActivityIndicator(shown: false)
+            guard let origin = weatherComparaison[.origin] as? CityWeatherResponse else {
+                self.handleErrors(for: .origin, weatherComparaison: weatherComparaison)
                 return
             }
             
-            guard let origin = self.weatherService.weatherComparaison[.origin] as? CityWeatherResponse else {
-                self.handleErrors(for: .origin)
+            guard let destination = weatherComparaison[.destination] as? CityWeatherResponse else {
+                self.handleErrors(for: .destination, weatherComparaison: weatherComparaison)
                 return
             }
+            
             self.toggleActivityIndicator(shown: false)
             self.originCityNameLabel.text = origin.name
             self.originCityWeatherDescriptionLabel.text = "Description: \n \(origin.weather[0].weatherDescription)"
@@ -99,60 +86,15 @@ class WeatherViewController: UIViewController, WeatherSelectionDelegate {
             self.destinationCityNameLabel.text = destination.name
             self.destinationWeatherDescriptionLabel.text = "Description: \n \(destination.weather[0].weatherDescription)"
             self.destinationTemperatureLabel.text = self.getStringFromTemp(temperature: destination.main.temp) + " °C"
-
         }
     }
     
-//    private func getWeather(for city: WeatherService, cityName: String, isDestination: Bool) {
-//        self.toggleActivityIndicator(shown: true)
-//        city.getWeather(for: cityName) { [weak self] (error, weather) in
-//            guard let self = self else { return }
-//
-//            self.toggleActivityIndicator(shown: false)
-//            if let weather = weather, error == nil {
-//                if isDestination {
-//                    self.destinationCityNameLabel.text = weather.name
-//                    self.destinationWeatherDescriptionLabel.text = "Description: \n \(weather.weather[0].weatherDescription)"
-//                    self.destinationTemperatureLabel.text = self.getStringFromTemp(temperature: weather.main.temp) + " °C"
-//                } else {
-//                    self.originCityNameLabel.text = weather.name
-//                    self.originCityWeatherDescriptionLabel.text = "Description: \n \(weather.weather[0].weatherDescription)"
-//                    self.originCityWeatherLabel.text = self.getStringFromTemp(temperature: weather.main.temp) + " °C"
-//                }
-//            } else {
-//                self.toggleActivityIndicator(shown: true)
-//                if let serviceError = error {
-//                    guard let error = city.error else {
-//                        return
-//                    }
-//
-//                    switch error {
-//                        case .apiError:
-//                            self.presentAlert(message: serviceError.message + "\nMerci d'entrer un nom de ville correct.", handler: self.settingsButtonTapped(_:))
-//                        case .notUrlFriendly:
-//                            self.presentAlert(message: "Merci d'entrer un nom de ville correct.", handler: self.settingsButtonTapped(_:))
-//                    }
-//                }
-//            }
-//        }
-//        let weatherViewModel = WeatherViewModel(originCityName: originCityName!, destinationCityName: destinationCityName!, weatherService: WeatherService())
-//        for (_, value) in weatherViewModel.weatherErrors {
-//            if let error = value {
-//                self.presentAlert(message: error.message + "\nMerci d'entrer un nom de ville correct.", handler: self.settingsButtonTapped(_:))
-//                return
-//            }
-//        }
-//
-//        if weatherViewModel.weatherErrors.count == 0 {
-//            self.originCityNameLabel.text = weatherViewModel.weatherInfos[originCityName!]?.name
-//            self.originCityWeatherDescriptionLabel.text = "Description: \n \(weatherViewModel.weatherInfos[originCityName!]!.weather[0].weatherDescription)"
-//            self.originCityWeatherLabel.text = self.getStringFromTemp(temperature: weatherViewModel.weatherInfos[originCityName!]!.main.temp) + " °C"
-//
-//            self.destinationCityNameLabel.text = weatherViewModel.weatherInfos[destinationCityName!]?.name
-//            self.destinationWeatherDescriptionLabel.text = "Description: \n \(weatherViewModel.weatherInfos[destinationCityName!]!.weather[0].weatherDescription)"
-//            self.destinationTemperatureLabel.text = self.getStringFromTemp(temperature: weatherViewModel.weatherInfos[destinationCityName!]!.main.temp) + " °C"
-//        }
-//    }
+    private func handleErrors(for cityType: CityType, weatherComparaison: [CityType: Any?]) {
+        guard let error = weatherComparaison[cityType] as? WeatherResponseError else {
+            return
+        }
+        self.presentAlert(message: "\(error.message) for \(cityType.rawValue) \nMerci d'entrer un nom de ville correct.", handler: self.settingsButtonTapped)
+    }
     
     @IBAction func settingsButtonTapped(_ sender: Any) {
         guard let storyBoard = storyboard else {
@@ -176,31 +118,3 @@ class WeatherViewController: UIViewController, WeatherSelectionDelegate {
     }
 }
 
-//class WeatherViewModel {
-//    var originCityName: String
-//    var destinationCityName: String
-//    var weatherInfos: [String: CityWeatherResponse] = [:]
-//    var weatherErrors: [String: WeatherResponseError?] = [:]
-//    var weatherService: WeatherServiceProtocol
-//
-//    init(originCityName: String, destinationCityName: String, weatherService: WeatherServiceProtocol) {
-//        self.originCityName = originCityName
-//        self.destinationCityName = destinationCityName
-//        self.weatherErrors[originCityName] = nil
-//        self.weatherErrors[destinationCityName] = nil
-//        self.weatherService = weatherService
-//        compareWeather()
-//    }
-//
-//    private func getWeather(for citysName: String) {
-//        weatherService.getWeather(for: citysName) { (weatherResponseError, cityWeatherResponse) in
-//            self.weatherErrors[citysName] = weatherResponseError
-//            self.weatherInfos[citysName] = cityWeatherResponse
-//        }
-//    }
-//
-//    func compareWeather() {
-//        self.getWeather(for: originCityName)
-//        self.getWeather(for: destinationCityName)
-//    }
-//}

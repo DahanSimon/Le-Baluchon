@@ -10,22 +10,40 @@ import XCTest
 
 class WeatherServiceTests: XCTestCase {
 
+//    func testGetWeatherForParisShouldGetParisWeather() {
+//        // Given
+//        let weatherService = MockWeatherService(isValid: true)
+//
+//        // When
+//        let expectation = XCTestExpectation(description: "Wait for queue change.")
+//
+//        weatherService.getWeather(for: "Paris") { (success, weather) in
+//            // Then
+//            XCTAssertNil(success)
+//            XCTAssertNotNil(weather)
+//            XCTAssertNil(weatherService.invalidWeatherResponse)
+//            expectation.fulfill()
+//        }
+//
+//        wait(for: [expectation], timeout: 0.01)
+//    }
+    
     func testGetWeatherForParisShouldGetParisWeather() {
         // Given
-        let weatherService = MockWeatherService(isValid: true)
-
+        let weatherService = WeatherService(weatherSession: URLSessionFake(data: FakeWeatherData.weatherCorrectData, response: FakeWeatherData.responseOK, error: nil))
+        
         // When
         let expectation = XCTestExpectation(description: "Wait for queue change.")
-
-        weatherService.getWeather(for: "Paris") { (success, weather) in
-            // Then
-            XCTAssertNil(success)
-            XCTAssertNotNil(weather)
-            XCTAssertNil(weatherService.invalidWeatherResponse)
+        var result: [CityType: Any?] = [:]
+        weatherService.getWeatherComparaison(between: "Paris", and: "New York") { weatherComparaison in
+            result = weatherComparaison
             expectation.fulfill()
         }
-
         wait(for: [expectation], timeout: 0.01)
+        XCTAssertNotNil(result[.origin] as? CityWeatherResponse)
+        let parisWeather = result[.origin] as? CityWeatherResponse
+        XCTAssertTrue(parisWeather?.name == "Paris")
+        XCTAssertEqual(parisWeather?.name, "Paris")
     }
     
     func testGetWeatherForRandomStringShouldPostFailedCallback() {
@@ -42,7 +60,6 @@ class WeatherServiceTests: XCTestCase {
             XCTAssertNotNil(weatherService.invalidWeatherResponse)
             expectation.fulfill()
         }
-
         wait(for: [expectation], timeout: 0.01)
     }
 }
