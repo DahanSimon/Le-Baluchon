@@ -9,29 +9,29 @@ import XCTest
 @testable import Le_Baluchon
 
 class WeatherServiceTests: XCTestCase {
-
-//    func testGetWeatherForParisShouldGetParisWeather() {
-//        // Given
-//        let weatherService = MockWeatherService(isValid: true)
-//
-//        // When
-//        let expectation = XCTestExpectation(description: "Wait for queue change.")
-//
-//        weatherService.getWeather(for: "Paris") { (success, weather) in
-//            // Then
-//            XCTAssertNil(success)
-//            XCTAssertNotNil(weather)
-//            XCTAssertNil(weatherService.invalidWeatherResponse)
-//            expectation.fulfill()
-//        }
-//
-//        wait(for: [expectation], timeout: 0.01)
-//    }
     
     func testGetWeatherForParisShouldGetParisWeather() {
         // Given
-        let weatherService = WeatherService(weatherSession: URLSessionFake(data: FakeWeatherData.weatherCorrectData, response: FakeWeatherData.responseOK, error: nil))
-        
+        let weatherService = WeatherService(weatherSession: URLSessionFake(originData: FakeWeatherData.parisWeatherData, destinationData: FakeWeatherData.newYorkWeatherData, response: FakeWeatherData.responseOK, error: nil))
+        // When
+        let expectation = XCTestExpectation(description: "Wait for queue change.")
+    
+        var parisWeather: CityWeatherResponse? = nil
+        weatherService.getWeather(for: "Paris") { (error, response) in
+            if let weatherResponse = response {
+                parisWeather = weatherResponse
+            }
+            expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 0.01)
+        XCTAssertNotNil(parisWeather)
+        XCTAssertEqual(parisWeather?.name, "Paris")
+    }
+    
+    func testGetWeatherComparaisonBetweenParisAndNYShouldGetWeatherComparaison() {
+        // Given
+        let weatherService = WeatherService(weatherSession: URLSessionFake(originData: FakeWeatherData.parisWeatherData, destinationData: FakeWeatherData.newYorkWeatherData, response: FakeWeatherData.responseOK, error: nil))
+
         // When
         let expectation = XCTestExpectation(description: "Wait for queue change.")
         var result: [CityType: Any?] = [:]
@@ -41,25 +41,46 @@ class WeatherServiceTests: XCTestCase {
         }
         wait(for: [expectation], timeout: 0.01)
         XCTAssertNotNil(result[.origin] as? CityWeatherResponse)
-        let parisWeather = result[.origin] as? CityWeatherResponse
-        XCTAssertTrue(parisWeather?.name == "Paris")
-        XCTAssertEqual(parisWeather?.name, "Paris")
+        XCTAssertNotNil(result[.destination] as? CityWeatherResponse)
+        let originWeather = result[.origin] as? CityWeatherResponse
+        let destinationWeather = result[.destination] as? CityWeatherResponse
+        XCTAssertEqual(originWeather?.name, "Paris")
+        XCTAssertEqual(destinationWeather?.name, "New York")
     }
     
-    func testGetWeatherForRandomStringShouldPostFailedCallback() {
+    
+    
+    func testGetWeatherForUnknownCityShouldGetError() {
         // Given
-        let weatherService = MockWeatherService(isValid: false)
-
+        let weatherService = WeatherService(weatherSession: URLSessionFake(originData: FakeWeatherData.weatherIncorrectData, destinationData: FakeWeatherData.weatherIncorrectData, response: FakeWeatherData.responseKO, error: FakeWeatherData.weatherIncorrectData))
         // When
         let expectation = XCTestExpectation(description: "Wait for queue change.")
-
-        weatherService.getWeather(for: "hvbdkvbsl") { (success, weather) in
-            // Then
-            XCTAssertNotNil(success)
-            XCTAssertNil(weather)
-            XCTAssertNotNil(weatherService.invalidWeatherResponse)
+        
+        var weatherError: WeatherResponseError?
+        weatherService.getWeather(for: "gfdh") { (error, response) in
+//            if let weatherResponse = response {
+//                parisWeather = weatherResponse
+//            }
+            weatherError = weatherService.weatherResponseError
             expectation.fulfill()
         }
         wait(for: [expectation], timeout: 0.01)
+        XCTAssertNotNil(weatherError)
+    }
+    
+    func testGetWeatherComparaisonForUnknownCitiesShouldGetError() {
+        // Given
+        let weatherService = WeatherService(weatherSession: URLSessionFake(originData: FakeWeatherData.weatherIncorrectData, destinationData: FakeWeatherData.weatherIncorrectData, response: FakeWeatherData.responseKO, error: FakeWeatherData.weatherIncorrectData))
+
+        // When
+        let expectation = XCTestExpectation(description: "Wait for queue change.")
+        var result: [CityType: Any?] = [:]
+        weatherService.getWeatherComparaison(between: "hgs.@/dfh", and: "hgdsh") { weatherComparaison in
+            result = weatherComparaison
+            expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 0.01)
+        XCTAssertNotNil(result[.origin] as? WeatherResponseError)
+        XCTAssertNotNil(result[.destination] as? WeatherResponseError)
     }
 }

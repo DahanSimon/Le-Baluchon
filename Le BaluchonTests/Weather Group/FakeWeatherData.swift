@@ -10,9 +10,15 @@ import Foundation
 
 class FakeWeatherData {
     // MARK: - Data
-    static var weatherCorrectData: Data? {
+    static var parisWeatherData: Data? {
         let bundle = Bundle(for: FakeWeatherData.self)
-        let url = bundle.url(forResource: "ValidWeatherData", withExtension: "json")!
+        let url = bundle.url(forResource: "ParisWeatherData", withExtension: "json")!
+        return try! Data(contentsOf: url)
+    }
+    
+    static var newYorkWeatherData: Data? {
+        let bundle = Bundle(for: FakeWeatherData.self)
+        let url = bundle.url(forResource: "NewYorkWeatherData", withExtension: "json")!
         return try! Data(contentsOf: url)
     }
 

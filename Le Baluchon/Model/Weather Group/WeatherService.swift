@@ -21,6 +21,7 @@ class WeatherService {
     init(weatherSession: URLSession) {
         self.weatherSession = weatherSession
     }
+    
     private var task: URLSessionDataTask?
         
     private func execute(request: URLRequest, callback: @escaping (WeatherResponseError?, CityWeatherResponse?) -> Void) {
@@ -99,7 +100,7 @@ class WeatherService {
     }
 }
 
-extension WeatherService: WeatherServiceProtocol {
+extension WeatherService {
     
     func getWeather(for city: String, callback: @escaping (WeatherResponseError?, CityWeatherResponse?) -> Void) {
         guard let cityNameUrlFriendly = city.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else {
@@ -123,5 +124,3 @@ enum CityType: String {
     case origin
     case destination
 }
-
-//
