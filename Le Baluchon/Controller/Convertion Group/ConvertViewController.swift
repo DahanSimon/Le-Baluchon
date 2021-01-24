@@ -20,6 +20,7 @@ class ConvertViewController: UIViewController, CurrencySelectionDelegate {
     func didSelectCurrency(convertTo_CurrencyCode: String, baseCurrencyCode: String) {
         self.selectedConvertTo_CurrencyCode = convertTo_CurrencyCode
         self.selectedBaseCurrencyCode = baseCurrencyCode
+        ConvertionService.shared.baseCurrency = baseCurrencyCode
         callApi(amountToConvert: 0.0)
 
     }
@@ -36,9 +37,9 @@ class ConvertViewController: UIViewController, CurrencySelectionDelegate {
     var selectedBaseCurrencyCode = "EUR"
         
     override func viewDidLoad() {
-        ConvertionService.shared.getConvertion { [self] (success, exchange) in
+        ConvertionService.shared.convert { [self] (success, exchange) in
             toggleActivityIndicator(shown: false)
-            
+
             if success, let exchange = exchange {
                 let rate = exchange.rates["USD"]!
                 rateInfoLabel.text = "1 € = " + String(format: "%.4f $", rate)
@@ -73,7 +74,7 @@ class ConvertViewController: UIViewController, CurrencySelectionDelegate {
     }
     
     func callApi(amountToConvert: Double) {
-        ConvertionService.shared.getConvertion { /*[weak self]*/ (success, exchange) in
+        ConvertionService.shared.convert { /*[weak self]*/ (success, exchange) in
             
 //            guard let self = self else { return }
             
