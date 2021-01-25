@@ -8,19 +8,19 @@
 import Foundation
 
 class TranslationService {
+            
     let api: TranslationAPIProtocol
     
     init(api: TranslationAPIProtocol) {
         self.api = api
     }
     
-    func translate(callback: @escaping (Bool, TranslationResponse?) -> Void) {
-        api.getTranslation { (success, response) in
+    func translate(textToTranslate: String, callback: @escaping (Bool, TranslationResponse?) -> Void) {
+        api.getTranslation(textToTranslate: textToTranslate) { (success, response) in
             if let translation = response {
                 print(translation.data.translations)
                 callback(true, translation)
             }
         }
     }
-    
 }
