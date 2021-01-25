@@ -11,6 +11,7 @@ class TranslateViewController: UIViewController {
     
     @IBOutlet weak var textToTranslateTextField: UITextField!
     @IBOutlet weak var translatedTextTextField: UILabel!
+    @IBOutlet var tapGestureRecongnizer: UITapGestureRecognizer!
     
     let translationService = TranslationService(api: TranslationGoogleAPI())
     
@@ -25,6 +26,7 @@ class TranslateViewController: UIViewController {
             }
             self.translatedTextTextField.text = translationResponse.data.translations[0].translatedText
         }
+        dismissKeyboard(self.tapGestureRecongnizer)
     }
     
     private func presentAlert(message: String) {
@@ -32,5 +34,9 @@ class TranslateViewController: UIViewController {
         let action = UIAlertAction(title: "OK", style: .cancel, handler: nil)
         alertVC.addAction(action)
         self.present(alertVC, animated: true, completion: nil)
+    }
+    
+    @IBAction func dismissKeyboard(_ sender: UITapGestureRecognizer) {
+        textToTranslateTextField.resignFirstResponder()
     }
 }
