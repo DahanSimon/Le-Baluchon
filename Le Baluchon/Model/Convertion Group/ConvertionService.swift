@@ -18,7 +18,6 @@ class ConvertionService {
     init(api: ConvertionProtocol) {
         self.api = api
     }
-    //    private init() {}
     
     var convertionResponse: ConvertionResponse?
     var baseCurrency = "EUR"
@@ -29,10 +28,6 @@ class ConvertionService {
     var lastUpdatedRateDate: Int?
     var lastBaseRequested: String?
     
-    
-    //    init (exchangeSession: URLSession, baseCurrency: String) {
-    //        self.convertionSession = exchangeSession
-    //    }
     
     func convert(callback: @escaping (Bool, ConvertionResponse?) -> Void) {
         

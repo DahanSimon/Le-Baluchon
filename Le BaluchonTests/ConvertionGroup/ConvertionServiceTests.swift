@@ -19,10 +19,16 @@ class ConvertionServiceTests: XCTestCase {
         let expectation = XCTestExpectation(description: "Wait for queue change.")
     
         var euroBasedRates: ConvertionResponse? = nil
+        
+        convertionService.convert { (success, convertionResponse) in
+            euroBasedRates = convertionResponse
+        }
+        
         convertionService.convert { (success, convertionResponse) in
             euroBasedRates = convertionResponse
             expectation.fulfill()
         }
+        
         wait(for: [expectation], timeout: 0.01)
         XCTAssertNotNil(euroBasedRates)
         XCTAssertTrue(euroBasedRates?.base == "EUR")
@@ -45,5 +51,4 @@ class ConvertionServiceTests: XCTestCase {
         XCTAssertNotNil(usdBasedRates)
         XCTAssertTrue(usdBasedRates?.base == "USD")
     }
-
 }
