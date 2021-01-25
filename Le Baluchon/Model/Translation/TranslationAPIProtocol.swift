@@ -9,5 +9,5 @@ import Foundation
 
 protocol TranslationAPIProtocol {
     
-    func getTranslation()
+    func getTranslation(callback: @escaping (Bool, TranslationResponse?) -> Void)
 }
