@@ -15,7 +15,7 @@ class ApiConvertion: ConvertionProtocol {
     var convertionError: ConvertionErrors? = nil
     var baseCurrency: String = "EUR"
     private var convertionUrl: URL {
-        let url = URL(string: "https://data.fixer.io/api/latest" + "?access_key=07bb16458b377a95361d648e74daed7f&base=" + self.baseCurrency)!
+        let url = URL(string: "http://data.fixer.io/api/latest" + "?access_key=07bb16458b377a95361d648e74daed7f&base=" + self.baseCurrency)!
         return url
     }
     
