@@ -22,10 +22,10 @@ class ConvertionService {
     var convertionResponse: ConvertionResponse?
     var baseCurrency = "EUR"
     
-    var currentTimestamp: Int {
+    var currentTimestamp: TimeInterval {
         return getcurrentTimestamp()
     }
-    var lastUpdatedRateDate: Int?
+    var lastUpdatedRateDate: TimeInterval?
     var lastBaseRequested: String?
     
     
@@ -55,11 +55,11 @@ class ConvertionService {
     
     
     
-    private func getcurrentTimestamp() -> Int {
+    private func getcurrentTimestamp() -> TimeInterval {
         let dateFormatter : DateFormatter = DateFormatter()
         dateFormatter.timeZone = TimeZone(secondsFromGMT:0)
         let date = Date()
-        let currentTimestamp = Int(date.timeIntervalSince1970)
+        let currentTimestamp = date.timeIntervalSince1970
         return currentTimestamp
     }
     

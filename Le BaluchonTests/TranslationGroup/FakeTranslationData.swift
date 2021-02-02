@@ -15,4 +15,10 @@ class FakeTranslationData {
         let url = bundle.url(forResource: "HelloTranslationData", withExtension: "json")!
         return try! Data(contentsOf: url)
     }
+    
+    static var frDetectionData: Data? {
+        let bundle = Bundle(for: FakeTranslationData.self)
+        let url = bundle.url(forResource: "FrDetectionData", withExtension: "json")!
+        return try! Data(contentsOf: url)
+    }
 }

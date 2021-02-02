@@ -21,3 +21,6 @@ struct TranslationDataClass: Codable {
 struct Translation: Codable {
     let translatedText: String
 }
+
+let a = TranslationResponse(data: TranslationDataClass(translations: [Translation(translatedText: "Hello")]))
+

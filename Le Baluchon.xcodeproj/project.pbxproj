@@ -21,6 +21,7 @@
 		6B5B350C251D63FD00554B7B /* ConvertionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5B350B251D63FD00554B7B /* ConvertionService.swift */; };
 		6B5E9A92254861E60042A46B /* URLSessionFake.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5E9A91254861E60042A46B /* URLSessionFake.swift */; };
 		6B5E9A97254864D60042A46B /* FakeWeatherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5E9A96254864D60042A46B /* FakeWeatherData.swift */; };
+		6B65217525C9C05C008453DC /* FrDetectionData.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B65217425C9C05C008453DC /* FrDetectionData.json */; };
 		6B90E0D125268BD8004DEB2F /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B90E0D025268BD8004DEB2F /* Currency.swift */; };
 		6B90E0DE25274C82004DEB2F /* CurrenciesData.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B90E0DD25274C82004DEB2F /* CurrenciesData.json */; };
 		6BA52E0E25BD9980001B5DCE /* NewYorkWeatherData.json in Resources */ = {isa = PBXBuildFile; fileRef = 6BA52E0D25BD9980001B5DCE /* NewYorkWeatherData.json */; };
@@ -84,6 +85,7 @@
 		6B5B350B251D63FD00554B7B /* ConvertionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConvertionService.swift; sourceTree = "<group>"; };
 		6B5E9A91254861E60042A46B /* URLSessionFake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionFake.swift; sourceTree = "<group>"; };
 		6B5E9A96254864D60042A46B /* FakeWeatherData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeWeatherData.swift; sourceTree = "<group>"; };
+		6B65217425C9C05C008453DC /* FrDetectionData.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = FrDetectionData.json; sourceTree = "<group>"; };
 		6B90E0D025268BD8004DEB2F /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
 		6B90E0DD25274C82004DEB2F /* CurrenciesData.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = CurrenciesData.json; sourceTree = "<group>"; };
 		6BA52E0D25BD9980001B5DCE /* NewYorkWeatherData.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = NewYorkWeatherData.json; sourceTree = "<group>"; };
@@ -215,6 +217,7 @@
 				6BA52E5825BF3328001B5DCE /* TranslationServiceTests.swift */,
 				6B571FB825BF4708001C00CD /* HelloTranslationData.json */,
 				6B571FC025BF4738001C00CD /* FakeTranslationData.swift */,
+				6B65217425C9C05C008453DC /* FrDetectionData.json */,
 			);
 			path = TranslationGroup;
 			sourceTree = "<group>";
@@ -457,6 +460,7 @@
 				6BA52E2B25BDCEAC001B5DCE /* UsdBasedConvertionData.json in Resources */,
 				6BA52E0E25BD9980001B5DCE /* NewYorkWeatherData.json in Resources */,
 				6BA52E2625BDCE86001B5DCE /* EuroBasedConvertionData.json in Resources */,
+				6B65217525C9C05C008453DC /* FrDetectionData.json in Resources */,
 				6B571FB925BF4708001C00CD /* HelloTranslationData.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
