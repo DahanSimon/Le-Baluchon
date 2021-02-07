@@ -24,10 +24,10 @@ class FakeConvertionData {
     
     // MARK: - Response
     static let responseOK = HTTPURLResponse(
-        url: URL(string: "https://openclassrooms.com")!,
+        url: URL(string: "https://examples.org")!,
         statusCode: 200, httpVersion: nil, headerFields: nil)!
 
     static let responseKO = HTTPURLResponse(
-        url: URL(string: "https://openclassrooms.com")!,
+        url: URL(string: "https://examples.org")!,
         statusCode: 201, httpVersion: nil, headerFields: nil)!
 }

@@ -15,7 +15,7 @@ class SettingsContainerVC: UIViewController {
         super.viewDidLoad()
     }
     
-    private var weatherSettingsTableVC: WeatherSettingsTableViewController!
+    private weak var weatherSettingsTableVC: WeatherSettingsTableViewController!
     
     var delegate: WeatherSelectionDelegate?
     

@@ -8,7 +8,7 @@
 import UIKit
 
 protocol WeatherSelectionDelegate {
-    func didEnteredCitiesNames(destinationCityName: String, originCityName: String)
+    func didEnterCitiesNames(destinationCityName: String, originCityName: String)
 }
 
 class WeatherSettingsTableViewController: UITableViewController {
@@ -39,19 +39,17 @@ class WeatherSettingsTableViewController: UITableViewController {
             return
         }
         
-        
-        
-        if originCityName == "" && destinationCityName == "" {
+        if originCityName.isEmpty && destinationCityName.isEmpty {
             self.originCityTextField.backgroundColor = #colorLiteral(red: 1, green: 0.2705882353, blue: 0.2274509804, alpha: 1)
             self.destinationCityTextField.backgroundColor = #colorLiteral(red: 1, green: 0.2705882353, blue: 0.2274509804, alpha: 1)
             formError = .noTextFieldAreFilled
             presentAlert(message: formError!.rawValue)
-        } else if destinationCityName == "" {
+        } else if destinationCityName .isEmpty {
             self.originCityTextField.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
             self.destinationCityTextField.backgroundColor = #colorLiteral(red: 1, green: 0.2705882353, blue: 0.2274509804, alpha: 1)
             formError = .destinationTextFieldIsNotFilled
             presentAlert(message: formError!.rawValue)
-        } else if originCityName == "" {
+        } else if originCityName.isEmpty {
             self.originCityTextField.backgroundColor = #colorLiteral(red: 1, green: 0.2705882353, blue: 0.2274509804, alpha: 1)
             self.destinationCityTextField.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
             formError = .originTextFieldIsNotFilled
@@ -59,7 +57,7 @@ class WeatherSettingsTableViewController: UITableViewController {
         } else {
             self.originCityTextField.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
             self.destinationCityTextField.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-            weatherSelectionDelegate.didEnteredCitiesNames(destinationCityName: destinationCityName, originCityName: originCityName)
+            weatherSelectionDelegate.didEnterCitiesNames(destinationCityName: destinationCityName, originCityName: originCityName)
             self.performSegue(withIdentifier: "unwindToWeather", sender: self)
         }
         
@@ -88,8 +86,6 @@ extension WeatherSettingsTableViewController: UITextFieldDelegate {
         textField.resignFirstResponder()
         return true
     }
-    
-    
 }
 
 enum WeatherSettingsFormErrors: String {

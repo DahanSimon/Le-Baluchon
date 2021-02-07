@@ -1,5 +1,5 @@
 //
-//  ExchaneResponse.swift
+//  ConvertionResponse.swift
 //  Le Baluchon
 //
 //  Created by Simon Dahan on 27/09/2020.
@@ -11,7 +11,7 @@ import Foundation
 // MARK: - CorrectResponse
 struct ConvertionResponse: Codable {
     let success: Bool
-    let timestamp: Int
+    let timestamp: TimeInterval
     let base, date: String
     let rates: [String: Double]
 }

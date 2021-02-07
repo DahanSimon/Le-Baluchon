@@ -24,11 +24,11 @@ class TranslationGoogleAPI: TranslationAPIProtocol {
                 return nil
             }
             var url: URL?
-            url = URL(string: "https://translation.googleapis.com/language/translate/v2?key=AIzaSyA5IE8fEVAPl0J1jYH_drQZVOi_FTThdng&q=" + textToTranslateUrlFriendly + "&source=" +  sourceLanguage +  "&target=en&format=text")!
+            url = URL(string: "https://translation.googleapis.com/language/translate/v2?key=AIzaSyA5IE8fEVAPl0J1jYH_drQZVOi_FTThdng&q=" + textToTranslateUrlFriendly + "&source=" +  sourceLanguage +  "&target=en&format=text")
             return url
         }
         
-        guard let request = createTranslationRequest(url: translationURL) else {
+        guard let request = createRequest(url: translationURL) else {
             return
         }
         
@@ -63,7 +63,7 @@ class TranslationGoogleAPI: TranslationAPIProtocol {
         task?.resume()
     }
     
-    private func createTranslationRequest(url: URL?) -> URLRequest? {
+    private func createRequest(url: URL?) -> URLRequest? {
         guard let translationURL = url else {
             return nil
         }
@@ -76,20 +76,7 @@ class TranslationGoogleAPI: TranslationAPIProtocol {
         return request
     }
     
-    private func createDetectLanguageRequest(url: URL?) -> URLRequest? {
-        guard let translationURL = url else {
-            return nil
-        }
-        
-        var request = URLRequest(url: translationURL)
-        request.httpMethod = "POST"
-        
-        let body = ""
-        request.httpBody = body.data(using: .utf8)
-        return request
-    }
-    
-    func getSourceLanguage(textToTranslate: String, callback: @escaping (Bool, DetectionResponse?) -> Void)  {
+    func getSourceLanguage(textToTranslate: String, callback: @escaping (Bool, String?) -> Void)  {
         let detectionSession = URLSession(configuration: .default)
         var detectionTask: URLSessionDataTask?
         guard let textToTranslateUrlFriendly = textToTranslate.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else {
@@ -98,11 +85,11 @@ class TranslationGoogleAPI: TranslationAPIProtocol {
         
         var detectionURL: URL? {
             var url: URL?
-            url = URL(string: "https://translation.googleapis.com/language/translate/v2/detect?key=AIzaSyA5IE8fEVAPl0J1jYH_drQZVOi_FTThdng&q=" + textToTranslateUrlFriendly)!
+            url = URL(string: "https://translation.googleapis.com/language/translate/v2/detect?key=AIzaSyA5IE8fEVAPl0J1jYH_drQZVOi_FTThdng&q=" + textToTranslateUrlFriendly)
             return url
         }
         
-        guard let detectionRequest = createTranslationRequest(url: detectionURL) else {
+        guard let detectionRequest = createRequest(url: detectionURL) else {
             return
         }
         
@@ -123,8 +110,8 @@ class TranslationGoogleAPI: TranslationAPIProtocol {
                 }
                 
                 if let responseJSON = try? JSONDecoder().decode(DetectionResponse.self, from: data) {
-                    self.sourceLanguage = responseJSON.data.detections[0][0].language
-                    callback(true, responseJSON)
+                    self.sourceLanguage = responseJSON.data.detections.first?.first?.language
+                    callback(true, responseJSON.data.detections.first?.first?.language)
                 } else {
                     if let incorrectResponseJSON = try? JSONDecoder().decode(IncorrectResponse.self, from: data) {
                         callback(false, nil)

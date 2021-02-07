@@ -12,12 +12,9 @@ class ApiConvertion: ConvertionProtocol {
     private var task: URLSessionDataTask?
     private var convertionSession = URLSession(configuration: .default)
     var apiConvertionResponse: ConvertionResponse?
-    var convertionError: ConvertionErrors? = nil
+    var convertionError: ConvertionError? = nil
     var baseCurrency: String = "EUR"
-    private var convertionUrl: URL {
-        let url = URL(string: "http://data.fixer.io/api/latest" + "?access_key=07bb16458b377a95361d648e74daed7f&base=" + self.baseCurrency)!
-        return url
-    }
+    
     
     func getConvertion(baseCurrency: String, callback: @escaping (Bool, ConvertionResponse?) -> Void) {
         self.baseCurrency = baseCurrency
@@ -29,14 +26,14 @@ class ApiConvertion: ConvertionProtocol {
                 //                    guard let self = self else { return }
                 
                 guard let data = data, error == nil else {
-                    callback(false, nil)
                     self.convertionError = .noDataReceived
+                    callback(false, nil)
                     return
                 }
                 
                 guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                    callback(false, nil)
                     self.convertionError = .responseCodeIsNot200
+                    callback(false, nil)
                     return
                 }
                 
@@ -55,6 +52,11 @@ class ApiConvertion: ConvertionProtocol {
             }
         }
         task?.resume()
+    }
+    
+    private var convertionUrl: URL {
+        let url = URL(string: "http://data.fixer.io/api/latest" + "?access_key=07bb16458b377a95361d648e74daed7f&base=" + self.baseCurrency)!
+        return url
     }
     
     private func createConvertionRequest() -> URLRequest {

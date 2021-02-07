@@ -41,8 +41,9 @@ class ConvertViewController: UIViewController, CurrencySelectionDelegate {
             toggleActivityIndicator(shown: false)
 
             if success, let exchange = exchange {
-                let rate = exchange.rates["USD"]!
-                rateInfoLabel.text = "1 € = " + String(format: "%.4f $", rate)
+                if let rate = exchange.rates["USD"] {
+                    rateInfoLabel.text = "1 € = " + String(format: "%.4f $", rate)
+                }
             } else {
                 rateInfoLabel.isHidden = true
             }

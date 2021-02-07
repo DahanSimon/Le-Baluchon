@@ -19,16 +19,7 @@ class TranslateViewController: UIViewController {
     
     @IBAction func translateButtonTapped(_ sender: Any) {
         
-        var languagesCodeData: Data? {
-            let bundle = Bundle(for: TranslationService.self)
-            let url = bundle.url(forResource: "LanguagesCodesData", withExtension: "json")!
-            return try! Data(contentsOf: url)
-        }
-        
-        guard let languagesCodes = try? JSONDecoder().decode(LanguagesCodes.self, from: languagesCodeData!) else {
-            return
-        }
-        
+                
         guard let textToTranslate = self.textToTranslateTextField.text else {
             return
         }
@@ -42,7 +33,7 @@ class TranslateViewController: UIViewController {
             guard let translation = translationStruct else {
                 return
             }
-            self.sourceLanguageLabel.text = languagesCodes[translation.sourceLanguage!]?.name
+            self.sourceLanguageLabel.text = translation.sourceLanguage
             self.translatedTextTextField.text = translation.translatedText
         }
         

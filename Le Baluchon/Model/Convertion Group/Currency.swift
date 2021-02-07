@@ -16,7 +16,7 @@ struct Currency {
     static var currenciesData: Data? {
         let bundle = Bundle(for: ConvertionService.self)
         let url = bundle.url(forResource: "CurrenciesData", withExtension: "json")!
-        return try! Data(contentsOf: url)
+        return try? Data(contentsOf: url)
     }
     
     let data = try! JSONDecoder().decode(CurrenciesData.self, from: currenciesData!)
@@ -38,6 +38,6 @@ struct CurrenciesDataValue: Codable {
         case namePlural = "name_plural"
     }
 }
-
+// The key of this dictionnary is the currency code
 typealias CurrenciesData = [String: CurrenciesDataValue]
 

@@ -42,11 +42,13 @@
 		6BBCE097253B85B000C82902 /* WeatherServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBCE096253B85B000C82902 /* WeatherServiceTests.swift */; };
 		6BBEBD3D2520B99D00B16CA0 /* ConvertionResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBEBD3C2520B99D00B16CA0 /* ConvertionResponse.swift */; };
 		6BBF2A3C252640000098D104 /* ConvertSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBF2A3B252640000098D104 /* ConvertSettingsViewController.swift */; };
+		6BC8671E25D06CC900A9B28E /* WeatherServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC8671B25D06CC900A9B28E /* WeatherServiceProtocol.swift */; };
+		6BC8671F25D06CC900A9B28E /* world-cities_json.json in Resources */ = {isa = PBXBuildFile; fileRef = 6BC8671C25D06CC900A9B28E /* world-cities_json.json */; };
+		6BC8672025D06CC900A9B28E /* CitiesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC8671D25D06CC900A9B28E /* CitiesList.swift */; };
 		6BC878E8251B9F6F00113732 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC878E7251B9F6F00113732 /* AppDelegate.swift */; };
 		6BC878EF251B9F6F00113732 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6BC878ED251B9F6F00113732 /* Main.storyboard */; };
 		6BC878F1251B9F7300113732 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6BC878F0251B9F7300113732 /* Assets.xcassets */; };
 		6BC878F4251B9F7300113732 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6BC878F2251B9F7300113732 /* LaunchScreen.storyboard */; };
-		6BC878FF251B9F7300113732 /* Le_BaluchonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC878FE251B9F7300113732 /* Le_BaluchonTests.swift */; };
 		6BC8790A251B9F7300113732 /* Le_BaluchonUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC87909251B9F7300113732 /* Le_BaluchonUITests.swift */; };
 		6BC87928251BB68400113732 /* ConvertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC87927251BB68400113732 /* ConvertViewController.swift */; };
 		6BC87930251BDAFA00113732 /* TranslateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC8792F251BDAFA00113732 /* TranslateViewController.swift */; };
@@ -106,6 +108,9 @@
 		6BBCE096253B85B000C82902 /* WeatherServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherServiceTests.swift; sourceTree = "<group>"; };
 		6BBEBD3C2520B99D00B16CA0 /* ConvertionResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConvertionResponse.swift; sourceTree = "<group>"; };
 		6BBF2A3B252640000098D104 /* ConvertSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConvertSettingsViewController.swift; sourceTree = "<group>"; };
+		6BC8671B25D06CC900A9B28E /* WeatherServiceProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherServiceProtocol.swift; sourceTree = "<group>"; };
+		6BC8671C25D06CC900A9B28E /* world-cities_json.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "world-cities_json.json"; sourceTree = "<group>"; };
+		6BC8671D25D06CC900A9B28E /* CitiesList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CitiesList.swift; sourceTree = "<group>"; };
 		6BC878E4251B9F6F00113732 /* Le Baluchon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Le Baluchon.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BC878E7251B9F6F00113732 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6BC878EE251B9F6F00113732 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -113,7 +118,6 @@
 		6BC878F3251B9F7300113732 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6BC878F5251B9F7300113732 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6BC878FA251B9F7300113732 /* Le BaluchonTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Le BaluchonTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		6BC878FE251B9F7300113732 /* Le_BaluchonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Le_BaluchonTests.swift; sourceTree = "<group>"; };
 		6BC87900251B9F7300113732 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6BC87905251B9F7300113732 /* Le BaluchonUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Le BaluchonUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BC87909251B9F7300113732 /* Le_BaluchonUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Le_BaluchonUITests.swift; sourceTree = "<group>"; };
@@ -178,6 +182,9 @@
 		6B59B8FA2524EF3D00901DEF /* Weather Group */ = {
 			isa = PBXGroup;
 			children = (
+				6BC8671D25D06CC900A9B28E /* CitiesList.swift */,
+				6BC8671B25D06CC900A9B28E /* WeatherServiceProtocol.swift */,
+				6BC8671C25D06CC900A9B28E /* world-cities_json.json */,
 				6B59B9032524EF9400901DEF /* WeatherService.swift */,
 				6B59B8FB2524EF7200901DEF /* CityWeatherResponse.swift */,
 			);
@@ -287,7 +294,6 @@
 				6BA52E3D25BF31E6001B5DCE /* TranslationGroup */,
 				6BA52E1725BDCCE7001B5DCE /* ConvertionGroup */,
 				6BBCE095253B858C00C82902 /* Weather Group */,
-				6BC878FE251B9F7300113732 /* Le_BaluchonTests.swift */,
 				6BC87900251B9F7300113732 /* Info.plist */,
 			);
 			path = "Le BaluchonTests";
@@ -444,6 +450,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6B90E0DE25274C82004DEB2F /* CurrenciesData.json in Resources */,
+				6BC8671F25D06CC900A9B28E /* world-cities_json.json in Resources */,
 				6BC878F4251B9F7300113732 /* LaunchScreen.storyboard in Resources */,
 				6B1AF27325C8B95D003F6DC1 /* LanguagesCodesData.json in Resources */,
 				6BC878F1251B9F7300113732 /* Assets.xcassets in Resources */,
@@ -487,9 +494,11 @@
 				6BA52E4F25BF32A1001B5DCE /* TranslationAPIProtocol.swift in Sources */,
 				6B1AF26E25C8AF74003F6DC1 /* IsoCodes.swift in Sources */,
 				6B59B9042524EF9400901DEF /* WeatherService.swift in Sources */,
+				6BC8671E25D06CC900A9B28E /* WeatherServiceProtocol.swift in Sources */,
 				6B59B8F62524E38B00901DEF /* ConvertionErrors.swift in Sources */,
 				6BC87935251BE4DE00113732 /* WeatherViewController.swift in Sources */,
 				6B5833702538B12C00B10E9D /* SettingsContainerVC.swift in Sources */,
+				6BC8672025D06CC900A9B28E /* CitiesList.swift in Sources */,
 				6B5B350C251D63FD00554B7B /* ConvertionService.swift in Sources */,
 				6BBF2A3C252640000098D104 /* ConvertSettingsViewController.swift in Sources */,
 				6B571FC625C2DB63001C00CD /* DetectionResponse.swift in Sources */,
@@ -516,7 +525,6 @@
 				6B571FC125BF4738001C00CD /* FakeTranslationData.swift in Sources */,
 				6BBCE097253B85B000C82902 /* WeatherServiceTests.swift in Sources */,
 				6BA52E3525BDD279001B5DCE /* ConvertionServiceTests.swift in Sources */,
-				6BC878FF251B9F7300113732 /* Le_BaluchonTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

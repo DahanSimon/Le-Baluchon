@@ -626,7 +626,7 @@
                     <navigationItem key="navigationItem" id="hG5-3w-JvZ"/>
                     <connections>
                         <outlet property="baseCurrencyPickerView" destination="mCs-9G-WEz" id="9vY-Id-u4V"/>
-                        <outlet property="convertTo_CurrencyPickerView" destination="l19-kp-jOb" id="tB6-ak-z0D"/>
+                        <outlet property="convertToCurrencyPickerView" destination="l19-kp-jOb" id="XCP-MJ-WGo"/>
                         <outlet property="settingHalfView" destination="aJW-Rp-6Ah" id="e8q-2Z-YfQ"/>
                     </connections>
                 </viewController>

@@ -9,7 +9,7 @@ import UIKit
 
 class WeatherViewController: UIViewController, WeatherSelectionDelegate {
     
-    func didEnteredCitiesNames(destinationCityName: String, originCityName: String) {
+    func didEnterCitiesNames(destinationCityName: String, originCityName: String) {
         self.destinationCityName = destinationCityName
         self.originCityName = originCityName
         compareWeather(between: self.originCityName!, and: self.destinationCityName!)
@@ -59,7 +59,7 @@ class WeatherViewController: UIViewController, WeatherSelectionDelegate {
         
     }
     
-    private func getStringFromTemp(temperature: Double) -> String{
+    private func getString(from temperature: Double) -> String{
         let intTemp = Int(temperature)
         return String(intTemp)
     }
@@ -79,13 +79,21 @@ class WeatherViewController: UIViewController, WeatherSelectionDelegate {
             }
             
             self.toggleActivityIndicator(shown: false)
-            self.originCityNameLabel.text = origin.name
-            self.originCityWeatherDescriptionLabel.text = "Description: \n \(origin.weather[0].weatherDescription)"
-            self.originCityWeatherLabel.text = self.getStringFromTemp(temperature: (origin.main.temp)) + " °C"
-            
-            self.destinationCityNameLabel.text = destination.name
-            self.destinationWeatherDescriptionLabel.text = "Description: \n \(destination.weather[0].weatherDescription)"
-            self.destinationTemperatureLabel.text = self.getStringFromTemp(temperature: destination.main.temp) + " °C"
+            self.updateView(for: .origin, name: origin.name, description: origin.weather[0].weatherDescription, temp: origin.main.temp)
+            self.updateView(for: .destination, name: destination.name, description: destination.weather[0].weatherDescription, temp: destination.main.temp)
+        }
+    }
+    
+    private func updateView(for cityType: CityType, name: String, description: String, temp: Double) {
+        switch cityType {
+        case .origin:
+            self.originCityNameLabel.text = name
+            self.originCityWeatherDescriptionLabel.text = "Description: \n \(description)"
+            self.originCityWeatherLabel.text = self.getString(from: temp) + " °C"
+        case .destination:
+            self.destinationCityNameLabel.text = name
+            self.destinationWeatherDescriptionLabel.text = "Description: \n \(description)"
+            self.destinationTemperatureLabel.text = self.getString(from: temp) + " °C"
         }
     }
     

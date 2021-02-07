@@ -12,14 +12,14 @@ protocol CurrencySelectionDelegate {
 }
 
 class ConvertSettingsViewController: UIViewController {
-    @IBOutlet weak var convertTo_CurrencyPickerView: UIPickerView!
+    @IBOutlet weak var convertToCurrencyPickerView: UIPickerView!
     @IBOutlet weak var baseCurrencyPickerView: UIPickerView!
     @IBOutlet weak var settingHalfView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.settingHalfView.layer.cornerRadius = 15
-        checkData()
+        populateData()
     }
     
     var ratesCityCode:[String: String] = [:]
@@ -27,12 +27,18 @@ class ConvertSettingsViewController: UIViewController {
     var selectionDelegate: CurrencySelectionDelegate!
     
 
-    private func createArrayFormDictionnary(dict: [String: String]) {
+    @IBAction func okButtonTapped(_ sender: Any) {
+        let convertTo_CurrencyCode = getCurrenciesCode(pickerView: self.convertToCurrencyPickerView)
+        let baseCurrencyCode = getCurrenciesCode(pickerView: self.baseCurrencyPickerView)
+        selectionDelegate.didSelectCurrency(convertTo_CurrencyCode: convertTo_CurrencyCode, baseCurrencyCode: baseCurrencyCode)
+    }
+    
+    private func createArrayFormDictionnary(dict: [String: String]) -> [String]{
         var array: [String] = []
         for (key, value) in dict {
             array.append(key + " - \(value)")
         }
-        currenciesArray = array.sorted()
+        return array.sorted()
     }
     
     func getCurrenciesCode(pickerView: UIPickerView) -> String {
@@ -40,6 +46,15 @@ class ConvertSettingsViewController: UIViewController {
         let currency = currenciesArray[currencyIndex]
         let currencyCode = currency.split(separator: " ").first!
         return String(currencyCode)
+    }
+    
+    func populateData() {
+        for (code, _) in Currency.share.data {
+            if let _ = ConvertionService.shared.convertionResponse?.rates[code] {
+                ratesCityCode[code] = Currency.share.data[code]?.name
+            }
+        }
+        self.currenciesArray = createArrayFormDictionnary(dict: ratesCityCode)
     }
 }
 
@@ -54,23 +69,9 @@ extension ConvertSettingsViewController: UIPickerViewDataSource, UIPickerViewDel
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        createArrayFormDictionnary(dict: ratesCityCode)
         return currenciesArray[row]
     }
     
-    @IBAction func okButtonTapped(_ sender: Any) {
-        let convertTo_CurrencyCode = getCurrenciesCode(pickerView: self.convertTo_CurrencyPickerView)
-        let baseCurrencyCode = getCurrenciesCode(pickerView: self.baseCurrencyPickerView)
-        selectionDelegate.didSelectCurrency(convertTo_CurrencyCode: convertTo_CurrencyCode, baseCurrencyCode: baseCurrencyCode)
-    }
-    
-    func checkData() {
-        for (code, _) in Currency.share.data {
-            if let _ = ConvertionService.shared.convertionResponse?.rates[code] {
-                ratesCityCode[code] = Currency.share.data[code]?.name
-            }
-        }
-    }
 }
 
 

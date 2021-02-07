@@ -16,34 +16,46 @@ class TranslationService {
     }
     
     func detectAndTranslate(textToTranslate: String, callback: @escaping (Bool, TranslationStruct?) -> Void) {
-        var translationStruc = TranslationStruct()
-        translationStruc.textToTransalte = textToTranslate
+        
+        var languagesCodeData: Data? {
+            let bundle = Bundle(for: TranslationService.self)
+            let url = bundle.url(forResource: "LanguagesCodesData", withExtension: "json")!
+            return try! Data(contentsOf: url)
+        }
+        
+        guard let languagesCodes = try? JSONDecoder().decode(LanguagesCodes.self, from: languagesCodeData!) else {
+            return
+        }
+
+        var translationStruc = TranslationStruct(textToTranslate: textToTranslate)
         
         let dispatchGroup = DispatchGroup()
         dispatchGroup.enter()
-        self.api.getSourceLanguage(textToTranslate: textToTranslate) { (success, detectionResponse) in
-            if let detection = detectionResponse {
-                translationStruc.sourceLanguage = detection.data.detections[0][0].language
-                dispatchGroup.enter()
-                self.api.getTranslation(textToTranslate: textToTranslate) { (success, response) in
-                    if let translation = response {
-                        translationStruc.translatedText = translation.data.translations[0].translatedText
-                    }
-                    dispatchGroup.leave()
-                }
+        self.api.getSourceLanguage(textToTranslate: textToTranslate) { (success, detectedLanguageCode) in
+            if let detectedLanguage = detectedLanguageCode {
+                translationStruc.sourceLanguage = languagesCodes[detectedLanguage]?.name
             }
             dispatchGroup.leave()
         }
         
         dispatchGroup.notify(queue: .main) {
-            callback(true,translationStruc)
+            self.api.getTranslation(textToTranslate: textToTranslate) { (success, response) in
+                if let translation = response {
+                    translationStruc.translatedText = translation.data.translations.first?.translatedText
+                    callback(true,translationStruc)
+                }
+            }
         }
     }
 }
 
 
 struct TranslationStruct {
-    var textToTransalte: String?
+    var textToTranslate: String
     var sourceLanguage: String?
     var translatedText: String?
+    
+    init(textToTranslate: String) {
+        self.textToTranslate = textToTranslate
+    }
 }

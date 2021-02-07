@@ -9,7 +9,7 @@ import Foundation
 
 class WeatherService {
     
-    var error: WeatherApiErrors?
+    var error: WeatherApiError?
     var weatherResponse: CityWeatherResponse?
     var weatherResponseError: WeatherResponseError?
     
@@ -25,10 +25,10 @@ class WeatherService {
     private var task: URLSessionDataTask?
         
     private func execute(request: URLRequest, callback: @escaping (WeatherResponseError?, CityWeatherResponse?) -> Void) {
-        task = weatherSession.dataTask(with: request) { /*[weak self]*/ (data, response, error) in
+        task = weatherSession.dataTask(with: request) { [weak self] (data, response, error) in
             DispatchQueue.main.async {
                 
-//                guard let self = self else { return }
+                guard let self = self else { return }
                 
                 guard let data = data, error == nil else {
                     callback(nil, nil)
@@ -47,7 +47,7 @@ class WeatherService {
                     }
                 } else {
                     if let responseJSON = try? JSONDecoder().decode(WeatherResponseError.self, from: data) {
-                        self.error = WeatherApiErrors.apiError(weatherResponseError: responseJSON)
+                        self.error = WeatherApiError.apiError(weatherResponseError: responseJSON)
                         self.weatherResponseError = responseJSON
                         callback(self.weatherResponseError, nil)
                     }
@@ -115,7 +115,7 @@ extension WeatherService {
     }
 }
 
-enum WeatherApiErrors {
+enum WeatherApiError {
     case apiError(weatherResponseError: WeatherResponseError)
     case notUrlFriendly(message: String)
 }

@@ -24,6 +24,7 @@ class WeatherServiceTests: XCTestCase {
             expectation.fulfill()
         }
         wait(for: [expectation], timeout: 0.01)
+        //Then
         XCTAssertNotNil(parisWeather)
         XCTAssertEqual(parisWeather?.name, "Paris")
     }
@@ -40,6 +41,7 @@ class WeatherServiceTests: XCTestCase {
             expectation.fulfill()
         }
         wait(for: [expectation], timeout: 0.01)
+        //Then
         XCTAssertNotNil(result[.origin] as? CityWeatherResponse)
         XCTAssertNotNil(result[.destination] as? CityWeatherResponse)
         let originWeather = result[.origin] as? CityWeatherResponse
@@ -58,13 +60,11 @@ class WeatherServiceTests: XCTestCase {
         
         var weatherError: WeatherResponseError?
         weatherService.getWeather(for: "gfdh") { (error, response) in
-//            if let weatherResponse = response {
-//                parisWeather = weatherResponse
-//            }
             weatherError = weatherService.weatherResponseError
             expectation.fulfill()
         }
         wait(for: [expectation], timeout: 0.01)
+        //Then
         XCTAssertNotNil(weatherError)
     }
     
@@ -80,6 +80,7 @@ class WeatherServiceTests: XCTestCase {
             expectation.fulfill()
         }
         wait(for: [expectation], timeout: 0.01)
+        //Then
         XCTAssertNotNil(result[.origin] as? WeatherResponseError)
         XCTAssertNotNil(result[.destination] as? WeatherResponseError)
     }

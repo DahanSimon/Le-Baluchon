@@ -16,13 +16,9 @@ class ConvertionServiceTests: XCTestCase {
         let convertionService = ConvertionService(api: euroBasedMock)
         convertionService.baseCurrency = "EUR"
         // When
-        let expectation = XCTestExpectation(description: "Wait for queue change.")
+        let expectation = XCTestExpectation(description: "Wait for convertion to be done")
     
         var euroBasedRates: ConvertionResponse? = nil
-        
-        convertionService.convert { (success, convertionResponse) in
-            euroBasedRates = convertionResponse
-        }
         
         convertionService.convert { (success, convertionResponse) in
             euroBasedRates = convertionResponse
@@ -40,7 +36,7 @@ class ConvertionServiceTests: XCTestCase {
         let convertionService = ConvertionService(api: usdBasedMock)
         convertionService.baseCurrency = "USD"
         // When
-        let expectation = XCTestExpectation(description: "Wait for queue change.")
+        let expectation = XCTestExpectation(description: "Wait for convertion to be done")
     
         var usdBasedRates: ConvertionResponse? = nil
         convertionService.convert { (success, convertionResponse) in

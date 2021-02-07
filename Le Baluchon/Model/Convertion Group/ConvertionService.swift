@@ -56,8 +56,8 @@ class ConvertionService {
     
     
     private func getcurrentTimestamp() -> TimeInterval {
-        let dateFormatter : DateFormatter = DateFormatter()
-        dateFormatter.timeZone = TimeZone(secondsFromGMT:0)
+//        let dateFormatter : DateFormatter = DateFormatter()
+//        dateFormatter.timeZone = TimeZone(secondsFromGMT:0)
         let date = Date()
         let currentTimestamp = date.timeIntervalSince1970
         return currentTimestamp

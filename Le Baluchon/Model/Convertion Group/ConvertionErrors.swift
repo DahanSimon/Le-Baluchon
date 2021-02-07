@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum ConvertionErrors {
+enum ConvertionError {
     case noDataReceived
     case responseCodeIsNot200
     case incorrectRequest(errorDescription: String)
