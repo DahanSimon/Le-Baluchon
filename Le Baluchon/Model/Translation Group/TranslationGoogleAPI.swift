@@ -12,6 +12,7 @@ class TranslationGoogleAPI: TranslationAPIProtocol {
     private var task: URLSessionDataTask?
     var sourceLanguage: String?
     var translationResponse: TranslationResponse?
+    var incorrectTranslationResponse: IncorrectTranslationResponse?
     
     func getTranslation(textToTranslate: String, callback: @escaping (Bool, TranslationResponse?) -> Void) {
         
@@ -35,28 +36,26 @@ class TranslationGoogleAPI: TranslationAPIProtocol {
         task?.cancel()
         task = translationSession.dataTask(with: request) { (data, response, error) in
             DispatchQueue.main.async { [self] in
-                
-                //                    guard let self = self else { return }
-                
+                if self.sourceLanguage == "en" {
+                    callback(true, TranslationResponse(data: TranslationDataClass(translations: [Translation(translatedText: textToTranslate)])))
+                }
+                                
                 guard let data = data, error == nil else {
                     callback(false, nil)
                     return
                 }
                 
                 guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                    callback(false, nil)
+                    if let incorrectResponseJSON = try? JSONDecoder().decode(IncorrectTranslationResponse.self, from: data) {
+                        self.incorrectTranslationResponse = incorrectResponseJSON
+                        callback(false, nil)
+                    }
                     return
                 }
                 
                 if let responseJSON = try? JSONDecoder().decode(TranslationResponse.self, from: data) {
                     self.translationResponse = responseJSON
                     callback(true, self.translationResponse)
-                } else {
-                    if let incorrectResponseJSON = try? JSONDecoder().decode(IncorrectResponse.self, from: data) {
-                        callback(false, nil)
-                    } else {
-                        callback(false, nil)
-                    }
                 }
             }
         }
@@ -111,13 +110,12 @@ class TranslationGoogleAPI: TranslationAPIProtocol {
                 
                 if let responseJSON = try? JSONDecoder().decode(DetectionResponse.self, from: data) {
                     self.sourceLanguage = responseJSON.data.detections.first?.first?.language
-                    callback(true, responseJSON.data.detections.first?.first?.language)
-                } else {
-                    if let incorrectResponseJSON = try? JSONDecoder().decode(IncorrectResponse.self, from: data) {
-                        callback(false, nil)
+                    if self.sourceLanguage != "und" {
+                        callback(true, responseJSON.data.detections.first?.first?.language)
                     } else {
-                        callback(false, nil)
+                        callback(false,responseJSON.data.detections.first?.first?.language)
                     }
+                    
                 }
             }
         }

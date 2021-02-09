@@ -24,3 +24,5 @@ struct Detection: Codable {
     let confidence: Double
     let language: String
 }
+
+let a = DetectionResponse(data: DetectionDataClass(detections: [[Detection(isReliable: true, confidence: 1, language: "fr")]]))

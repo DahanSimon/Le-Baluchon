@@ -43,9 +43,8 @@ class ConvertionService {
                     callback(false, nil)
                 }
             }
-            
         } else {
-            if let convertionResponse = convertionResponse {
+            if let convertionResponse = self.convertionResponse {
                 callback(true, convertionResponse)
             } else {
                 callback(false, nil)

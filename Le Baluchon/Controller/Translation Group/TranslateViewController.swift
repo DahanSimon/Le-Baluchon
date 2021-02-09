@@ -24,15 +24,23 @@ class TranslateViewController: UIViewController {
             return
         }
         
-        if textToTranslate == "" {
+        if textToTranslate.isEmpty {
             presentAlert(message: "Please enter some text")
             return
         }
         
         self.translationService.detectAndTranslate(textToTranslate: textToTranslate) { (success, translationStruct) in
             guard let translation = translationStruct else {
+                if let detectionError = self.translationService.detectionError, detectionError == .undefined {
+                    self.presentAlert(message: detectionError.localizedDescription)
+                }
+                
+                if let translationErrorMessage = self.translationService.translationErrorMessage {
+                    self.presentAlert(message: translationErrorMessage)
+                }
                 return
             }
+            
             self.sourceLanguageLabel.text = translation.sourceLanguage
             self.translatedTextTextField.text = translation.translatedText
         }

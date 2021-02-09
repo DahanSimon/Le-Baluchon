@@ -53,6 +53,7 @@
 		6BC87928251BB68400113732 /* ConvertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC87927251BB68400113732 /* ConvertViewController.swift */; };
 		6BC87930251BDAFA00113732 /* TranslateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC8792F251BDAFA00113732 /* TranslateViewController.swift */; };
 		6BC87935251BE4DE00113732 /* WeatherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC87934251BE4DE00113732 /* WeatherViewController.swift */; };
+		6BE488C325D2EB910072E7B7 /* IncorrectTranslationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE488C225D2EB910072E7B7 /* IncorrectTranslationResponse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -125,6 +126,7 @@
 		6BC87927251BB68400113732 /* ConvertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConvertViewController.swift; sourceTree = "<group>"; };
 		6BC8792F251BDAFA00113732 /* TranslateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslateViewController.swift; sourceTree = "<group>"; };
 		6BC87934251BE4DE00113732 /* WeatherViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewController.swift; sourceTree = "<group>"; };
+		6BE488C225D2EB910072E7B7 /* IncorrectTranslationResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncorrectTranslationResponse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -203,7 +205,7 @@
 			path = ConvertionGroup;
 			sourceTree = "<group>";
 		};
-		6BA52E3C25BF31BF001B5DCE /* Translation */ = {
+		6BA52E3C25BF31BF001B5DCE /* Translation Group */ = {
 			isa = PBXGroup;
 			children = (
 				6BA52E4925BF3272001B5DCE /* TranslationService.swift */,
@@ -213,8 +215,9 @@
 				6B571FC525C2DB63001C00CD /* DetectionResponse.swift */,
 				6B1AF26D25C8AF74003F6DC1 /* IsoCodes.swift */,
 				6B1AF27225C8B95D003F6DC1 /* LanguagesCodesData.json */,
+				6BE488C225D2EB910072E7B7 /* IncorrectTranslationResponse.swift */,
 			);
-			path = Translation;
+			path = "Translation Group";
 			sourceTree = "<group>";
 		};
 		6BA52E3D25BF31E6001B5DCE /* TranslationGroup */ = {
@@ -340,7 +343,7 @@
 			isa = PBXGroup;
 			children = (
 				6BA9189A2523B2C200CA3A01 /* Convertion Group */,
-				6BA52E3C25BF31BF001B5DCE /* Translation */,
+				6BA52E3C25BF31BF001B5DCE /* Translation Group */,
 				6B59B8FA2524EF3D00901DEF /* Weather Group */,
 			);
 			path = Model;
@@ -498,6 +501,7 @@
 				6B59B8F62524E38B00901DEF /* ConvertionErrors.swift in Sources */,
 				6BC87935251BE4DE00113732 /* WeatherViewController.swift in Sources */,
 				6B5833702538B12C00B10E9D /* SettingsContainerVC.swift in Sources */,
+				6BE488C325D2EB910072E7B7 /* IncorrectTranslationResponse.swift in Sources */,
 				6BC8672025D06CC900A9B28E /* CitiesList.swift in Sources */,
 				6B5B350C251D63FD00554B7B /* ConvertionService.swift in Sources */,
 				6BBF2A3C252640000098D104 /* ConvertSettingsViewController.swift in Sources */,

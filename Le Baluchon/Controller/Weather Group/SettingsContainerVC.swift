@@ -15,9 +15,9 @@ class SettingsContainerVC: UIViewController {
         super.viewDidLoad()
     }
     
-    private weak var weatherSettingsTableVC: WeatherSettingsTableViewController!
+    private var weatherSettingsTableVC: WeatherSettingsTableViewController!
     
-    var delegate: WeatherSelectionDelegate?
+    weak var delegate: WeatherSelectionDelegate?
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let vc = segue.destination as? WeatherSettingsTableViewController {

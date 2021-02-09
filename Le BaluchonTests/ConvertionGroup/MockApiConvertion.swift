@@ -9,49 +9,23 @@ import Foundation
 @testable import Le_Baluchon
 
 class MockApiConvertion: ConvertionProtocol {
-    var euroBasedConvertionData: Data?
-    var usdBasedConvertionData: Data?
-    var baseCurrency: String?
-    init(baseCurrency: String) {
-        if baseCurrency == "EUR" {
-            self.baseCurrency = baseCurrency
-            self.euroBasedConvertionData = FakeConvertionData.euroBasedConvertionData
-            self.usdBasedConvertionData = nil
-        } else if baseCurrency == "USD" {
-            self.baseCurrency = baseCurrency
-            self.euroBasedConvertionData = nil
-            self.usdBasedConvertionData = FakeConvertionData.usdBasedConvertionData
-        } else {
-            self.baseCurrency = nil
-            self.euroBasedConvertionData = nil
-            self.usdBasedConvertionData = nil
-        }
+    var expectedResult: Double?
+    var baseCurrency: String
+    var convertToCurrency: String
+    var amountToConvert: Int
+    var convertionResponse: ConvertionResponse?
+    var apiCallCounter = 0
+    init(expectedResult: Double?, baseCurrency: String, convertToCurrency: String, amountToConvert: Int, rate: Double, timestamp: TimeInterval) {
+        self.expectedResult = expectedResult
+        self.baseCurrency = baseCurrency
+        self.amountToConvert = amountToConvert
+        self.convertToCurrency = convertToCurrency
+        self.convertionResponse = ConvertionResponse(success: true, timestamp: timestamp, base: baseCurrency, date: "01/01/2021", rates: [convertToCurrency: rate])
     }
     
+    
     func getConvertion(baseCurrency: String, callback: @escaping (Bool, ConvertionResponse?) -> Void) {
-        
-        
-        if baseCurrency == "EUR" {
-            guard let euroBasedConvertionData = self.euroBasedConvertionData else {
-                callback(false,nil)
-                return
-            }
-            if let responseJSON = try? JSONDecoder().decode(ConvertionResponse.self, from: euroBasedConvertionData){
-                callback(true,responseJSON)
-            } else {
-                callback(false,nil)
-            }
-        } else if baseCurrency == "USD" {
-            guard let usdBasedConvertionData = self.usdBasedConvertionData else {
-                callback(false,nil)
-                return
-            }
-            if let responseJSON = try? JSONDecoder().decode(ConvertionResponse.self, from: usdBasedConvertionData){
-                callback(true,responseJSON)
-            } else {
-                callback(false,nil)
-            }
-            
-        }
+        self.apiCallCounter += 1
+        callback(true,self.convertionResponse)
     }
 }
