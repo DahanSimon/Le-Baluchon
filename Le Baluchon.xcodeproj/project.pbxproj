@@ -11,6 +11,7 @@
 		6B0B3857253B92520093B1A5 /* WeatherDataError.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B0B3856253B92520093B1A5 /* WeatherDataError.json */; };
 		6B1AF26E25C8AF74003F6DC1 /* IsoCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B1AF26D25C8AF74003F6DC1 /* IsoCodes.swift */; };
 		6B1AF27325C8B95D003F6DC1 /* LanguagesCodesData.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B1AF27225C8B95D003F6DC1 /* LanguagesCodesData.json */; };
+		6B54974625D4497D00A5AA83 /* ServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B54974525D4497D00A5AA83 /* ServiceError.swift */; };
 		6B571FB925BF4708001C00CD /* HelloTranslationData.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B571FB825BF4708001C00CD /* HelloTranslationData.json */; };
 		6B571FC125BF4738001C00CD /* FakeTranslationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B571FC025BF4738001C00CD /* FakeTranslationData.swift */; };
 		6B571FC625C2DB63001C00CD /* DetectionResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B571FC525C2DB63001C00CD /* DetectionResponse.swift */; };
@@ -78,6 +79,7 @@
 		6B0B3856253B92520093B1A5 /* WeatherDataError.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = WeatherDataError.json; sourceTree = "<group>"; };
 		6B1AF26D25C8AF74003F6DC1 /* IsoCodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsoCodes.swift; sourceTree = "<group>"; };
 		6B1AF27225C8B95D003F6DC1 /* LanguagesCodesData.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = LanguagesCodesData.json; sourceTree = "<group>"; };
+		6B54974525D4497D00A5AA83 /* ServiceError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceError.swift; sourceTree = "<group>"; };
 		6B571FB825BF4708001C00CD /* HelloTranslationData.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = HelloTranslationData.json; sourceTree = "<group>"; };
 		6B571FC025BF4738001C00CD /* FakeTranslationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeTranslationData.swift; sourceTree = "<group>"; };
 		6B571FC525C2DB63001C00CD /* DetectionResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectionResponse.swift; sourceTree = "<group>"; };
@@ -216,6 +218,7 @@
 				6B1AF26D25C8AF74003F6DC1 /* IsoCodes.swift */,
 				6B1AF27225C8B95D003F6DC1 /* LanguagesCodesData.json */,
 				6BE488C225D2EB910072E7B7 /* IncorrectTranslationResponse.swift */,
+				6B54974525D4497D00A5AA83 /* ServiceError.swift */,
 			);
 			path = "Translation Group";
 			sourceTree = "<group>";
@@ -509,6 +512,7 @@
 				6B90E0D125268BD8004DEB2F /* Currency.swift in Sources */,
 				6B59B8FC2524EF7200901DEF /* CityWeatherResponse.swift in Sources */,
 				6BBEBD3D2520B99D00B16CA0 /* ConvertionResponse.swift in Sources */,
+				6B54974625D4497D00A5AA83 /* ServiceError.swift in Sources */,
 				6BC87930251BDAFA00113732 /* TranslateViewController.swift in Sources */,
 				6BC878E8251B9F6F00113732 /* AppDelegate.swift in Sources */,
 				6BA52E1925BDCD09001B5DCE /* ApiConvertion.swift in Sources */,

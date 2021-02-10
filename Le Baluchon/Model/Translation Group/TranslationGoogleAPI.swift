@@ -38,6 +38,7 @@ class TranslationGoogleAPI: TranslationAPIProtocol {
             DispatchQueue.main.async { [self] in
                 if self.sourceLanguage == "en" {
                     callback(true, TranslationResponse(data: TranslationDataClass(translations: [Translation(translatedText: textToTranslate)])))
+                    return
                 }
                                 
                 guard let data = data, error == nil else {

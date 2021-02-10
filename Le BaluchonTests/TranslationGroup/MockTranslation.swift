@@ -11,15 +11,24 @@ class MockTranslationAPI: TranslationAPIProtocol {
     var incorrectTranslationResponse: IncorrectTranslationResponse?
     
     var sourceLanguage: String?
-    var expectedResult: String
+    var expectedResult: String?
     let translationResponse: TranslationResponse?
     let detectionResponse: DetectionResponse?
     var isValid: Bool
-    init(sourceLanguageExpected: String, expectedResult: String, isValid: Bool) {
+    init(sourceLanguageExpected: String?, expectedResult: String?, isValid: Bool) {
         self.expectedResult = expectedResult
         self.isValid = isValid
-        self.translationResponse = TranslationResponse(data: TranslationDataClass(translations: [Translation(translatedText: expectedResult)]))
-        self.detectionResponse = DetectionResponse(data: DetectionDataClass(detections: [[Detection(isReliable: true, confidence: 1, language: sourceLanguageExpected)]]))
+        if let str = expectedResult{
+            self.translationResponse = TranslationResponse(data: TranslationDataClass(translations: [Translation(translatedText: str)]))
+        } else {
+            self.translationResponse = nil
+        }
+        if let source = sourceLanguageExpected {
+            self.detectionResponse = DetectionResponse(data: DetectionDataClass(detections: [[Detection(isReliable: true, confidence: 1, language: source)]]))
+        } else {
+            self.detectionResponse = nil
+        }
+        
     }
     
     func getSourceLanguage(textToTranslate: String, callback: @escaping (Bool, String?) -> Void) {
@@ -35,6 +44,8 @@ class MockTranslationAPI: TranslationAPIProtocol {
     func getTranslation(textToTranslate: String, callback: @escaping (Bool, TranslationResponse?) -> Void) {
         if self.isValid {
             callback(true, self.translationResponse)
+        } else {
+            callback(false,nil)
         }
     }
 }

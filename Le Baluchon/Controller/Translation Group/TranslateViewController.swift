@@ -31,12 +31,8 @@ class TranslateViewController: UIViewController {
         
         self.translationService.detectAndTranslate(textToTranslate: textToTranslate) { (success, translationStruct) in
             guard let translation = translationStruct else {
-                if let detectionError = self.translationService.detectionError, detectionError == .undefined {
-                    self.presentAlert(message: detectionError.localizedDescription)
-                }
-                
-                if let translationErrorMessage = self.translationService.translationErrorMessage {
-                    self.presentAlert(message: translationErrorMessage)
+                if let serviceError = self.translationService.serviceError {
+                    self.presentAlert(message: serviceError.localizedDescription)
                 }
                 return
             }

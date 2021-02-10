@@ -11,7 +11,7 @@ class TranslationService {
     var sourceLanguage: String?
     let api: TranslationAPIProtocol
     var languageDetectionResponse: DetectionResponse?
-    var detectionError: ServiceError?
+    var serviceError: ServiceError?
     var translationErrorMessage: String?
     init(api: TranslationAPIProtocol) {
         self.api = api
@@ -37,16 +37,15 @@ class TranslationService {
             if let detectedLanguage = detectedLanguageCode, success{
                 translationStruc.sourceLanguage = languagesCodes[detectedLanguage]?.name
             } else if detectedLanguageCode == "und"{
-                self.detectionError = .undefined
+                self.serviceError = .undefined
             }
             dispatchGroup.leave()
         }
         
         dispatchGroup.notify(queue: .main) {
-            if self.detectionError != nil {
-                callback(false, nil)
-            }
+            
             self.api.getTranslation(textToTranslate: textToTranslate) { (success, response) in
+                
                 if let translation = response {
                     if self.api.sourceLanguage == "en"{
                         translationStruc.translatedText = textToTranslate
@@ -54,6 +53,13 @@ class TranslationService {
                     }
                     translationStruc.translatedText = translation.data.translations.first?.translatedText
                     callback(true,translationStruc)
+                } else {
+                    if self.serviceError != nil {
+                        callback(false, nil)
+                        return
+                    }
+                    self.serviceError = .translationError
+                    callback(false,nil)
                 }
             }
         }
@@ -73,15 +79,4 @@ struct TranslationStruct {
     }
 }
 
-enum ServiceError: Swift.Error {
-    case undefined
-    case translationError
-    var localizedDescription: String {
-        switch self {
-        case .undefined:
-            return "Source language has not been detected"
-        case .translationError:
-            return "Translation Error"
-        }
-    }
-}
+

@@ -17,6 +17,7 @@ class ConvertViewController: UIViewController, CurrencySelectionDelegate {
     enum test {
         case random(String)
     }
+    
     func didSelectCurrency(convertTo_CurrencyCode: String, baseCurrencyCode: String) {
         self.selectedConvertTo_CurrencyCode = convertTo_CurrencyCode
         self.selectedBaseCurrencyCode = baseCurrencyCode
@@ -32,11 +33,19 @@ class ConvertViewController: UIViewController, CurrencySelectionDelegate {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet var tapGestureRecognizer: UITapGestureRecognizer!
     @IBOutlet weak var rateInfoLabel: UILabel!
-    
     var selectedConvertTo_CurrencyCode = "USD"
     var selectedBaseCurrencyCode = "EUR"
-        
+    
+    private func formatTextField(currencyCode: String) {
+        let formatter = NumberFormatter()
+        formatter.currencyCode = currencyCode
+        formatter.numberStyle = .currency
+        formatter.locale = NSLocale(localeIdentifier: "us") as Locale
+    }
+    
     override func viewDidLoad() {
+        self.baseCurrencySymbol.layer.zPosition = 1000
+        self.amountToChangeTextField.layer.zPosition = 1
         ConvertionService.shared.convert { [self] (success, exchange) in
             toggleActivityIndicator(shown: false)
 
@@ -54,7 +63,7 @@ class ConvertViewController: UIViewController, CurrencySelectionDelegate {
         toggleActivityIndicator(shown: true)
         dismissKeyboard(tapGestureRecognizer)
         
-        guard let amountToConvertString = amountToChangeTextField.text else {
+        guard let amountToConvertString = amountToChangeTextField?.text else {
             toggleActivityIndicator(shown: false)
             return
         }

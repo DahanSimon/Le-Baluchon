@@ -40,7 +40,21 @@ class TranslationServiceTests: XCTestCase {
         }
         
         wait(for: [expectation], timeout: 0.010)
-        XCTAssertEqual(translationService.detectionError, ServiceError.undefined)
+        XCTAssertEqual(translationService.serviceError, ServiceError.undefined)
+    }
+    
+    func testGetDetectionAndGetApiErrorShouldGetError() {
+        // Given
+        let translationService = TranslationService(api: MockTranslationAPI(sourceLanguageExpected: "fr", expectedResult: nil, isValid: false))
+        // When
+        let expectation = XCTestExpectation(description: "Wait for queue change.")
+    
+        translationService.detectAndTranslate(textToTranslate: "gfysdugf") { (success, translation) in
+            expectation.fulfill()
+        }
+        
+        wait(for: [expectation], timeout: 0.010)
+        XCTAssertEqual(translationService.serviceError, ServiceError.translationError)
     }
     
     func testGetTranslationForHelloSHouldGetHello() {

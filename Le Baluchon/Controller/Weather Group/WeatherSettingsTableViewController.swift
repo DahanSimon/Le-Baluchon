@@ -16,7 +16,8 @@ class WeatherSettingsTableViewController: UITableViewController {
     @IBOutlet var settingsTableView: UITableView!
     @IBOutlet weak var originCityTextField: UITextField!
     @IBOutlet weak var destinationCityTextField: UITextField!
-
+    @IBOutlet var tapGestureRecognizer: UITapGestureRecognizer!
+    
     
     
     override func viewDidLoad() {
@@ -77,7 +78,7 @@ class WeatherSettingsTableViewController: UITableViewController {
 }
 
 extension WeatherSettingsTableViewController: UITextFieldDelegate {
-    @IBAction func dismissKeyboard(_ sender: Any) {
+    @IBAction func dismissKeyboard(_ sender: UITapGestureRecognizer) {
         originCityTextField.resignFirstResponder()
         destinationCityTextField.resignFirstResponder()
     }
