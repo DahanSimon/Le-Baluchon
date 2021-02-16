@@ -33,11 +33,11 @@ class ConvertionService {
         
         // Checks if we need to call the API
         if lastUpdatedRateDate ?? 0 <= currentTimestamp - 3600 || lastBaseRequested != baseCurrency {
-            api.getConvertion(baseCurrency: self.baseCurrency) { (responseError, convertionResponse) in
+            api.getConvertion(baseCurrency: self.baseCurrency) { (success, convertionResponse) in
                 self.convertionResponse = convertionResponse
                 self.lastUpdatedRateDate = self.convertionResponse!.timestamp
                 self.lastBaseRequested = self.baseCurrency
-                if let convertionResponse = convertionResponse {
+                if success, let convertionResponse = convertionResponse {
                     callback(true, convertionResponse)
                 } else {
                     callback(false, nil)
@@ -64,7 +64,3 @@ class ConvertionService {
         print("Convertion has been deinited no retain cycle")
     }
 }
-
-
-
-

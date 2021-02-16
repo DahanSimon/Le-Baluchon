@@ -14,7 +14,7 @@ class TranslationGoogleAPI: TranslationAPIProtocol {
     var translationResponse: TranslationResponse?
     var incorrectTranslationResponse: IncorrectTranslationResponse?
     
-    func getTranslation(textToTranslate: String, callback: @escaping (Bool, TranslationResponse?) -> Void) {
+    func getTranslation(textToTranslate: String, callback: @escaping (RequestResponse) -> Void) {
         
         guard let textToTranslateUrlFriendly = textToTranslate.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else {
             return
@@ -36,27 +36,29 @@ class TranslationGoogleAPI: TranslationAPIProtocol {
         task?.cancel()
         task = translationSession.dataTask(with: request) { (data, response, error) in
             DispatchQueue.main.async { [self] in
+                let englishTranslationresponse = TranslationResponse(data: TranslationDataClass(translations: [Translation(translatedText: textToTranslate)]))
                 if self.sourceLanguage == "en" {
-                    callback(true, TranslationResponse(data: TranslationDataClass(translations: [Translation(translatedText: textToTranslate)])))
+                    callback(RequestResponse.success(englishTranslationresponse))
                     return
                 }
                                 
                 guard let data = data, error == nil else {
-                    callback(false, nil)
+                    callback(RequestResponse.failure(ServiceError.noDataReceived))
                     return
                 }
                 
                 guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
                     if let incorrectResponseJSON = try? JSONDecoder().decode(IncorrectTranslationResponse.self, from: data) {
                         self.incorrectTranslationResponse = incorrectResponseJSON
-                        callback(false, nil)
+                        
                     }
+                    callback(RequestResponse.failure(ServiceError.translationError))
                     return
                 }
                 
                 if let responseJSON = try? JSONDecoder().decode(TranslationResponse.self, from: data) {
                     self.translationResponse = responseJSON
-                    callback(true, self.translationResponse)
+                    callback(RequestResponse.success(responseJSON))
                 }
             }
         }

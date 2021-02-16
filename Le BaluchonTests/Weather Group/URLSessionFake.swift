@@ -47,7 +47,7 @@ class URLSessionDataTaskFake: URLSessionDataTask {
     var data: Data?
     var urlResponse: URLResponse?
     var responseError: Error?
-
+    
     override func resume() {
         completionHandler?(data, urlResponse, responseError)
     }

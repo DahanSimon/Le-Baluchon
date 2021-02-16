@@ -47,30 +47,16 @@ class ConvertionServiceTests: XCTestCase {
         
         var usdBasedRates: ConvertionResponse? = nil
         var result: Double?
-        convertionService.convert { (success, convertionResponse) in
-            usdBasedRates = convertionResponse
-            if let euroRate = usdBasedRates?.rates["EUR"] {
-                result = euroRate * Double(amountToConvert)
-            }
-            
-        }
         
-        convertionService.convert { (success, convertionResponse) in
-            usdBasedRates = convertionResponse
-            if let euroRate = usdBasedRates?.rates["EUR"] {
-                result = euroRate * Double(amountToConvert)
+        for _ in 1...3 {
+            convertionService.convert { (success, convertionResponse) in
+                usdBasedRates = convertionResponse
+                if let euroRate = usdBasedRates?.rates["EUR"] {
+                    result = euroRate * Double(amountToConvert)
+                }
             }
-            
         }
-        
-        convertionService.convert { (success, convertionResponse) in
-            usdBasedRates = convertionResponse
-            if let euroRate = usdBasedRates?.rates["EUR"] {
-                result = euroRate * Double(amountToConvert)
-            }
-            
-            expectation.fulfill()
-        }
+        expectation.fulfill()
         
         wait(for: [expectation], timeout: 0.01)
         XCTAssertEqual(euroBasedMock.apiCallCounter, 1)
@@ -78,4 +64,5 @@ class ConvertionServiceTests: XCTestCase {
         XCTAssertNotNil(usdBasedRates)
         XCTAssertTrue(usdBasedRates?.base == "USD")
     }
+    
 }

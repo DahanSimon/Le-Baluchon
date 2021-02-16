@@ -25,7 +25,7 @@ class TranslationServiceTests: XCTestCase {
             expectation.fulfill()
         }
         
-        wait(for: [expectation], timeout: 0.010)
+        wait(for: [expectation], timeout: 0.01)
         XCTAssertEqual(translatedText, "Hello")
     }
     
@@ -39,7 +39,7 @@ class TranslationServiceTests: XCTestCase {
             expectation.fulfill()
         }
         
-        wait(for: [expectation], timeout: 0.010)
+        wait(for: [expectation], timeout: 0.01)
         XCTAssertEqual(translationService.serviceError, ServiceError.undefined)
     }
     
@@ -53,7 +53,7 @@ class TranslationServiceTests: XCTestCase {
             expectation.fulfill()
         }
         
-        wait(for: [expectation], timeout: 0.010)
+        wait(for: [expectation], timeout: 0.01)
         XCTAssertEqual(translationService.serviceError, ServiceError.translationError)
     }
     
@@ -72,8 +72,25 @@ class TranslationServiceTests: XCTestCase {
             expectation.fulfill()
         }
         
-        wait(for: [expectation], timeout: 0.010)
+        wait(for: [expectation], timeout: 0.01)
         XCTAssertEqual(translatedText, "Hello")
     }
     
+    func testGetTranslationForUnknownCharacterShouldGetError() {
+        // Given
+        let translationService = TranslationService(api: MockTranslationAPI(sourceLanguageExpected: "und", expectedResult: nil, isValid: false))
+        var translatedText: String?
+        // When
+        let expectation = XCTestExpectation(description: "Wait for queue change.")
+    
+        translationService.detectAndTranslate(textToTranslate: "!@#$") { (success, translation) in
+            guard let translation = translation else {
+                expectation.fulfill()
+                return
+            }
+        }
+        
+        wait(for: [expectation], timeout: 0.01)
+        XCTAssertEqual(translationService.serviceError, ServiceError.undefined)
+    }
 }

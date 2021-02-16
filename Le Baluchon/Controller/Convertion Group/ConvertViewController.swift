@@ -84,9 +84,7 @@ class ConvertViewController: UIViewController, CurrencySelectionDelegate {
     }
     
     func callApi(amountToConvert: Double) {
-        ConvertionService.shared.convert { /*[weak self]*/ (success, exchange) in
-            
-//            guard let self = self else { return }
+        ConvertionService.shared.convert { (success, exchange) in
             
             self.toggleActivityIndicator(shown: false)
             

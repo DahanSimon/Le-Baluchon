@@ -33,34 +33,54 @@ class TranslationService {
         
         let dispatchGroup = DispatchGroup()
         dispatchGroup.enter()
-        self.api.getSourceLanguage(textToTranslate: textToTranslate) { (success, detectedLanguageCode) in
-            if let detectedLanguage = detectedLanguageCode, success{
+        self.api.getSourceLanguage(textToTranslate: textToTranslate) { (success, detectedLanguageCode)  in
+            
+            
+            if let detectedLanguage = detectedLanguageCode, success {
                 translationStruc.sourceLanguage = languagesCodes[detectedLanguage]?.name
             } else if detectedLanguageCode == "und"{
-                self.serviceError = .undefined
+                self.serviceError = ServiceError.undefined
             }
             dispatchGroup.leave()
         }
         
         dispatchGroup.notify(queue: .main) {
-            
-            self.api.getTranslation(textToTranslate: textToTranslate) { (success, response) in
+            if self.serviceError != nil {
+                callback(false, nil)
+                return
+            }
+        
+            self.api.getTranslation(textToTranslate: textToTranslate) { (requestResponse) in
                 
-                if let translation = response {
+                switch requestResponse {
+                
+                case .failure(let serviceError):
+                    self.serviceError = .translationError
+                    callback(false, nil)
+                case .success(let translation):
                     if self.api.sourceLanguage == "en"{
                         translationStruc.translatedText = textToTranslate
                         callback(true,translationStruc)
                     }
                     translationStruc.translatedText = translation.data.translations.first?.translatedText
                     callback(true,translationStruc)
-                } else {
-                    if self.serviceError != nil {
-                        callback(false, nil)
-                        return
-                    }
-                    self.serviceError = .translationError
-                    callback(false,nil)
                 }
+                
+//                if success, let translation = response {
+//                    if self.api.sourceLanguage == "en"{
+//                        translationStruc.translatedText = textToTranslate
+//                        callback(true,translationStruc)
+//                    }
+//                    translationStruc.translatedText = translation.data.translations.first?.translatedText
+//                    callback(true,translationStruc)
+//                } else {
+//                    if self.serviceError != nil {
+//                        callback(false, nil)
+//                        return
+//                    }
+//                    self.serviceError = .translationError
+//                    callback(false,nil)
+//                }
             }
         }
     }
