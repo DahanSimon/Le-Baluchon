@@ -25,14 +25,17 @@ class TranslateViewController: UIViewController {
         }
         
         if textToTranslate.isEmpty {
-            presentAlert(message: "Please enter some text")
+            presentAlert(message: "Please enter some text", handler: nil)
             return
         }
         
-        self.translationService.detectAndTranslate(textToTranslate: textToTranslate) { (success, translationStruct) in
+        self.translationService.detectAndTranslate(textToTranslate: textToTranslate) { [weak self] (success, translationStruct) in
+            
+            guard let self = self else { return }
+            
             guard let translation = translationStruct else {
                 if !success, let serviceError = self.translationService.serviceError {
-                    self.presentAlert(message: serviceError.localizedDescription)
+                    self.presentAlert(message: serviceError.localizedDescription, handler: nil)
                 }
                 return
             }
@@ -42,13 +45,6 @@ class TranslateViewController: UIViewController {
         }
         
         dismissKeyboard(self.tapGestureRecongnizer)
-    }
-    
-    private func presentAlert(message: String) {
-        let alertVC = UIAlertController(title: "Erreur", message: message, preferredStyle: .alert)
-        let action = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-        alertVC.addAction(action)
-        self.present(alertVC, animated: true, completion: nil)
     }
     
     @IBAction func dismissKeyboard(_ sender: UITapGestureRecognizer) {

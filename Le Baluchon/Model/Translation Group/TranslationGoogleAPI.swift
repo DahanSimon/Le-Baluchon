@@ -14,7 +14,7 @@ class TranslationGoogleAPI: TranslationAPIProtocol {
     var translationResponse: TranslationResponse?
     var incorrectTranslationResponse: IncorrectTranslationResponse?
     
-    func getTranslation(textToTranslate: String, callback: @escaping (RequestResponse) -> Void) {
+    func getTranslation(textToTranslate: String, callback: @escaping (RequestResponse<TranslationResponse>) -> Void) {
         
         guard let textToTranslateUrlFriendly = textToTranslate.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else {
             return

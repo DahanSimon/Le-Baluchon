@@ -79,15 +79,14 @@ class TranslationServiceTests: XCTestCase {
     func testGetTranslationForUnknownCharacterShouldGetError() {
         // Given
         let translationService = TranslationService(api: MockTranslationAPI(sourceLanguageExpected: "und", expectedResult: nil, isValid: false))
-        var translatedText: String?
         // When
         let expectation = XCTestExpectation(description: "Wait for queue change.")
-    
         translationService.detectAndTranslate(textToTranslate: "!@#$") { (success, translation) in
-            guard let translation = translation else {
-                expectation.fulfill()
-                return
-            }
+//            guard let translation = translation else {
+//                expectation.fulfill()
+//                return
+//            }
+            expectation.fulfill()
         }
         
         wait(for: [expectation], timeout: 0.01)

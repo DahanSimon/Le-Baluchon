@@ -41,7 +41,7 @@ class MockTranslationAPI: TranslationAPIProtocol {
         }
     }
     
-    func getTranslation(textToTranslate: String, callback: @escaping (RequestResponse) -> Void) {
+    func getTranslation(textToTranslate: String, callback: @escaping (RequestResponse<TranslationResponse>) -> Void) {
         if let translationResponse = self.translationResponse, self.isValid {
             
             callback(RequestResponse.success(translationResponse))

@@ -8,5 +8,5 @@
 import Foundation
 
 protocol ConvertionProtocol {
-    func getConvertion(baseCurrency: String, callback: @escaping (Bool, ConvertionResponse?) -> Void)
+    func getConvertion(baseCurrency: String, callback: @escaping (RequestResponse<ConvertionResponse>) -> Void)
 }

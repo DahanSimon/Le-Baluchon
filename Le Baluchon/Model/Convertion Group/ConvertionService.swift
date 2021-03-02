@@ -29,25 +29,27 @@ class ConvertionService {
     var lastBaseRequested: String?
     
     
-    func convert(callback: @escaping (Bool, ConvertionResponse?) -> Void) {
+    func convert(callback: @escaping (RequestResponse<ConvertionResponse>) -> Void) {
         
         // Checks if we need to call the API
         if lastUpdatedRateDate ?? 0 <= currentTimestamp - 3600 || lastBaseRequested != baseCurrency {
-            api.getConvertion(baseCurrency: self.baseCurrency) { (success, convertionResponse) in
-                self.convertionResponse = convertionResponse
-                self.lastUpdatedRateDate = self.convertionResponse!.timestamp
-                self.lastBaseRequested = self.baseCurrency
-                if success, let convertionResponse = convertionResponse {
-                    callback(true, convertionResponse)
-                } else {
-                    callback(false, nil)
+            api.getConvertion(baseCurrency: self.baseCurrency) { (requestResponse) in
+                
+                switch requestResponse {
+                case .failure(_):
+                    callback(requestResponse)
+                case .success(let convertionResponse):
+                    self.convertionResponse = convertionResponse
+                    self.lastUpdatedRateDate = convertionResponse.timestamp
+                    self.lastBaseRequested = self.baseCurrency
+                    callback(requestResponse)
                 }
             }
         } else {
             if let convertionResponse = self.convertionResponse {
-                callback(true, convertionResponse)
+                callback(RequestResponse.success(convertionResponse))
             } else {
-                callback(false, nil)
+                callback(RequestResponse.failure(ServiceError.convertionError))
             }
         }
     }

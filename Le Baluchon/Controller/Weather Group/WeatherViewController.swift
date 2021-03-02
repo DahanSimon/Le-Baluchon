@@ -66,7 +66,10 @@ class WeatherViewController: UIViewController, WeatherSelectionDelegate {
     
     private func compareWeather(between originCityName: String, and destinationCityName: String) {
         self.toggleActivityIndicator(shown: true)
-        WeatherService.shared.getWeatherComparaison(between: originCityName, and: destinationCityName) { weatherComparaison in
+        WeatherService.shared.getWeatherComparaison(between: originCityName, and: destinationCityName) { [weak self] weatherComparaison in
+            
+            guard let self = self else { return }
+            
             self.toggleActivityIndicator(shown: false)
             guard let origin = weatherComparaison[.origin] as? CityWeatherResponse else {
                 self.handleErrors(for: .origin, weatherComparaison: weatherComparaison)
@@ -101,7 +104,7 @@ class WeatherViewController: UIViewController, WeatherSelectionDelegate {
         guard let error = weatherComparaison[cityType] as? WeatherResponseError else {
             return
         }
-        self.presentAlert(message: "\(error.message) for \(cityType.rawValue) \nMerci d'entrer un nom de ville correct.", handler: self.settingsButtonTapped)
+        presentAlert(message: "\(error.message) for \(cityType.rawValue) \nMerci d'entrer un nom de ville correct.", handler: self.settingsButtonTapped)
     }
     
     @IBAction func settingsButtonTapped(_ sender: Any) {
@@ -112,17 +115,6 @@ class WeatherViewController: UIViewController, WeatherSelectionDelegate {
             settingsVC2.delegate = self
             present(settingsVC2, animated: true, completion: nil)
         }
-    }
-    
-    private func presentAlert(message: String, handler: ((UIAlertAction) -> Void)?) {
-        let alertVC = UIAlertController(title: "Erreur", message: message, preferredStyle: .alert)
-        let action = UIAlertAction(title: "OK", style: .cancel, handler: handler)
-        alertVC.addAction(action)
-        self.present(alertVC, animated: true, completion: nil)
-    }
-    
-    deinit {
-        print("Weather has been deinited no retain cycle")
     }
 }
 

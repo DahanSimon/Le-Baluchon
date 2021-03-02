@@ -53,9 +53,8 @@ class TranslationService {
             self.api.getTranslation(textToTranslate: textToTranslate) { (requestResponse) in
                 
                 switch requestResponse {
-                
                 case .failure(let serviceError):
-                    self.serviceError = .translationError
+                    self.serviceError = serviceError
                     callback(false, nil)
                 case .success(let translation):
                     if self.api.sourceLanguage == "en"{
@@ -66,21 +65,6 @@ class TranslationService {
                     callback(true,translationStruc)
                 }
                 
-//                if success, let translation = response {
-//                    if self.api.sourceLanguage == "en"{
-//                        translationStruc.translatedText = textToTranslate
-//                        callback(true,translationStruc)
-//                    }
-//                    translationStruc.translatedText = translation.data.translations.first?.translatedText
-//                    callback(true,translationStruc)
-//                } else {
-//                    if self.serviceError != nil {
-//                        callback(false, nil)
-//                        return
-//                    }
-//                    self.serviceError = .translationError
-//                    callback(false,nil)
-//                }
             }
         }
     }

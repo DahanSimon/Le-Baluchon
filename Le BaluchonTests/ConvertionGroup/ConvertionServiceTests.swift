@@ -21,12 +21,17 @@ class ConvertionServiceTests: XCTestCase {
         
         var usdBasedRates: ConvertionResponse? = nil
         var result: Double?
-        convertionService.convert { (success, convertionResponse) in
-            usdBasedRates = convertionResponse
-            if let euroRate = usdBasedRates?.rates["EUR"] {
-                result = euroRate * Double(amountToConvert)
-            }
+        convertionService.convert { (requestResponse) in
+            switch requestResponse {
             
+            case .failure(_):
+                return
+            case .success(let convertionResponse):
+                usdBasedRates = convertionResponse
+                if let euroRate = usdBasedRates?.rates["EUR"] {
+                    result = euroRate * Double(amountToConvert)
+                }
+            }
             expectation.fulfill()
         }
         
@@ -49,10 +54,15 @@ class ConvertionServiceTests: XCTestCase {
         var result: Double?
         
         for _ in 1...3 {
-            convertionService.convert { (success, convertionResponse) in
-                usdBasedRates = convertionResponse
-                if let euroRate = usdBasedRates?.rates["EUR"] {
-                    result = euroRate * Double(amountToConvert)
+            convertionService.convert { (requestResponse) in
+                switch requestResponse {
+                case .failure(_):
+                    return
+                case .success(let convertionResponse):
+                    usdBasedRates = convertionResponse
+                    if let euroRate = usdBasedRates?.rates["EUR"] {
+                        result = euroRate * Double(amountToConvert)
+                    }
                 }
             }
         }

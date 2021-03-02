@@ -346,6 +346,9 @@
                             <constraint firstItem="GHl-6u-sLz" firstAttribute="bottom" secondItem="CZ9-Np-0bc" secondAttribute="bottom" id="SzG-5U-yuq"/>
                             <constraint firstItem="CZ9-Np-0bc" firstAttribute="leading" secondItem="GHl-6u-sLz" secondAttribute="leading" id="wfM-Nh-cOg"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="mpw-WW-Wii" appends="YES" id="xFc-4E-U0V"/>
+                        </connections>
                     </view>
                     <connections>
                         <outlet property="containerView" destination="CZ9-Np-0bc" id="hxR-Yy-ytf"/>
@@ -353,6 +356,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="unE-xS-P6e" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="mpw-WW-Wii">
+                    <connections>
+                        <segue destination="Sog-Vo-OeR" kind="unwind" unwindAction="unwindToWeatherWithSegue:" id="2HF-ia-fwy"/>
+                    </connections>
+                </tapGestureRecognizer>
                 <exit id="Sog-Vo-OeR" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="672" y="1391"/>

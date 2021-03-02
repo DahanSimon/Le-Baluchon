@@ -12,42 +12,31 @@ class ApiConvertion: ConvertionProtocol {
     private var task: URLSessionDataTask?
     private var convertionSession = URLSession(configuration: .default)
     var apiConvertionResponse: ConvertionResponse?
-    var convertionError: ConvertionError? = nil
     var baseCurrency: String = "EUR"
     
     
-    func getConvertion(baseCurrency: String, callback: @escaping (Bool, ConvertionResponse?) -> Void) {
+    func getConvertion(baseCurrency: String, callback: @escaping (RequestResponse<ConvertionResponse>) -> Void) {
         self.baseCurrency = baseCurrency
         let request = createConvertionRequest()
         task?.cancel()
         task = convertionSession.dataTask(with: request) { (data, response, error) in
             DispatchQueue.main.async { [self] in
                 
-                //                    guard let self = self else { return }
-                
                 guard let data = data, error == nil else {
-                    self.convertionError = .noDataReceived
-                    callback(false, nil)
+                    callback(RequestResponse.failure(ServiceError.noDataReceived))
                     return
                 }
                 
                 guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                    self.convertionError = .responseCodeIsNot200
-                    callback(false, nil)
+                    callback(RequestResponse.failure(ServiceError.convertionError))
                     return
                 }
                 
                 if let responseJSON = try? JSONDecoder().decode(ConvertionResponse.self, from: data) {
                     self.apiConvertionResponse = responseJSON
-                    callback(true, self.apiConvertionResponse)
+                    callback(RequestResponse.success(responseJSON))
                 } else {
-                    if let incorrectResponseJSON = try? JSONDecoder().decode(IncorrectResponse.self, from: data) {
-                        let incorrectResponse = incorrectResponseJSON
-                        self.convertionError = .incorrectRequest(errorDescription: incorrectResponse.error.info)
-                        callback(false, nil)
-                    } else {
-                        callback(false, nil)
-                    }
+                    callback(RequestResponse.failure(ServiceError.convertionError))
                 }
             }
         }

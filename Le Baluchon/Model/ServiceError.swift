@@ -10,6 +10,7 @@ import Foundation
 enum ServiceError: Swift.Error {
     case undefined
     case translationError
+    case convertionError
     case noDataReceived
     case sourceLanguageIsEnglish
     var localizedDescription: String {
@@ -18,16 +19,17 @@ enum ServiceError: Swift.Error {
             return "Source language has not been detected"
         case .translationError:
             return "An error occured please try again"
+        case .convertionError:
+            return "An error occured please try again"
         case .noDataReceived:
             return "An error occured please try again"
         case .sourceLanguageIsEnglish:
             return ""
         }
+        
+            
     }
 }
 
-enum RequestResponse {
-    case failure(ServiceError)
-    case success(TranslationResponse)
-}
+
 
