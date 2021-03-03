@@ -34,7 +34,6 @@ class ConvertionService {
         // Checks if we need to call the API
         if lastUpdatedRateDate ?? 0 <= currentTimestamp - 3600 || lastBaseRequested != baseCurrency {
             api.getConvertion(baseCurrency: self.baseCurrency) { (requestResponse) in
-                
                 switch requestResponse {
                 case .failure(_):
                     callback(requestResponse)
@@ -48,8 +47,6 @@ class ConvertionService {
         } else {
             if let convertionResponse = self.convertionResponse {
                 callback(RequestResponse.success(convertionResponse))
-            } else {
-                callback(RequestResponse.failure(ServiceError.convertionError))
             }
         }
     }

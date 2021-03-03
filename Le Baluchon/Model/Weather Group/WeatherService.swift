@@ -71,7 +71,6 @@ class WeatherService {
         
         let dispatchGroup = DispatchGroup()
         var weatherComparaison: [CityType: Any?] = [:]
-//        DispatchQueue.main.async {
             dispatchGroup.enter()
             self.getWeather(for: origin) {  (responseError, response) in
                     if responseError == nil {
@@ -96,7 +95,6 @@ class WeatherService {
             dispatchGroup.notify(queue: .main) {
                 completionHandler(weatherComparaison)
             }
-//        }
     }
 }
 

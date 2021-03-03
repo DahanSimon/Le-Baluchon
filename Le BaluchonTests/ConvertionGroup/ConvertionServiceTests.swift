@@ -75,4 +75,28 @@ class ConvertionServiceTests: XCTestCase {
         XCTAssertTrue(usdBasedRates?.base == "USD")
     }
     
+    func testServerSendsnoDataShouldGetConvertionError() {
+        // Given
+        let amountToConvert = 1
+        let euroBasedMock = MockApiConvertion(expectedResult: nil, baseCurrency: "USD", convertToCurrency: "EUR", amountToConvert: amountToConvert, rate: 0.825866, timestamp: Date().timeIntervalSince1970)
+        let convertionService = ConvertionService(api: euroBasedMock)
+        convertionService.baseCurrency = "EUR"
+        // When
+        let expectation = XCTestExpectation(description: "Wait for convertion to be done")
+        
+        var requestError: ServiceError?
+        convertionService.convert { (requestResponse) in
+            switch requestResponse {
+            case .failure(let sentRequestError):
+                requestError = sentRequestError
+                expectation.fulfill()
+            case .success(_):
+                return
+            }
+            expectation.fulfill()
+        }
+        
+        wait(for: [expectation], timeout: 0.01)
+        XCTAssertEqual(requestError, ServiceError.convertionError)
+    }
 }

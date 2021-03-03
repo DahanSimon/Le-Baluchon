@@ -19,7 +19,7 @@ class ConvertViewController: UIViewController, CurrencySelectionDelegate {
     }
     
     func didSelectCurrency(convertTo_CurrencyCode: String, baseCurrencyCode: String) {
-        self.selectedConvertTo_CurrencyCode = convertTo_CurrencyCode
+        self.selectedConvertToCurrencyCode = convertTo_CurrencyCode
         self.selectedBaseCurrencyCode = baseCurrencyCode
         ConvertionService.shared.baseCurrency = baseCurrencyCode
         callApi(amountToConvert: 0.0)
@@ -33,7 +33,7 @@ class ConvertViewController: UIViewController, CurrencySelectionDelegate {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet var tapGestureRecognizer: UITapGestureRecognizer!
     @IBOutlet weak var rateInfoLabel: UILabel!
-    var selectedConvertTo_CurrencyCode = "USD"
+    var selectedConvertToCurrencyCode = "USD"
     var selectedBaseCurrencyCode = "EUR"
     
     private func formatTextField(currencyCode: String) {
@@ -101,14 +101,14 @@ class ConvertViewController: UIViewController, CurrencySelectionDelegate {
             case .failure(let serviceError):
                 self.presentAlert(message: serviceError.localizedDescription, handler: nil)
             case .success(let convertionResponse):
-                let rate = convertionResponse.rates[self.selectedConvertTo_CurrencyCode]!
+                let rate = convertionResponse.rates[self.selectedConvertToCurrencyCode]!
                 let result = self.convert(amount: amountToConvert, rate: rate)
                 
-                let convertTo_CurrencySymbol = Currency.share.data[self.selectedConvertTo_CurrencyCode]!.symbol
+                let convertTo_CurrencySymbol = Currency.share.data[self.selectedConvertToCurrencyCode]!.symbol
                 let baseCurrencySymbol = Currency.share.data[self.selectedBaseCurrencyCode]!.symbol
                 self.baseCurrencySymbol.text = baseCurrencySymbol
                 self.changedValueLabel.text = String(format: "%.2f \(convertTo_CurrencySymbol)", result)
-                self.rateInfoLabel.text = "1 \(baseCurrencySymbol) = " + String(format: "%.4f \(convertTo_CurrencySymbol)", convertionResponse.rates[self.selectedConvertTo_CurrencyCode]!)
+                self.rateInfoLabel.text = "1 \(baseCurrencySymbol) = " + String(format: "%.4f \(convertTo_CurrencySymbol)", convertionResponse.rates[self.selectedConvertToCurrencyCode]!)
             }
         }
     }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum RequestResponse <value> {
+enum RequestResponse <Value> {
     case failure(ServiceError)
-    case success(value)
+    case success(Value)
 }

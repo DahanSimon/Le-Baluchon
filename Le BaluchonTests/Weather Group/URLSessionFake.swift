@@ -13,14 +13,14 @@ class URLSessionFake: URLSession {
     var newYorkData: Data?
     var response: URLResponse?
     var error: Data?
-
+    
     init(originData: Data?, destinationData: Data?, response: URLResponse?, error: Data?) {
         self.parisData = originData
         self.newYorkData = destinationData
         self.response = response
         self.error = error
     }
-
+    
     override func dataTask(with request: URLRequest, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTask {
         let task = URLSessionDataTaskFake()
         task.completionHandler = completionHandler
@@ -48,6 +48,6 @@ class URLSessionDataTaskFake: URLSessionDataTask {
     override func resume() {
         completionHandler?(data, urlResponse, responseError)
     }
-
+    
     override func cancel() {}
 }

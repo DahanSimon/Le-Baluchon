@@ -26,7 +26,8 @@ class MockApiConvertion: ConvertionProtocol {
     
     func getConvertion(baseCurrency: String, callback: @escaping (RequestResponse<ConvertionResponse>) -> Void) {
         self.apiCallCounter += 1
-        guard let convertionResponse = self.convertionResponse else {
+        guard let convertionResponse = self.convertionResponse, self.expectedResult != nil else {
+            callback(RequestResponse.failure(ServiceError.convertionError))
             return
         }
         callback(RequestResponse.success(convertionResponse))

@@ -82,10 +82,6 @@ class TranslationServiceTests: XCTestCase {
         // When
         let expectation = XCTestExpectation(description: "Wait for queue change.")
         translationService.detectAndTranslate(textToTranslate: "!@#$") { (success, translation) in
-//            guard let translation = translation else {
-//                expectation.fulfill()
-//                return
-//            }
             expectation.fulfill()
         }
         

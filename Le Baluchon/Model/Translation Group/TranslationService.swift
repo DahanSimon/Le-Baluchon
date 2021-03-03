@@ -25,9 +25,7 @@ class TranslationService {
             return try! Data(contentsOf: url)
         }
         
-        guard let languagesCodes = try? JSONDecoder().decode(LanguagesCodes.self, from: languagesCodeData!) else {
-            return
-        }
+        guard let languagesCodes = try? JSONDecoder().decode(LanguagesCodes.self, from: languagesCodeData!) else { return }
 
         var translationStruc = TranslationStruct(textToTranslate: textToTranslate)
         
