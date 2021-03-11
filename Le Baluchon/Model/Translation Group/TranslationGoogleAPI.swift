@@ -14,6 +14,49 @@ class TranslationGoogleAPI: TranslationAPIProtocol {
     var translationResponse: TranslationResponse?
     var incorrectTranslationResponse: IncorrectTranslationResponse?
     
+    func getSourceLanguage(textToTranslate: String, callback: @escaping (Bool, String?) -> Void)  {
+        let detectionSession = URLSession(configuration: .default)
+        var detectionTask: URLSessionDataTask?
+        
+        guard let textToTranslateUrlFriendly = textToTranslate.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else {
+            return
+        }
+        
+        var detectionURL: URL? {
+            var url: URL?
+            url = URL(string: "https://translation.googleapis.com/language/translate/v2/detect?key=AIzaSyA5IE8fEVAPl0J1jYH_drQZVOi_FTThdng&q=" + textToTranslateUrlFriendly)
+            return url
+        }
+        
+        guard let detectionRequest = createRequest(url: detectionURL) else {
+            return
+        }
+        
+        detectionTask?.cancel()
+        detectionTask = detectionSession.dataTask(with: detectionRequest) { (data, response, error) in
+            DispatchQueue.main.async { [self] in
+                guard let data = data, error == nil else {
+                    callback(false, nil)
+                    return
+                }
+                
+                guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+                    callback(false, nil)
+                    return
+                }
+                if let responseJSON = try? JSONDecoder().decode(DetectionResponse.self, from: data) {
+                    self.sourceLanguage = responseJSON.data.detections.first?.first?.language
+                    if self.sourceLanguage != "und" {
+                        callback(true, responseJSON.data.detections.first?.first?.language)
+                    } else {
+                        callback(false,responseJSON.data.detections.first?.first?.language)
+                    }
+                }
+            }
+        }
+        detectionTask?.resume()
+    }
+    
     func getTranslation(textToTranslate: String, callback: @escaping (RequestResponse<TranslationResponse>) -> Void) {
         
         guard let textToTranslateUrlFriendly = textToTranslate.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else {
@@ -32,7 +75,7 @@ class TranslationGoogleAPI: TranslationAPIProtocol {
         guard let request = createRequest(url: translationURL) else {
             return
         }
-        
+
         task?.cancel()
         task = translationSession.dataTask(with: request) { (data, response, error) in
             DispatchQueue.main.async { [self] in
@@ -76,53 +119,6 @@ class TranslationGoogleAPI: TranslationAPIProtocol {
         let body = ""
         request.httpBody = body.data(using: .utf8)
         return request
-    }
-    
-    func getSourceLanguage(textToTranslate: String, callback: @escaping (Bool, String?) -> Void)  {
-        let detectionSession = URLSession(configuration: .default)
-        var detectionTask: URLSessionDataTask?
-        guard let textToTranslateUrlFriendly = textToTranslate.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else {
-            return
-        }
-        
-        var detectionURL: URL? {
-            var url: URL?
-            url = URL(string: "https://translation.googleapis.com/language/translate/v2/detect?key=AIzaSyA5IE8fEVAPl0J1jYH_drQZVOi_FTThdng&q=" + textToTranslateUrlFriendly)
-            return url
-        }
-        
-        guard let detectionRequest = createRequest(url: detectionURL) else {
-            return
-        }
-        
-        detectionTask?.cancel()
-        detectionTask = detectionSession.dataTask(with: detectionRequest) { (data, response, error) in
-            DispatchQueue.main.async { [self] in
-                
-                //                    guard let self = self else { return }
-                
-                guard let data = data, error == nil else {
-                    callback(false, nil)
-                    return
-                }
-                
-                guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                    callback(false, nil)
-                    return
-                }
-                
-                if let responseJSON = try? JSONDecoder().decode(DetectionResponse.self, from: data) {
-                    self.sourceLanguage = responseJSON.data.detections.first?.first?.language
-                    if self.sourceLanguage != "und" {
-                        callback(true, responseJSON.data.detections.first?.first?.language)
-                    } else {
-                        callback(false,responseJSON.data.detections.first?.first?.language)
-                    }
-                    
-                }
-            }
-        }
-        detectionTask?.resume()
     }
 }
 

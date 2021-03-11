@@ -12,80 +12,85 @@ class ConvertionServiceTests: XCTestCase {
     
     func testGetConvertionFor1DollarInEuroShouldGetConvertion() {
         // Given
-        let amountToConvert = 1
+        let amountToConvert = 1.0
         let euroBasedMock = MockApiConvertion(expectedResult: 0.825866, baseCurrency: "USD", convertToCurrency: "EUR", amountToConvert: amountToConvert, rate: 0.825866, timestamp: Date().timeIntervalSince1970)
         let convertionService = ConvertionService(api: euroBasedMock)
         convertionService.baseCurrency = "EUR"
         // When
         let expectation = XCTestExpectation(description: "Wait for convertion to be done")
-        
+
         var usdBasedRates: ConvertionResponse? = nil
         var result: Double?
-        convertionService.convert { (requestResponse) in
+        
+        convertionService.getConvertion(amountToConvert: amountToConvert, convertToCurrencyCode: "EUR") { (requestResponse, apiResult) in
             switch requestResponse {
-            
+
             case .failure(_):
                 return
             case .success(let convertionResponse):
                 usdBasedRates = convertionResponse
-                if let euroRate = usdBasedRates?.rates["EUR"] {
-                    result = euroRate * Double(amountToConvert)
+                if let convertionResult = apiResult {
+                    result = convertionResult
                 }
             }
             expectation.fulfill()
         }
-        
+
         wait(for: [expectation], timeout: 0.01)
         XCTAssertEqual(result, 0.825866)
         XCTAssertNotNil(usdBasedRates)
         XCTAssertTrue(usdBasedRates?.base == "USD")
     }
-    
+
     func testGetConvertionFor1DollarInEuroThreeTimesShouldCallApiOnce() {
         // Given
-        let amountToConvert = 1
+        let amountToConvert = 1.0
         let euroBasedMock = MockApiConvertion(expectedResult: 0.825866, baseCurrency: "USD", convertToCurrency: "EUR", amountToConvert: amountToConvert, rate: 0.825866, timestamp: Date().timeIntervalSince1970)
         let convertionService = ConvertionService(api: euroBasedMock)
         convertionService.baseCurrency = "EUR"
         // When
         let expectation = XCTestExpectation(description: "Wait for convertion to be done")
-        
+
         var usdBasedRates: ConvertionResponse? = nil
         var result: Double?
-        
+
         for _ in 1...3 {
-            convertionService.convert { (requestResponse) in
+            
+            convertionService.getConvertion(amountToConvert: amountToConvert, convertToCurrencyCode: "EUR") { (requestResponse, apiResult) in
                 switch requestResponse {
                 case .failure(_):
                     return
                 case .success(let convertionResponse):
                     usdBasedRates = convertionResponse
-                    if let euroRate = usdBasedRates?.rates["EUR"] {
-                        result = euroRate * Double(amountToConvert)
+                    if let convertionResult = apiResult {
+                        result = convertionResult
                     }
                 }
             }
+            
         }
         expectation.fulfill()
-        
+
         wait(for: [expectation], timeout: 0.01)
         XCTAssertEqual(euroBasedMock.apiCallCounter, 1)
         XCTAssertEqual(result, 0.825866)
         XCTAssertNotNil(usdBasedRates)
         XCTAssertTrue(usdBasedRates?.base == "USD")
     }
-    
-    func testServerSendsnoDataShouldGetConvertionError() {
+
+    func testServerSendsNoDataShouldGetConvertionError() {
         // Given
-        let amountToConvert = 1
+        let amountToConvert = 1.0
         let euroBasedMock = MockApiConvertion(expectedResult: nil, baseCurrency: "USD", convertToCurrency: "EUR", amountToConvert: amountToConvert, rate: 0.825866, timestamp: Date().timeIntervalSince1970)
         let convertionService = ConvertionService(api: euroBasedMock)
         convertionService.baseCurrency = "EUR"
         // When
         let expectation = XCTestExpectation(description: "Wait for convertion to be done")
-        
+
         var requestError: ServiceError?
-        convertionService.convert { (requestResponse) in
+        
+        
+        convertionService.getConvertion(amountToConvert: amountToConvert, convertToCurrencyCode: "EUR") { (requestResponse, apiResult) in
             switch requestResponse {
             case .failure(let sentRequestError):
                 requestError = sentRequestError
@@ -95,7 +100,7 @@ class ConvertionServiceTests: XCTestCase {
             }
             expectation.fulfill()
         }
-        
+
         wait(for: [expectation], timeout: 0.01)
         XCTAssertEqual(requestError, ServiceError.convertionError)
     }

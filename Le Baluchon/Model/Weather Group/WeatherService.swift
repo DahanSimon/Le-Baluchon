@@ -54,7 +54,6 @@ class WeatherService {
                 }
             }
         }
-        
         task?.resume()
     }
     
@@ -68,7 +67,7 @@ class WeatherService {
     }
     
     func getWeatherComparaison(between origin: String, and destination: String, completionHandler: @escaping ([CityType: Any?]) -> Void) {
-        
+        // Use of dispatchGroup to make sure that that the 2 api calls aren't made at the same time
         let dispatchGroup = DispatchGroup()
         var weatherComparaison: [CityType: Any?] = [:]
             dispatchGroup.enter()
@@ -83,11 +82,11 @@ class WeatherService {
             
             dispatchGroup.enter()
             self.getWeather(for: destination) { (responseError, response) in
-                    if response != nil {
-                        weatherComparaison[.destination] = response
+                    if response == nil {
+                        weatherComparaison[.destination] = responseError
                         
                     } else {
-                        weatherComparaison[.destination] = responseError
+                        weatherComparaison[.destination] = response
                     }
                     dispatchGroup.leave()
             }

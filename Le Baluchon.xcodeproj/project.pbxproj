@@ -188,11 +188,11 @@
 		6B59B8FA2524EF3D00901DEF /* Weather Group */ = {
 			isa = PBXGroup;
 			children = (
-				6BC8671D25D06CC900A9B28E /* CitiesList.swift */,
-				6BC8671B25D06CC900A9B28E /* WeatherServiceProtocol.swift */,
-				6BC8671C25D06CC900A9B28E /* world-cities_json.json */,
 				6B59B9032524EF9400901DEF /* WeatherService.swift */,
+				6BC8671B25D06CC900A9B28E /* WeatherServiceProtocol.swift */,
 				6B59B8FB2524EF7200901DEF /* CityWeatherResponse.swift */,
+				6BC8671D25D06CC900A9B28E /* CitiesList.swift */,
+				6BC8671C25D06CC900A9B28E /* world-cities_json.json */,
 			);
 			path = "Weather Group";
 			sourceTree = "<group>";
@@ -213,13 +213,13 @@
 			isa = PBXGroup;
 			children = (
 				6BA52E4925BF3272001B5DCE /* TranslationService.swift */,
-				6BA52E4E25BF32A1001B5DCE /* TranslationAPIProtocol.swift */,
 				6BA52E5D25BF339D001B5DCE /* TranslationGoogleAPI.swift */,
+				6BA52E4E25BF32A1001B5DCE /* TranslationAPIProtocol.swift */,
+				6BE488C225D2EB910072E7B7 /* IncorrectTranslationResponse.swift */,
 				6BB8F7A025BF389B0088A767 /* TranslationResponse.swift */,
 				6B571FC525C2DB63001C00CD /* DetectionResponse.swift */,
 				6B1AF26D25C8AF74003F6DC1 /* IsoCodes.swift */,
 				6B1AF27225C8B95D003F6DC1 /* LanguagesCodesData.json */,
-				6BE488C225D2EB910072E7B7 /* IncorrectTranslationResponse.swift */,
 			);
 			path = "Translation Group";
 			sourceTree = "<group>";
@@ -240,11 +240,11 @@
 			isa = PBXGroup;
 			children = (
 				6B5B350B251D63FD00554B7B /* ConvertionService.swift */,
+				6BA52E1825BDCD09001B5DCE /* ApiConvertion.swift */,
+				6BA52E1225BDBEB6001B5DCE /* ConvertionProtocol.swift */,
 				6BBEBD3C2520B99D00B16CA0 /* ConvertionResponse.swift */,
 				6B90E0D025268BD8004DEB2F /* Currency.swift */,
 				6B90E0DD25274C82004DEB2F /* CurrenciesData.json */,
-				6BA52E1225BDBEB6001B5DCE /* ConvertionProtocol.swift */,
-				6BA52E1825BDCD09001B5DCE /* ApiConvertion.swift */,
 			);
 			path = "Convertion Group";
 			sourceTree = "<group>";

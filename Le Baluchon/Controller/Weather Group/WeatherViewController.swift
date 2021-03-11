@@ -9,6 +9,7 @@ import UIKit
 
 class WeatherViewController: UIViewController, WeatherSelectionDelegate {
     
+    // This method transfer the city's name that the user entered from the WeatherSettingsVC to the WeatherVC
     func didEnterCitiesNames(destinationCityName: String, originCityName: String) {
         self.destinationCityName = destinationCityName
         self.originCityName = originCityName
@@ -56,7 +57,6 @@ class WeatherViewController: UIViewController, WeatherSelectionDelegate {
         
         destinationStackView.isHidden = shown
         destinationActivityINdicator.isHidden = !shown
-        
     }
     
     private func getString(from temperature: Double) -> String{
@@ -104,9 +104,9 @@ class WeatherViewController: UIViewController, WeatherSelectionDelegate {
         guard let error = weatherComparaison[cityType] as? WeatherResponseError else {
             return
         }
-        presentAlert(message: "\(error.message) for \(cityType.rawValue) \nMerci d'entrer un nom de ville correct.", handler: self.settingsButtonTapped)
+        presentAlert(message: "\(error.message) for \(cityType.rawValue) \nPlease enter a valid city name", handler: self.settingsButtonTapped)
     }
-    
+    // Presents SettingsContainerVC and set his delgate as WeatherViewController
     @IBAction func settingsButtonTapped(_ sender: Any) {
         guard let storyBoard = storyboard else {
             return

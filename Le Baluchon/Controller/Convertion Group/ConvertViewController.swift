@@ -10,20 +10,16 @@ import UIKit
 class ConvertViewController: UIViewController, CurrencySelectionDelegate {
     
     enum VCErrors: String {
-        case invalidTextFieldInput = "Merci d'entrer une valeur correct."
-        case apiError = "Une erreur c'est produite ! Merci de réessayer."
+        case invalidTextFieldInput = "Please enter a correct value."
+        case apiError = "An error occured ! Please try again"
     }
     
-    enum test {
-        case random(String)
-    }
-    
+    // This method transfer the currencies codes that the user selected from the SettingsVC to the ConvertVC
     func didSelectCurrency(convertTo_CurrencyCode: String, baseCurrencyCode: String) {
         self.selectedConvertToCurrencyCode = convertTo_CurrencyCode
         self.selectedBaseCurrencyCode = baseCurrencyCode
         ConvertionService.shared.baseCurrency = baseCurrencyCode
         callApi(amountToConvert: 0.0)
-        
     }
     
     @IBOutlet weak var baseCurrencySymbol: UILabel!
@@ -36,28 +32,20 @@ class ConvertViewController: UIViewController, CurrencySelectionDelegate {
     var selectedConvertToCurrencyCode = "USD"
     var selectedBaseCurrencyCode = "EUR"
     
-    private func formatTextField(currencyCode: String) {
-        let formatter = NumberFormatter()
-        formatter.currencyCode = currencyCode
-        formatter.numberStyle = .currency
-        formatter.locale = NSLocale(localeIdentifier: "us") as Locale
-    }
-    
     override func viewDidLoad() {
         self.baseCurrencySymbol.layer.zPosition = 1000
         self.amountToChangeTextField.layer.zPosition = 1
-        ConvertionService.shared.convert { [weak self] (requestResponse) in
-            
+        
+        // Get the rate at the beginnig to display it on the rateInfoLabel
+        ConvertionService.shared.getConvertion(amountToConvert: 1.0, convertToCurrencyCode: selectedConvertToCurrencyCode) { [weak self] (requestResponse, result) in
             guard let self = self else { return }
-            
             self.toggleActivityIndicator(shown: false)
-            
             switch requestResponse {
             case .failure(let serviceError):
                 self.presentAlert(message: serviceError.localizedDescription, handler: nil)
-            case .success(let convertionResponse):
-                if let rate = convertionResponse.rates["USD"] {
-                    self.rateInfoLabel.text = "1 € = " + String(format: "%.4f $", rate)
+            case .success(_):
+                if let convertionResult = result {
+                    self.rateInfoLabel.text = "1 € = " + String(format: "%.4f $", convertionResult)
                 } else {
                     self.rateInfoLabel.isHidden = true
                 }
@@ -82,43 +70,34 @@ class ConvertViewController: UIViewController, CurrencySelectionDelegate {
         callApi(amountToConvert: amountToConvert)
     }
     
-    
-    
     private func toggleActivityIndicator(shown: Bool) {
         calculateButton.isHidden = shown
         activityIndicator.isHidden = !shown
     }
     
     func callApi(amountToConvert: Double) {
-        ConvertionService.shared.convert { [weak self] (requestResponse) in
-            
+        ConvertionService.shared.getConvertion(amountToConvert: amountToConvert, convertToCurrencyCode: selectedConvertToCurrencyCode) { [weak self] (requestResponse, result) in
             guard let self = self else { return }
-            
+            guard let convertionResult = result else { return }
             self.toggleActivityIndicator(shown: false)
             
             switch requestResponse {
-            
             case .failure(let serviceError):
                 self.presentAlert(message: serviceError.localizedDescription, handler: nil)
             case .success(let convertionResponse):
-                let rate = convertionResponse.rates[self.selectedConvertToCurrencyCode]!
-                let result = self.convert(amount: amountToConvert, rate: rate)
-                
-                let convertTo_CurrencySymbol = Currency.share.data[self.selectedConvertToCurrencyCode]!.symbol
+                let convertToCurrencySymbol = Currency.share.data[self.selectedConvertToCurrencyCode]!.symbol
                 let baseCurrencySymbol = Currency.share.data[self.selectedBaseCurrencyCode]!.symbol
                 self.baseCurrencySymbol.text = baseCurrencySymbol
-                self.changedValueLabel.text = String(format: "%.2f \(convertTo_CurrencySymbol)", result)
-                self.rateInfoLabel.text = "1 \(baseCurrencySymbol) = " + String(format: "%.4f \(convertTo_CurrencySymbol)", convertionResponse.rates[self.selectedConvertToCurrencyCode]!)
+                self.changedValueLabel.text = String(format: "%.2f \(convertToCurrencySymbol)", convertionResult)
+                self.rateInfoLabel.text = "1 \(baseCurrencySymbol) = " + String(format: "%.4f \(convertToCurrencySymbol)", convertionResponse.rates[self.selectedConvertToCurrencyCode]!)
             }
         }
     }
     
-    private func convert(amount: Double, rate: Double) -> Double {
-        return amount * rate
-    }
     
     @IBAction func unwindToConvertion(segue:UIStoryboardSegue) {}
     
+    // Presents SettingsView and set his delgate as ConvertionViewController
     @IBAction func settingsButtonTapped(_ sender: Any) {
         let selectionVC = storyboard?.instantiateViewController(withIdentifier: "settingsViewController") as! ConvertSettingsViewController
         selectionVC.selectionDelegate = self

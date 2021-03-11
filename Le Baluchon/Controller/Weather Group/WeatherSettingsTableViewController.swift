@@ -90,8 +90,8 @@ extension WeatherSettingsTableViewController: UITextFieldDelegate {
 }
 
 enum WeatherSettingsFormErrors: String {
-    case originTextFieldIsNotFilled = "Merci d'entrer une vile d'origine"
-    case destinationTextFieldIsNotFilled = "Merci d'entrer une ville de destination"
-    case noTextFieldAreFilled = "Merci de remplir les champs en rouge"
-    case entryIsWrong = "Merci d'entrer un nom de ville valide"
+    case originTextFieldIsNotFilled = "Please enter an origin city name"
+    case destinationTextFieldIsNotFilled = "Please enter a destination city name"
+    case noTextFieldAreFilled = "Please fill the highlighted textfields"
+    case entryIsWrong = "Please enter a valid city name"
 }

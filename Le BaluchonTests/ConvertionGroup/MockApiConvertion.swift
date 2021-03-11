@@ -12,10 +12,10 @@ class MockApiConvertion: ConvertionProtocol {
     var expectedResult: Double?
     var baseCurrency: String
     var convertToCurrency: String
-    var amountToConvert: Int
+    var amountToConvert: Double
     var convertionResponse: ConvertionResponse?
     var apiCallCounter = 0
-    init(expectedResult: Double?, baseCurrency: String, convertToCurrency: String, amountToConvert: Int, rate: Double, timestamp: TimeInterval) {
+    init(expectedResult: Double?, baseCurrency: String, convertToCurrency: String, amountToConvert: Double, rate: Double, timestamp: TimeInterval) {
         self.expectedResult = expectedResult
         self.baseCurrency = baseCurrency
         self.amountToConvert = amountToConvert

@@ -16,10 +16,7 @@ class TranslateViewController: UIViewController {
     
     let translationService = TranslationService(api: TranslationGoogleAPI())
     
-    
     @IBAction func translateButtonTapped(_ sender: Any) {
-        
-                
         guard let textToTranslate = self.textToTranslateTextField.text else {
             return
         }
@@ -28,9 +25,7 @@ class TranslateViewController: UIViewController {
             presentAlert(message: "Please enter some text", handler: nil)
             return
         }
-        
         self.translationService.detectAndTranslate(textToTranslate: textToTranslate) { [weak self] (success, translationStruct) in
-            
             guard let self = self else { return }
             
             guard let translation = translationStruct else {
@@ -39,11 +34,9 @@ class TranslateViewController: UIViewController {
                 }
                 return
             }
-            
             self.sourceLanguageLabel.text = translation.sourceLanguage
             self.translatedTextTextField.text = translation.translatedText
         }
-        
         dismissKeyboard(self.tapGestureRecongnizer)
     }
     

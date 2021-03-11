@@ -48,6 +48,8 @@ class ConvertSettingsViewController: UIViewController {
         return String(currencyCode)
     }
     
+    /* Check what currencies are available from the api and match the currency
+        code from currecies save in CurrenciesData.json */
     func populateData() {
         for (code, _) in Currency.share.data {
             if let _ = ConvertionService.shared.convertionResponse?.rates[code] {
