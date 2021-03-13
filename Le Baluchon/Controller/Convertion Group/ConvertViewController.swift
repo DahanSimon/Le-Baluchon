@@ -103,6 +103,7 @@ class ConvertViewController: UIViewController, CurrencySelectionDelegate {
         selectionVC.selectionDelegate = self
         present(selectionVC, animated: true, completion: nil)
     }
+    
     deinit {
         print("Convertion has been deinited no retain cycle")
     }

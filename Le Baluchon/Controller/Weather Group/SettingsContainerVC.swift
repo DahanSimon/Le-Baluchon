@@ -19,7 +19,8 @@ class SettingsContainerVC: UIViewController {
     
     weak var delegate: WeatherSelectionDelegate?
     
-    /* Create an instance of WeatherSettingsTableViewController and set his delegate with the instance of WeatherViewController that is already set as the delegate of the SettingsContainerVC */
+    /* Create an instance of WeatherSettingsTableViewController and set his delegate with the instance
+     of WeatherViewController that is already set as the delegate of the SettingsContainerVC */
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let vc = segue.destination as? WeatherSettingsTableViewController {
             self.weatherSettingsTableVC = vc

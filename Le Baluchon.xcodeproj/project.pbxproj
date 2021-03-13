@@ -200,11 +200,11 @@
 		6BA52E1725BDCCE7001B5DCE /* ConvertionGroup */ = {
 			isa = PBXGroup;
 			children = (
+				6BA52E3425BDD279001B5DCE /* ConvertionServiceTests.swift */,
 				6BA52E2025BDCD38001B5DCE /* MockApiConvertion.swift */,
+				6BA52E2F25BDCEF3001B5DCE /* FakeConvertionData.swift */,
 				6BA52E2A25BDCEAC001B5DCE /* UsdBasedConvertionData.json */,
 				6BA52E2525BDCE86001B5DCE /* EuroBasedConvertionData.json */,
-				6BA52E2F25BDCEF3001B5DCE /* FakeConvertionData.swift */,
-				6BA52E3425BDD279001B5DCE /* ConvertionServiceTests.swift */,
 			);
 			path = ConvertionGroup;
 			sourceTree = "<group>";
@@ -227,10 +227,10 @@
 		6BA52E3D25BF31E6001B5DCE /* TranslationGroup */ = {
 			isa = PBXGroup;
 			children = (
-				6BA52E5325BF3313001B5DCE /* MockTranslation.swift */,
 				6BA52E5825BF3328001B5DCE /* TranslationServiceTests.swift */,
-				6B571FB825BF4708001C00CD /* HelloTranslationData.json */,
+				6BA52E5325BF3313001B5DCE /* MockTranslation.swift */,
 				6B571FC025BF4738001C00CD /* FakeTranslationData.swift */,
+				6B571FB825BF4708001C00CD /* HelloTranslationData.json */,
 				6B65217425C9C05C008453DC /* FrDetectionData.json */,
 			);
 			path = TranslationGroup;
@@ -253,11 +253,11 @@
 			isa = PBXGroup;
 			children = (
 				6BBCE096253B85B000C82902 /* WeatherServiceTests.swift */,
+				6B5E9A91254861E60042A46B /* URLSessionFake.swift */,
+				6B5E9A96254864D60042A46B /* FakeWeatherData.swift */,
 				6B0B3851253B914F0093B1A5 /* ParisWeatherData.json */,
 				6BA52E0D25BD9980001B5DCE /* NewYorkWeatherData.json */,
 				6B0B3856253B92520093B1A5 /* WeatherDataError.json */,
-				6B5E9A91254861E60042A46B /* URLSessionFake.swift */,
-				6B5E9A96254864D60042A46B /* FakeWeatherData.swift */,
 			);
 			path = "Weather Group";
 			sourceTree = "<group>";

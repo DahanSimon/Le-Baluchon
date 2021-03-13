@@ -18,8 +18,6 @@ class WeatherSettingsTableViewController: UITableViewController {
     @IBOutlet weak var destinationCityTextField: UITextField!
     @IBOutlet var tapGestureRecognizer: UITapGestureRecognizer!
     
-    
-    
     override func viewDidLoad() {
         self.settingsTableView.layer.cornerRadius = 15
         self.originCityTextField.backgroundColor = UIColor.white

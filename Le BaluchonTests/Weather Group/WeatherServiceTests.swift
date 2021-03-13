@@ -50,8 +50,6 @@ class WeatherServiceTests: XCTestCase {
         XCTAssertEqual(destinationWeather?.name, "New York")
     }
     
-    
-    
     func testGetWeatherForUnknownCityShouldGetError() {
         // Given
         let weatherService = WeatherService(weatherSession: URLSessionFake(originData: FakeWeatherData.weatherIncorrectData, destinationData: FakeWeatherData.weatherIncorrectData, response: FakeWeatherData.responseKO, error: FakeWeatherData.weatherIncorrectData))

@@ -8,7 +8,6 @@
 import Foundation
 
 class FakeTranslationData {
-    
     // MARK: - Data
     static var helloTranslationData: Data? {
         let bundle = Bundle(for: FakeTranslationData.self)
