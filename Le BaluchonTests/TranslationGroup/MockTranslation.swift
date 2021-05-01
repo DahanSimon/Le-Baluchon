@@ -7,9 +7,10 @@
 
 import Foundation
 @testable import Le_Baluchon
+
 class MockTranslationAPI: TranslationAPIProtocol {
-    var incorrectTranslationResponse: IncorrectTranslationResponse?
     
+    var incorrectTranslationResponse: IncorrectTranslationResponse?
     var sourceLanguage: String?
     var expectedResult: String?
     let translationResponse: TranslationResponse?

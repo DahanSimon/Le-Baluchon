@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol WeatherSelectionDelegate: class {
+protocol WeatherSelectionDelegate: AnyObject {
     func didEnterCitiesNames(destinationCityName: String, originCityName: String)
 }
 
